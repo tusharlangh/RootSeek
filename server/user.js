@@ -39,17 +39,17 @@ router.post("/user/login", async (req, res) => {
 router.post("/user/signin", async (req, res) => {
     try {
         const {email, firstName, lastName, username, password} = req.body
-    if (!email || !firstName || !lastName || !username || !password) {
-        return res.status(400).json({message: "Fields are required."})
-    }
-    const existingUser = await User.findOne({email})
-    if (existingUser) {
-        return res.status(400).json({message: "The email already exists."})
-    }
-    const hashedPassword = await bcrypt.hash(password, 10)
-    const user = new User({firstName, lastName, username, email, password:hashedPassword})
-    await user.save()
-    res.status(201).json({message: "User registered."})
+        if (!email || !firstName || !lastName || !username || !password) {
+            return res.status(400).json({message: "Fields are required."})
+        }
+        const existingUser = await User.findOne({email})
+        if (existingUser) {
+            return res.status(400).json({message: "The email already exists."})
+        }
+        const hashedPassword = await bcrypt.hash(password, 10)
+        const user = new User({firstName, lastName, username, email, password:hashedPassword})
+        await user.save()
+        res.status(201).json({message: "User registered."})
     } catch (error) {
         console.error("Error during user registration:", error);
         res.status(500).json({ message: "An error occurred during registration." });
