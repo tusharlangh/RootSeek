@@ -1,9 +1,9 @@
 import React from "react";
-import { RootSeekLoginPageBg, RootSeekLogo } from "./index";
 import { animate, AnimatePresence, motion } from "framer-motion";
 import LoginPage from "./loginPage";
 import SignInPage from "./signinPage";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { HomePageBgVid, LoginPageBg, LoginPageBg2 } from "..";
 
 const UserMain = () => {
   const location = useLocation();
@@ -22,8 +22,9 @@ const UserMain = () => {
         loop
         playsInline
       >
-        <source src={RootSeekLoginPageBg} type="video/mp4" />
+        <source src={HomePageBgVid} type="video/mp4" />
       </video>
+
       <AnimatePresence mode="wait">
         <motion.div
           key={location.pathname}

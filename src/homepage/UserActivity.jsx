@@ -30,7 +30,10 @@ const UserActivity = () => {
   return (
     <div className="flex flex-col gap-4 h-3/4 overflow-y-scroll">
       {posts.map((post) => (
-        <div className="bg-[#EBEBEB] hover:bg-[#E8E8E8] rounded-xl py-2 px-4 drop-shadow cursor-pointer w-full transition-colors">
+        <div
+          key={post.title}
+          className="bg-[#EBEBEB] hover:bg-[#E8E8E8] rounded-xl py-2 px-4 drop-shadow cursor-pointer w-full transition-colors"
+        >
           <h1 className="text-lg font-medium">
             {post.title} - {formatTime(post)}
           </h1>

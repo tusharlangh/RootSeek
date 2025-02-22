@@ -50,8 +50,11 @@ const SignInPage = () => {
     }
   };
 
+  const inputStyle =
+    "p-2 text-black rounded-md border border-gray-300 drop-shadow-xl";
+
   return (
-    <div className="flex flex-col bg-[#F9F9F9] p-12 rounded-xl drop-shadow-2xl">
+    <div className="flex flex-col bg-[#F9F9F9] p-12 rounded-xl drop-shadow-2xl shadow-xl opacity-96">
       <p className="font-baseline text-black text-2xl">
         Start your journey today!
       </p>
@@ -62,7 +65,7 @@ const SignInPage = () => {
       <form className="flex flex-col gap-4 mt-4" onSubmit={handleSignin}>
         <input
           type="email"
-          className="p-2 text-black rounded-xs border border-gray-300 drop-shadow-xl"
+          className={inputStyle}
           placeholder="example@gmail.com"
           style={{ backgroundColor: "rgb(232, 232, 232)" }}
           value={email}
@@ -72,7 +75,7 @@ const SignInPage = () => {
         <div className="flex gap-10">
           <input
             type="text"
-            className="p-2 text-black rounded-xs border border-gray-300 drop-shadow-xl"
+            className={inputStyle}
             placeholder="First Name"
             style={{ backgroundColor: "rgb(232, 232, 232)" }}
             value={firstName}
@@ -81,7 +84,7 @@ const SignInPage = () => {
           />
           <input
             type="text"
-            className="p-2 text-black rounded-xs border border-gray-300 drop-shadow-xl"
+            className={inputStyle}
             placeholder="Last Name"
             style={{ backgroundColor: "rgb(232, 232, 232)" }}
             value={lastName}
@@ -91,7 +94,7 @@ const SignInPage = () => {
         </div>
         <input
           type="text"
-          className="p-2 text-black rounded-xs border border-gray-300 drop-shadow-xl"
+          className={inputStyle}
           placeholder="Username"
           style={{ backgroundColor: "rgb(232, 232, 232)" }}
           value={username}
@@ -100,7 +103,7 @@ const SignInPage = () => {
         />
         <input
           type="password"
-          className="p-2 text-black rounded-xs border border-gray-300 drop-shadow-xl"
+          className={inputStyle}
           placeholder="Password"
           style={{ backgroundColor: "rgb(232, 232, 232)" }}
           value={password}
