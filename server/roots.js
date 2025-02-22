@@ -21,7 +21,7 @@ function auth(req, res, next) {
   const token = req.header("Authorization")?.split(" ")[1];
   if (!token) return res.status(401).json({ message: "Access denied." });
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Use environment variable for secret
+    const decoded = jwt.verify(token, "your_jwt_secret_key"); // Use environment variable for secret
     req.userId = decoded.userId;
     next();
   } catch (ex) {
@@ -60,5 +60,10 @@ router.post("/user/create", auth, async (req, res) => {
     res.status(400).json({ message: "Error creating post." });
   }
 });
+
+router.get("/posts/all", async (req, res) => {
+    const posts = await Post.find()
+    res.json(posts)
+})
 
 export default router;

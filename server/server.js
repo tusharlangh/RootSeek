@@ -13,4 +13,4 @@ app.use("/", rootsRoutes)
 
 app.listen(5002, () => {
     console.log('Backend server is running at http://localhost:5002');
-}) 
+})
