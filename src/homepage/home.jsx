@@ -40,7 +40,9 @@ const Home = () => {
   });
   return (
     <>
-      <div className={`flex justify-center items-center w-full h-screen`}>
+      <div
+        className={`flex justify-center items-center w-full h-screen shadow-xl`}
+      >
         <Navbar />
         <video
           className="w-full h-full absolute -z-1 object-cover"

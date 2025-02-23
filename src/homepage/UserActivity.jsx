@@ -1,9 +1,11 @@
 import react, { useState, useEffect } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const UserActivity = () => {
   const [posts, setPosts] = useState([]);
   const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -27,8 +29,18 @@ const UserActivity = () => {
     return formattedTime;
   };
 
+  if (!posts) {
+    return (
+      <motion.div
+        className="w-8 h-8 border-4 border-gray-300 border-t-black rounded-full"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+      />
+    );
+  }
+
   return (
-    <div className="flex flex-col gap-4 h-3/4 overflow-y-scroll">
+    <div className="flex flex-col gap-4 h-full overflow-y-auto pb-2">
       {posts.map((post) => (
         <div
           key={post.title}
