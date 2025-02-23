@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import { HomePageBgVid, RootSeekTransparentWhite } from "..";
+import { HomePageBgVid, LoginPageBg2, RootSeekTransparentWhite } from "..";
 import ActivityList from "./ActivityList";
 import {
   Link,
@@ -40,31 +40,13 @@ const Home = () => {
   });
   return (
     <>
-      <div
-        className={`flex justify-center items-center w-full h-screen shadow-xl`}
-      >
+      <div className={`flex justify-center items-center w-full h-screen`}>
         <Navbar />
-        <video
-          className="w-full h-full absolute -z-1 object-cover"
-          muted
-          autoPlay
-          loop
-          playsInline
-        >
-          <source src={HomePageBgVid} type="video/mp4" />
-        </video>
 
         <Routes>
           <Route path="" element={<ActivityList />} />
           <Route path="create" element={<Create />} />
         </Routes>
-
-        {/*
-        logo here
-        <div className="hidden md:block absolute top-4 h-1 w-10 cursor-pointer ">
-          <img src={RootSeekTransparentWhite} />
-        </div>
-        */}
       </div>
     </>
   );

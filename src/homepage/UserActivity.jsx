@@ -1,6 +1,8 @@
 import react, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { LoginPageBg2 } from "..";
+import { ThreeDotIcon } from "./icons";
 
 const UserActivity = () => {
   const [posts, setPosts] = useState([]);
@@ -40,16 +42,27 @@ const UserActivity = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4 h-full overflow-y-auto pb-2">
+    <div className="flex flex-col justify-center items-center gap-18 h-full w-full">
       {posts.map((post) => (
-        <div
-          key={post.title}
-          className="bg-[#EBEBEB] hover:bg-[#E8E8E8] rounded-xl py-2 px-4 drop-shadow cursor-pointer w-full transition-colors"
-        >
-          <h1 className="text-lg font-medium">
-            {post.title} - {formatTime(post)}
-          </h1>
-          <p className="font-light truncate w-3/4">{post.content}</p>
+        <div className="w-[50vw] border border-[#252525] py-4 px-8 rounded-xl">
+          <div key={post.title} className="flex flex-col gap-4">
+            <div className="flex items-center gap-1 text-gray-300">
+              <div className="flex items-center flex-1">
+                <span className="text-xl text-white">{post.title}</span>
+                <span className="text-sm text-gray-300 mx-1">•</span>
+                <span className="text-sm text-gray-300 mt-0.5">
+                  {formatTime(post)}
+                </span>
+              </div>
+              <div className="hover:bg-[#242424] cursor-pointer p-1 rounded-sm">
+                <ThreeDotIcon />
+              </div>
+            </div>
+            <div>
+              <img src={LoginPageBg2} />
+            </div>
+            <div className="font-light truncate">{post.content}</div>
+          </div>
         </div>
       ))}
     </div>

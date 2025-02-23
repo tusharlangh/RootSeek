@@ -16,13 +16,6 @@ import { path } from "framer-motion/client";
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [closeMenu, setCloseMenu] = useState(true);
-
-  const NavBarVariants = {
-    initial: { x: "-100%" },
-    animate: { x: closeMenu ? "-100%" : "0%" },
-    transition: { type: "spring", stiffness: 200, damping: 30 },
-  };
 
   useEffect(() => {
     console.log(location.pathname);
@@ -30,16 +23,19 @@ const Navbar = () => {
 
   const menuItems = [
     {
+      name: "Home",
       path: "/home",
       solid: <HomeIconSolid />,
       outline: <HomeIconOutline />,
     },
     {
+      name: "Search",
       path: "/home/search",
       solid: <SearchIconSolid />,
       outline: <SearchIconOutline />,
     },
     {
+      name: "Create",
       path: "/home/create",
       solid: <CreateIconSolid />,
       outline: <CreateIconOutline />,
@@ -48,27 +44,12 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="z-50 fixed top-0">
-        <div
-          className="fixed top-2 left-5 hover:bg-[#242424] cursor-pointer transition-colors p-4 rounded-lg"
-          onClick={() => setCloseMenu(!closeMenu)}
-        >
-          <MenuIcon />
-        </div>
-      </div>
-
-      <motion.div
-        variants={NavBarVariants}
-        initial="initial"
-        animate="animate"
-        transition="transition"
-        className="h-full fixed left-0 pt-[35vh] w-24 bg-[#171717] z-40"
-      >
-        <ul className="flex flex-col justify-center items-center gap-16">
-          {menuItems.map(({ path, solid, outline }) => (
+      <div className="h-full fixed left-0 top-0 pt-[35vh] w-44 bg-black border-r border-[#252525] z-40">
+        <ul className="flex flex-col justify-center items-center gap-4">
+          {menuItems.map(({ name, path, solid, outline }) => (
             <li
               key={path}
-              className={`${
+              className={`flex gap-4 ${
                 location.pathname !== path
                   ? "hover:bg-[#242424] cursor-pointer"
                   : ""
@@ -77,11 +58,11 @@ const Navbar = () => {
                 navigate(path);
               }}
             >
-              {location.pathname === path ? solid : outline}
+              {location.pathname === path ? solid : outline} {name}
             </li>
           ))}
         </ul>
-      </motion.div>
+      </div>
     </>
   );
 };
