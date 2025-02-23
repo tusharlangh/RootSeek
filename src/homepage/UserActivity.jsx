@@ -1,13 +1,15 @@
-import react, { useState, useEffect } from "react";
+import react, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { LoginPageBg2 } from "..";
 import { ThreeDotIcon } from "./icons";
+import { WindowContext } from "../utils";
 
 const UserActivity = () => {
   const [posts, setPosts] = useState([]);
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
+  const windowSize = useContext(WindowContext);
 
   useEffect(() => {
     axios
@@ -44,22 +46,24 @@ const UserActivity = () => {
   return (
     <div className="flex flex-col justify-center items-center gap-18 h-full w-full">
       {posts.map((post) => (
-        <div className="w-[50vw] border border-[#252525] py-4 px-8 rounded-xl">
-          <div key={post.title} className="flex flex-col gap-4">
-            <div className="flex items-center gap-1 text-gray-300">
+        <div className={`w-full border border-[#252525] py-4 px-4 rounded-xl`}>
+          <div key={post.title} className="flex flex-col gap-4 justify-between">
+            <div className="flex gap-1 text-gray-300">
               <div className="flex items-center flex-1">
-                <span className="text-xl text-white">{post.title}</span>
-                <span className="text-sm text-gray-300 mx-1">•</span>
-                <span className="text-sm text-gray-300 mt-0.5">
-                  {formatTime(post)}
-                </span>
+                <div className="w-4/5">
+                  <span className="text-xl text-white">{post.title}</span>
+                  <span className="text-sm text-gray-300 mx-1">•</span>
+                  <span className="text-sm text-gray-300 shrink-0">
+                    {formatTime(post)}
+                  </span>
+                </div>
               </div>
-              <div className="hover:bg-[#242424] cursor-pointer p-1 rounded-sm">
+              <div className="hover:bg-[#242424] transition-all cursor-pointer p-1 h-full rounded-sm">
                 <ThreeDotIcon />
               </div>
             </div>
             <div>
-              <img src={LoginPageBg2} />
+              <img src={LoginPageBg2} draggable={false} />
             </div>
             <div className="font-light truncate">{post.content}</div>
           </div>

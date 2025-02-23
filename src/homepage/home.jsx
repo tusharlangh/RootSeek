@@ -13,6 +13,8 @@ import {
 import Create from "./createpage/create";
 import { LockIcon } from "./icons";
 import { jwtDecode } from "jwt-decode";
+import WindowSize from "../utils";
+import Sidebar from "./Sidebar";
 
 const checkTokenExpiration = () => {
   const token = localStorage.getItem("token");
@@ -42,11 +44,11 @@ const Home = () => {
     <>
       <div className={`flex justify-center items-center w-full h-screen`}>
         <Navbar />
-
         <Routes>
           <Route path="" element={<ActivityList />} />
           <Route path="create" element={<Create />} />
         </Routes>
+        <Sidebar />
       </div>
     </>
   );

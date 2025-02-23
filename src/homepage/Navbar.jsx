@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   CreateIconOutline,
@@ -12,14 +12,12 @@ import {
 import { RootSeekTransparent } from "..";
 import { useLocation, useNavigate } from "react-router-dom";
 import { path } from "framer-motion/client";
+import { WindowContext } from "../utils";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    console.log(location.pathname);
-  });
+  const windowSize = useContext(WindowContext);
 
   const menuItems = [
     {
@@ -44,21 +42,42 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="h-full fixed left-0 top-0 pt-[35vh] w-44 bg-black border-r border-[#252525] z-40">
-        <ul className="flex flex-col justify-center items-center gap-4">
+      <div
+        className={`${
+          windowSize >= 1110
+            ? "h-full fixed left-0 top-0 pt-[35vh] border-r"
+            : windowSize >= 800
+            ? "h-full fixed left-0 top-0 pt-[35vh] border-r"
+            : "w-full fixed left-0 bottom-0 py-2 border-t"
+        } ${
+          windowSize >= 1110 ? "px-8" : "px-2"
+        } bg-black border-[#252525] z-40`}
+      >
+        <ul
+          className={`flex ${
+            windowSize >= 1110
+              ? "flex-col"
+              : windowSize >= 800
+              ? "flex-col"
+              : ""
+          } justify-center items-center gap-4`}
+        >
           {menuItems.map(({ name, path, solid, outline }) => (
             <li
               key={path}
-              className={`flex gap-4 ${
+              className={`flex gap-4 ${windowSize >= 1110 ? "w-32" : ""} ${
                 location.pathname !== path
                   ? "hover:bg-[#242424] cursor-pointer"
                   : ""
-              } transition-colors p-4 rounded-lg`}
+              } transition-colors p-3 rounded-lg`}
               onClick={() => {
                 navigate(path);
               }}
             >
-              {location.pathname === path ? solid : outline} {name}
+              <div className="">
+                {location.pathname === path ? solid : outline}
+              </div>
+              {windowSize >= 1110 ? name : ""}
             </li>
           ))}
         </ul>
