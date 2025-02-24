@@ -1,14 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
-  AddIcon,
-  AddIconBlack,
-  CheckmarkIcon,
   GlobeIcon,
   Hashtag,
   MapPin,
   PictureIcon,
   RecordIcon,
-  SendIcon,
   SmileIcon,
 } from "../icons";
 import axios from "axios";
@@ -25,58 +21,76 @@ const Loading = () => (
 const Create = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [picture, setPicture] = useState(null);
   const token = localStorage.getItem("token");
-  const [status, setStatus] = useState("send");
 
   const DailyTabStyles =
     "max-sm:w-[80vw] w-[55vw] rounded-xl bg-[#121212] border border-[#252525]";
 
   const onClick = (e) => {
     e.preventDefault();
-    const dataToSend = {
-      title: title,
-      content: content,
-      mood: "happy",
-    };
-    setStatus("loading");
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("mood", "happy");
+    if (picture) {
+      formData.append("image", picture);
+    }
 
     axios
-      .post("http://localhost:5002/user/create", dataToSend, {
+      .post("http://localhost:5002/user/create", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
         console.log(response);
-        setStatus("checked");
         setTitle("");
         setContent("");
-        setTimeout(() => setStatus("send"), 3000);
+        setPicture(null);
       })
       .catch((error) => {
         console.error(error);
       });
   };
 
+  const handleFileChange = (e) => {
+    setPicture(e.target.files[0]);
+  };
+
   return (
     <div className="">
       <div className={DailyTabStyles}>
-        <form className="flex flex-col gap-4 px-4 py-4">
+        <form className="flex flex-col gap-4 px-4 py-4" onSubmit={onClick}>
           <input
             type="text"
             placeholder="Title"
             className="bg-[#1F1F1F] border border-[#252525] rounded-sm p-3"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
           />
           <textarea
             type="text"
             placeholder="Content"
             className="h-40 bg-[#1F1F1F] border border-[#252525] rounded-sm p-3 resize-none"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            required
           />
           <div className="flex justify-between">
             <ul className="flex gap-2">
-              <li className="bg-[#1F1F1F] p-3 rounded-sm cursor-pointer hover:scale-105 transition-all">
+              <label className="bg-[#1F1F1F] p-3 rounded-sm cursor-pointer hover:scale-105 transition-all">
                 <PictureIcon />
-              </li>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+              </label>
+
               <li className="bg-[#1F1F1F] p-3 rounded-sm cursor-pointer hover:scale-105 transition-all">
                 <RecordIcon />
               </li>

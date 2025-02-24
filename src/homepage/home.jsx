@@ -43,7 +43,7 @@ const Home = () => {
     <>
       <div className={`flex justify-center items-center w-full h-screen`}>
         {showCreate && (
-          <div className="absolute z-40 w-[100vw] h-[100vh] flex justify-center items-center">
+          <div className="fixed z-40 w-[100vw] h-[100vh] flex justify-center items-center">
             <Create />
             <div
               className="absolute top-4 right-4 cursor-pointer"
@@ -53,7 +53,11 @@ const Home = () => {
             </div>
           </div>
         )}
-        <div className={showCreate ? "opacity-40 pointer-events-none" : ""}>
+        <div
+          className={`h-full ${
+            showCreate ? "opacity-40 pointer-events-none" : ""
+          }`}
+        >
           <Navbar showCreate={showCreate} setShowCreate={setShowCreate} />
           <Routes>
             <Route path="" element={<ActivityList showCreate={showCreate} />} />

@@ -47,10 +47,11 @@ const UserActivity = () => {
     <div className="flex flex-col justify-center items-center gap-12 h-full w-full">
       {posts.map((post) => (
         <div
+          key={post._id}
           className={`w-full bg-[#1F1F1F] border border-[#252525] py-4 px-4 rounded-xl`}
           style={{ background: "linear-gradient(rgb(21, 21, 21), #121212)" }}
         >
-          <div key={post.title} className="flex flex-col gap-4 justify-between">
+          <div className="flex flex-col gap-4 justify-between">
             <div className="flex gap-1 text-gray-300">
               <div className="flex items-center flex-1">
                 <div className="w-4/5">
@@ -64,6 +65,24 @@ const UserActivity = () => {
               <div className="hover:bg-[#242424] transition-all cursor-pointer p-1 h-full rounded-sm">
                 <ThreeDotIcon />
               </div>
+            </div>
+            <div
+              className={`${
+                post.picture
+                  ? windowSize >= 1110
+                    ? "h-[70vh]"
+                    : "h-[58vh]"
+                  : ""
+              } w-full`}
+            >
+              {post.picture ? (
+                <img
+                  className="w-full h-full aspect-[16/9] object-cover"
+                  src={"server/" + post.picture}
+                />
+              ) : (
+                ""
+              )}
             </div>
 
             <div className="font-light truncate">{post.content}</div>

@@ -11,9 +11,9 @@ const ActivityList = ({ showCreate }) => {
       : windowSize >= 800
       ? "w-[60vw]"
       : "w-[80vw]"
-  } h-full overflow-y-auto`;
+  } overflow-y-auto`;
   return (
-    <div className="relative w-full h-full flex justify-center items-center">
+    <div className="">
       <div className={DailyTabStyles}>
         <div className={`mt-24 mb-24`}>
           <p className="text-2xl font-medium mb-4">Your daily log</p>

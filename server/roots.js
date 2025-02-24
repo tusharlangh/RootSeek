@@ -1,21 +1,17 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
+import multer from "multer";
+import path from "path"
+import fs from "fs";
 
 const router = express.Router();
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-const postScheme = new mongoose.Schema(
-  {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    title: { type: String, required: true },
-    content: { type: String, required: true },
-    date: { type: Date, default: Date.now },
-    mood: { type: String },
-  },
-  { timestamps: true }
-);
-
-const Post = mongoose.model("Post", postScheme);
+const uploadDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
 
 function auth(req, res, next) {
   const token = req.header("Authorization")?.split(" ")[1];
@@ -28,6 +24,31 @@ function auth(req, res, next) {
     res.status(400).json({ message: "Invalid token." });
   }
 }
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({storage: storage})
+
+const postScheme = new mongoose.Schema(
+  {
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+    date: { type: Date, default: Date.now },
+    mood: { type: String },
+    picture: {type: String}
+  },
+  { timestamps: true }
+);
+
+const Post = mongoose.model("Post", postScheme);
 
 // Get all posts for a user
 router.get("/user/posts", auth, async (req, res) => {
@@ -43,7 +64,7 @@ router.get("/user/posts", auth, async (req, res) => {
 });
 
 // Create a new post for a user
-router.post("/user/create", auth, async (req, res) => {
+router.post("/user/create",upload.single("image"), auth, async (req, res) => {
   try {
     const { title, content, mood } = req.body;
     const post = new Post({
@@ -52,12 +73,13 @@ router.post("/user/create", auth, async (req, res) => {
       content,
       date: Date.now(), 
       mood,
+      picture: req.file ? `/uploads/${req.file.filename}` : ""
     });
     await post.save();
     res.status(201).json({ message: "Post created successfully." });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ message: "Error creating post." });
+    res.status(500).json({ message: "Error creating post." });
   }
 });
 
