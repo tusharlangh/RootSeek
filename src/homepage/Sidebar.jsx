@@ -12,7 +12,7 @@ const Sidebar = () => {
           <img src={DefaultPfp} draggable={false} />
         </div>
         <div className="">
-          <p className="text-xs">tusharlanghnoda</p>
+          <p className="text-xs">Tushar Langhnoda</p>
           <p className="text-xs">Tushar</p>
         </div>
       </div>

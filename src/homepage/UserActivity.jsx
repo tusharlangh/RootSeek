@@ -44,9 +44,12 @@ const UserActivity = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center gap-18 h-full w-full">
+    <div className="flex flex-col justify-center items-center gap-12 h-full w-full">
       {posts.map((post) => (
-        <div className={`w-full border border-[#252525] py-4 px-4 rounded-xl`}>
+        <div
+          className={`w-full bg-[#1F1F1F] border border-[#252525] py-4 px-4 rounded-xl`}
+          style={{ background: "linear-gradient(rgb(21, 21, 21), #121212)" }}
+        >
           <div key={post.title} className="flex flex-col gap-4 justify-between">
             <div className="flex gap-1 text-gray-300">
               <div className="flex items-center flex-1">
@@ -62,9 +65,7 @@ const UserActivity = () => {
                 <ThreeDotIcon />
               </div>
             </div>
-            <div>
-              <img src={LoginPageBg2} draggable={false} />
-            </div>
+
             <div className="font-light truncate">{post.content}</div>
           </div>
         </div>

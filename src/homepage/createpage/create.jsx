@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   AddIcon,
   AddIconBlack,
   CheckmarkIcon,
   GlobeIcon,
+  Hashtag,
+  MapPin,
+  PictureIcon,
   RecordIcon,
   SendIcon,
   SmileIcon,
@@ -26,10 +29,7 @@ const Create = () => {
   const [status, setStatus] = useState("send");
 
   const DailyTabStyles =
-    "relative flex flex-col bg-[#F9F9F9] max-w-[90vw] lg:max-w-[70vw] py-12 w-full rounded-3xl drop-shadow-2xl lg:ml-24 overflow-hidden justify-center items-center shadow-xl";
-
-  const inputStyle =
-    "rounded-2xl py-4 px-4 cursor-pointer transition-colors resize-none w-full h-full text-xl outline-none";
+    "max-sm:w-[80vw] w-[55vw] rounded-xl bg-[#121212] border border-[#252525]";
 
   const onClick = (e) => {
     e.preventDefault();
@@ -59,58 +59,49 @@ const Create = () => {
   };
 
   return (
-    <div className={DailyTabStyles}>
-      <div className="flex flex-col justify-center items-center h-full w-[80vw] lg:w-[60vw] gap-8">
-        <h1 className="text-3xl text-black font-semibold">Create a new Root</h1>
-        <form
-          className="flex flex-col gap-4 justify-center items-center shadow-sm rounded-2xl border border-gray-300 w-full"
-          onSubmit={onClick}
-        >
+    <div className="">
+      <div className={DailyTabStyles}>
+        <form className="flex flex-col gap-4 px-4 py-4">
           <input
-            className="w-full pt-4 pb-2 px-4 outline-none shadow-xs"
             type="text"
             placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            className="bg-[#1F1F1F] border border-[#252525] rounded-sm p-3"
           />
           <textarea
-            rows="3"
-            className={inputStyle}
             type="text"
-            placeholder="Start typing..."
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            placeholder="Content"
+            className="h-40 bg-[#1F1F1F] border border-[#252525] rounded-sm p-3 resize-none"
           />
-          <div className="w-full flex p-4 justify-end">
+          <div className="flex justify-between">
+            <ul className="flex gap-2">
+              <li className="bg-[#1F1F1F] p-3 rounded-sm cursor-pointer hover:scale-105 transition-all">
+                <PictureIcon />
+              </li>
+              <li className="bg-[#1F1F1F] p-3 rounded-sm cursor-pointer hover:scale-105 transition-all">
+                <RecordIcon />
+              </li>
+              <li className="bg-[#1F1F1F] p-3 rounded-sm cursor-pointer hover:scale-105 transition-all">
+                <SmileIcon />
+              </li>
+              <li className="bg-[#1F1F1F] p-3 rounded-sm cursor-pointer hover:scale-105 transition-all">
+                <GlobeIcon />
+              </li>
+              <li className="bg-[#1F1F1F] p-3 rounded-sm cursor-pointer hover:scale-105 transition-all">
+                <MapPin />
+              </li>
+              <li className="bg-[#1F1F1F] p-3 rounded-sm cursor-pointer hover:scale-105 transition-all">
+                <Hashtag />
+              </li>
+            </ul>
+
             <button
-              className="text-center bg-[#F9F9F9] border border-gray-300 hover:bg-[#F3F3F3] rounded-4xl p-3 max-w-13 transition-colors"
               type="submit"
+              className="bg-white hover:bg-[#E6E6E6] transition-all p-2 rounded-sm w-20 text-black font-medium"
             >
-              {status === "send" ? (
-                <SendIcon />
-              ) : status === "loading" ? (
-                <Loading />
-              ) : (
-                <CheckmarkIcon />
-              )}
+              Create
             </button>
           </div>
         </form>
-
-        <div className="flex gap-2 cursor-pointer w-full items-center justify-end">
-          <div className="text-center bg-[#F9F9F9] border border-gray-300 hover:bg-[#F3F3F3] rounded-4xl p-3 max-w-13 transition-colors">
-            <RecordIcon />
-          </div>
-          <div className="text-center bg-[#F9F9F9] border border-gray-300 hover:bg-[#F3F3F3] rounded-4xl p-3 max-w-13 transition-colors">
-            <SmileIcon />
-          </div>
-          <div className="text-center bg-[#F9F9F9] border border-gray-300 hover:bg-[#F3F3F3] rounded-4xl p-3 max-w-13 transition-colors">
-            <AddIconBlack />
-          </div>
-          <div className="text-center bg-[#F9F9F9] border border-gray-300 hover:bg-[#F3F3F3] rounded-4xl p-3 max-w-13 transition-colors">
-            <GlobeIcon />
-          </div>
-        </div>
       </div>
     </div>
   );

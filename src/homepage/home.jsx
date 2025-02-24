@@ -11,7 +11,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Create from "./createpage/create";
-import { LockIcon } from "./icons";
+import { CloseIcon, LockIcon } from "./icons";
 import { jwtDecode } from "jwt-decode";
 import WindowSize from "../utils";
 import Sidebar from "./Sidebar";
@@ -26,10 +26,9 @@ const checkTokenExpiration = () => {
 };
 
 const Home = () => {
-  const location = useLocation();
   const token = localStorage.getItem("token");
-
   const navigate = useNavigate();
+  const [showCreate, setShowCreate] = useState(false);
 
   useEffect(() => {
     if (!token) {
@@ -43,12 +42,25 @@ const Home = () => {
   return (
     <>
       <div className={`flex justify-center items-center w-full h-screen`}>
-        <Navbar />
-        <Routes>
-          <Route path="" element={<ActivityList />} />
-          <Route path="create" element={<Create />} />
-        </Routes>
-        <Sidebar />
+        {showCreate && (
+          <div className="absolute z-40 w-[100vw] h-[100vh] flex justify-center items-center">
+            <Create />
+            <div
+              className="absolute top-4 right-4 cursor-pointer"
+              onClick={() => setShowCreate(false)}
+            >
+              <CloseIcon />
+            </div>
+          </div>
+        )}
+        <div className={showCreate ? "opacity-40 pointer-events-none" : ""}>
+          <Navbar showCreate={showCreate} setShowCreate={setShowCreate} />
+          <Routes>
+            <Route path="" element={<ActivityList showCreate={showCreate} />} />
+            {/*<Route path="create" element={<Create />} />*/}
+          </Routes>
+          <Sidebar />
+        </div>
       </div>
     </>
   );

@@ -5,20 +5,22 @@ import {
   CreateIconSolid,
   HomeIconOutline,
   HomeIconSolid,
+  LogoutIcon,
   MenuIcon,
   SearchIconOutline,
   SearchIconSolid,
+  SettingsIconOutline,
+  SettingsIconSolid,
 } from "./icons";
 import { RootSeekTransparent } from "..";
 import { useLocation, useNavigate } from "react-router-dom";
 import { path } from "framer-motion/client";
 import { WindowContext } from "../utils";
 
-const Navbar = () => {
+const Navbar = ({ showCreate, setShowCreate }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const windowSize = useContext(WindowContext);
-
   const menuItems = [
     {
       name: "Home",
@@ -34,9 +36,21 @@ const Navbar = () => {
     },
     {
       name: "Create",
-      path: "/home/create",
+      path: "",
       solid: <CreateIconSolid />,
       outline: <CreateIconOutline />,
+    },
+    {
+      name: "Settings",
+      path: "",
+      solid: <SettingsIconSolid />,
+      outline: <SettingsIconOutline />,
+    },
+    {
+      name: "Logout",
+      path: "",
+      solid: <LogoutIcon />,
+      outline: <LogoutIcon />,
     },
   ];
 
@@ -45,13 +59,13 @@ const Navbar = () => {
       <div
         className={`${
           windowSize >= 1110
-            ? "h-full fixed left-0 top-0 pt-[35vh] border-r"
+            ? "h-[100vh] fixed left-0 top-0 pt-[35vh] border-r"
             : windowSize >= 800
-            ? "h-full fixed left-0 top-0 pt-[35vh] border-r"
+            ? "h-[100vh] fixed left-0 top-0 pt-[35vh] border-r"
             : "w-full fixed left-0 bottom-0 py-2 border-t"
         } ${
-          windowSize >= 1110 ? "px-8" : "px-2"
-        } bg-black border-[#252525] z-40`}
+          windowSize >= 1110 ? "px-4" : "px-2"
+        } bg-[#121212] border-[#252525] z-40 rounded-xl`}
       >
         <ul
           className={`flex ${
@@ -71,11 +85,21 @@ const Navbar = () => {
                   : ""
               } transition-colors p-3 rounded-lg`}
               onClick={() => {
-                navigate(path);
+                if (name === "Create") {
+                  setShowCreate(true);
+                } else {
+                  navigate(path);
+                }
               }}
             >
               <div className="">
-                {location.pathname === path ? solid : outline}
+                {path === "" && name === "Create"
+                  ? showCreate
+                    ? solid
+                    : outline
+                  : location.pathname === path
+                  ? solid
+                  : outline}
               </div>
               {windowSize >= 1110 ? name : ""}
             </li>
