@@ -15,6 +15,7 @@ import { CloseIcon, LockIcon } from "./icons";
 import { jwtDecode } from "jwt-decode";
 import WindowSize from "../utils";
 import Sidebar from "./Sidebar";
+import Logout from "./Logout";
 
 const checkTokenExpiration = () => {
   const token = localStorage.getItem("token");
@@ -29,6 +30,7 @@ const Home = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [showCreate, setShowCreate] = useState(false);
+  const [showLogout, setShowLogout] = useState(false);
 
   useEffect(() => {
     if (!token) {
@@ -53,12 +55,23 @@ const Home = () => {
             </div>
           </div>
         )}
+
+        {showLogout && (
+          <div className="fixed z-40 w-[100vw] h-[100vh] flex justify-center items-center">
+            <Logout setShowLogout={setShowLogout} />
+          </div>
+        )}
+
         <div
           className={`h-full ${
-            showCreate ? "opacity-40 pointer-events-none" : ""
+            showCreate || showLogout ? "opacity-40 pointer-events-none" : ""
           }`}
         >
-          <Navbar showCreate={showCreate} setShowCreate={setShowCreate} />
+          <Navbar
+            showCreate={showCreate}
+            setShowCreate={setShowCreate}
+            setShowLogout={setShowLogout}
+          />
           <Routes>
             <Route path="" element={<ActivityList showCreate={showCreate} />} />
             {/*<Route path="create" element={<Create />} />*/}

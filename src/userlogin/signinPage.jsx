@@ -50,15 +50,15 @@ const SignInPage = () => {
     }
   };
 
-  const inputStyle =
-    "p-2 text-black rounded-md border border-gray-300 drop-shadow-xl";
+  const inputStyle = "bg-[#1F1F1F] border border-[#252525] rounded-sm p-2";
 
   return (
-    <div className="flex flex-col bg-[#F9F9F9] p-12 rounded-xl drop-shadow-2xl shadow-xl opacity-96">
-      <p className="font-baseline text-black text-2xl">
-        Start your journey today!
-      </p>
-      <p className="font-light text-black mt-2">
+    <div
+      className="flex flex-col p-12 rounded-sm"
+      style={{ background: "linear-gradient(rgb(21, 21, 21), #121212)" }}
+    >
+      <p className="font-baseline text-2xl">Start your journey today!</p>
+      <p className="font-light mt-2">
         Please fill up the form below to register your new account.
       </p>
       {error && <p className="text-red-500 mt-2">{error}</p>}
@@ -67,7 +67,6 @@ const SignInPage = () => {
           type="email"
           className={inputStyle}
           placeholder="example@gmail.com"
-          style={{ backgroundColor: "rgb(232, 232, 232)" }}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -77,7 +76,6 @@ const SignInPage = () => {
             type="text"
             className={inputStyle}
             placeholder="First Name"
-            style={{ backgroundColor: "rgb(232, 232, 232)" }}
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
@@ -86,7 +84,6 @@ const SignInPage = () => {
             type="text"
             className={inputStyle}
             placeholder="Last Name"
-            style={{ backgroundColor: "rgb(232, 232, 232)" }}
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
@@ -96,7 +93,6 @@ const SignInPage = () => {
           type="text"
           className={inputStyle}
           placeholder="Username"
-          style={{ backgroundColor: "rgb(232, 232, 232)" }}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
@@ -105,20 +101,19 @@ const SignInPage = () => {
           type="password"
           className={inputStyle}
           placeholder="Password"
-          style={{ backgroundColor: "rgb(232, 232, 232)" }}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
         <div
-          className="mt-8 rounded-4xl text-center"
+          className="mt-4 rounded-4xl text-center"
           style={{
             backgroundColor: "rgb(43, 39, 39)",
           }}
         >
           <button
             type="submit"
-            className="w-full font-light text-white px-8 py-4 cursor-pointer rounded-4xl hover:bg-[#4E4E4E] transition-colors"
+            className="w-full text-black px-8 py-4 cursor-pointer rounded-sm bg-white hover:bg-[#E6E6E6] transition-colors"
             disabled={loading}
           >
             {loading ? "Signing up..." : "Sign in to your account"}

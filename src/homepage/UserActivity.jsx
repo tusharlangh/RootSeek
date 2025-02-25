@@ -41,6 +41,8 @@ const UserActivity = () => {
         transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
       />
     );
+  } else if (posts.length === 0) {
+    return <p>No roots made</p>;
   }
 
   return (

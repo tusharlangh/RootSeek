@@ -58,16 +58,14 @@ const LoginPage = () => {
   };
 
   const boxStyle =
-    "w-full flex flex-col justify-center items-center bg-[#F9F9F9] p-18 rounded-xl drop-shadow-2xl shadow-xl opacity-96";
+    "border border-[#252525] w-full flex flex-col justify-center items-center p-18 rounded-xl";
 
   return (
-    <div className={boxStyle}>
-      <h1
-        className="text-5xl font-semibold drop-shadow-2xl lg:text-7xl"
-        style={{ color: "rgb(43, 39, 39)" }}
-      >
-        Welcome back
-      </h1>
+    <div
+      className={boxStyle}
+      style={{ background: "linear-gradient(rgb(21, 21, 21), #121212)" }}
+    >
+      <h1 className="font-semibold drop-shadow-2xl text-5xl">Welcome back</h1>
       <div className="flex flex-col gap-4 items-end">
         <form className="flex flex-col gap-4 mt-10" onSubmit={handleLogin}>
           {sessionExpired && (
@@ -80,9 +78,8 @@ const LoginPage = () => {
           <div className="relative">
             <input
               type="email"
-              className="p-3 text-black rounded-md border border-gray-300 drop-shadow-xl w-92 h-12"
+              className="w-92 h-12 bg-[#1F1F1F] border border-[#252525] rounded-sm p-3"
               placeholder="E-mail address"
-              style={{ backgroundColor: "rgb(232, 232, 232)" }}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -91,39 +88,37 @@ const LoginPage = () => {
           <div className="relative">
             <input
               type="password"
-              className="p-3 text-black rounded-md border border-gray-300 drop-shadow-xl w-92 h-12"
+              className="bg-[#1F1F1F] border border-[#252525] rounded-sm p-3 w-92 h-12"
               placeholder="Password"
-              style={{ backgroundColor: "rgb(232, 232, 232)" }}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
-          <p
-            className="hover:underline cursor-pointer text-sm text-end"
-            style={{ color: "#4183c4" }}
-          >
+          <p className="hover:underline cursor-pointer text-sm text-end text-blue-400">
             Forgot your password?
           </p>
           <div
-            className="mt-4 rounded-4xl text-center"
+            className="text-center"
             style={{
               backgroundColor: "rgb(43, 39, 39)",
             }}
           >
-            <button className="font-light text-white px-8 py-4 cursor-pointer rounded-4xl hover:bg-[#4E4E4E] transition-colors w-full">
+            <button className="text-black font-medium px-8 py-4 cursor-pointer rounded-sm bg-white hover:bg-[#E6E6E6] transition-colors w-full">
               {loading ? "Logging in" : "Log in to your account"}
             </button>
+          </div>
+          <div className="mt-4 flex justify-center items-center">
+            <span className="w-full bg-[#3b3a3a] h-[1px]"></span>
+            <span className="px-2">OR</span>
+            <span className="w-full bg-[#3b3a3a] h-[1px]"></span>
           </div>
         </form>
       </div>
 
-      <p className="mt-4 text-black">
+      <p className="mt-4">
         Just getting started?{" "}
-        <span
-          className="hover:underline cursor-pointer"
-          style={{ color: "#4183c4" }}
-        >
+        <span className="hover:underline cursor-pointer text-blue-400">
           <Link to="/user/signin">Create an account</Link>
         </span>
       </p>

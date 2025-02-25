@@ -17,7 +17,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { path } from "framer-motion/client";
 import { WindowContext } from "../utils";
 
-const Navbar = ({ showCreate, setShowCreate }) => {
+const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const windowSize = useContext(WindowContext);
@@ -87,6 +87,8 @@ const Navbar = ({ showCreate, setShowCreate }) => {
               onClick={() => {
                 if (name === "Create") {
                   setShowCreate(true);
+                } else if (name === "Logout") {
+                  setShowLogout(true);
                 } else {
                   navigate(path);
                 }

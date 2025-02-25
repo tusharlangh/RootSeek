@@ -4,6 +4,18 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs"
 import { body } from "framer-motion/client";
 
+function auth(req, res, next) {
+  const token = req.header("Authorization")?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "Access denied." });
+  try {
+    const decoded = jwt.verify(token, "your_jwt_secret_key"); // Use environment variable for secret
+    req.userId = decoded.userId;
+    next();
+  } catch (ex) {
+    res.status(400).json({ message: "Invalid token." });
+  }
+}
+
 const router = express.Router()
 const uri = 'mongodb+srv://Tusharlanghnoda:VFWn9GNqI9yTSiSa@cluster0.p2fmz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 
@@ -22,8 +34,29 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model("User", userSchema)
 
 router.get("/users/all", async (req, res) => {
-    const users = await User.find()
-    res.json(users)
+    try {
+        const users = await User.find()
+        if (!users) return res.status(400).json({message : "user not found"})
+        res.json(users)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({message: "error occured."})
+    }
+})
+
+
+
+router.get("/user/details", auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.userId).select("-password -email")
+        //const user = await User.find()
+        if (!user) return res.status(400).json({message : "user not found"})
+        res.json(user)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({message: "error occured."})
+
+    }
 })
 
 router.post("/user/login", async (req, res) => {
@@ -56,7 +89,5 @@ router.post("/user/signin", async (req, res) => {
     }
     
 })
-
-
 
 export default router

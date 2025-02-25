@@ -15,16 +15,6 @@ const UserMain = () => {
 
   return (
     <div className="flex justify-center items-center h-screen w-full">
-      <video
-        className="w-full h-full absolute -z-1 object-cover"
-        muted
-        autoPlay
-        loop
-        playsInline
-      >
-        <source src={HomePageBgVid} type="video/mp4" />
-      </video>
-
       <AnimatePresence mode="wait">
         <motion.div
           key={location.pathname}
