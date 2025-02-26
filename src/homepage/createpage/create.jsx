@@ -121,7 +121,7 @@ const Create = () => {
 
               <button
                 type="submit"
-                className="bg-white hover:bg-[#E6E6E6] transition-all p-2 rounded-sm w-20 text-black font-medium flex justify-center items-center"
+                className="bg-[#2AA3A3] hover:bg-[#E6E6E6] transition-all p-2 rounded-sm w-20 text-black font-medium flex justify-center items-center"
               >
                 {create}
               </button>

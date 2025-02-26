@@ -14,7 +14,7 @@ const UserMain = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen w-full">
+    <div className="flex justify-center items-center h-screen w-full bg-[#121212] rootseekBg">
       <AnimatePresence mode="wait">
         <motion.div
           key={location.pathname}

@@ -60,18 +60,20 @@ router.get("/user/details", auth, async (req, res) => {
 })
 
 router.post("/user/login", async (req, res) => {
-    const {email, password} = req.body
+    let {email, password} = req.body
+    email = email.toLowerCase()
     const user = await User.findOne({email})
-    if (!user) return res.status(400).json({message: "User no found. Please check your username and password."})
+    if (!user) return res.status(400).json({message: "Invalid email and password."})
     const isMatch = await bcrypt.compare(password, user.password)
-    if (!isMatch) return res.status(400).json({message: "Entered password is wrong."})
+    if (!isMatch) return res.status(400).json({message: "Invalid password"})
     const token = jwt.sign({userId: user._id}, "your_jwt_secret_key", {expiresIn: "1h"})
     res.json({token}) 
 })
 
 router.post("/user/signin", async (req, res) => {
     try {
-        const {email, firstName, lastName, username, password} = req.body
+        let {email, firstName, lastName, username, password} = req.body
+        email = email.toLowerCase()
         if (!email || !firstName || !lastName || !username || !password) {
             return res.status(400).json({message: "Fields are required."})
         }
