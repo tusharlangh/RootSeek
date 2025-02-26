@@ -3,6 +3,7 @@ import {
   GlobeIcon,
   Hashtag,
   MapPin,
+  Music,
   PictureIcon,
   RecordIcon,
   SmileIcon,
@@ -91,7 +92,7 @@ const Create = () => {
               required
             />
             <div className="flex justify-between">
-              <ul className="flex gap-2">
+              <ul className="flex gap-2 flex-wrap">
                 <label className="bg-[#1F1F1F] p-3 rounded-sm cursor-pointer hover:scale-105 transition-all">
                   <PictureIcon />
                   <input
@@ -117,11 +118,14 @@ const Create = () => {
                 <li className="bg-[#1F1F1F] p-3 rounded-sm cursor-pointer hover:scale-105 transition-all">
                   <Hashtag />
                 </li>
+                <li className="bg-[#1F1F1F] p-3 rounded-sm cursor-pointer hover:scale-105 transition-all">
+                  <Music />
+                </li>
               </ul>
 
               <button
                 type="submit"
-                className="bg-[#2AA3A3] hover:bg-[#E6E6E6] transition-all p-2 rounded-sm w-20 text-black font-medium flex justify-center items-center"
+                className="ml-4 bg-[#2AA3A3] hover:bg-[#E6E6E6] transition-all p-2 rounded-sm w-20 h-12 text-black font-medium flex justify-center items-center "
               >
                 {create}
               </button>

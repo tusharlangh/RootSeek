@@ -4,12 +4,15 @@ import { motion } from "framer-motion";
 import { LoginPageBg2 } from "..";
 import { ThreeDotIcon } from "./icons";
 import { WindowContext } from "../utils";
+import DeletePost from "./deletePost";
 
 const UserActivity = () => {
   const [posts, setPosts] = useState([]);
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
   const windowSize = useContext(WindowContext);
+  const [seeMore, setSeeMore] = useState({});
+  const [showOptions, setShowOptions] = useState({});
 
   useEffect(() => {
     axios
@@ -45,6 +48,20 @@ const UserActivity = () => {
     return <p>No roots made</p>;
   }
 
+  const toggleSeeMore = (post_id) => {
+    setSeeMore((prev) => ({
+      ...prev,
+      [post_id]: !prev[post_id],
+    }));
+  };
+
+  const toggleOptions = (post_id) => {
+    setShowOptions((prev) => ({
+      ...prev,
+      [post_id]: !prev[post_id], //the [] in [post_id] is used because we are trying to get the key using the variable.
+    }));
+  };
+
   return (
     <div className="flex flex-col justify-center items-center gap-12 h-full w-full">
       {posts.map((post) => (
@@ -53,9 +70,9 @@ const UserActivity = () => {
           className={`w-full bg-[#1F1F1F] border border-[#252525] py-4 px-4 rounded-xl`}
           style={{ background: "linear-gradient(rgb(21, 21, 21), #121212)" }}
         >
-          <div className="flex flex-col gap-4 justify-between">
+          <div className="relative flex flex-col gap-4 justify-between">
             <div className="flex gap-1 text-gray-300">
-              <div className="flex items-center flex-1">
+              <div className="relative flex items-center flex-1">
                 <div className="w-4/5">
                   <span className="text-xl text-white">{post.title}</span>
                   <span className="text-sm text-gray-300 mx-1">•</span>
@@ -64,10 +81,26 @@ const UserActivity = () => {
                   </span>
                 </div>
               </div>
-              <div className="hover:bg-[#242424] transition-all cursor-pointer p-1 h-full rounded-sm">
-                <ThreeDotIcon />
+              <div className="">
+                <div
+                  className="w-full hover:bg-[#242424] transition-all cursor-pointer rounded-sm p-1"
+                  onClick={() => toggleOptions(post._id)}
+                >
+                  <ThreeDotIcon />
+                </div>
+                <motion.div
+                  className={`absolute top-9 select-none right-0 ${
+                    showOptions[post._id] ? "opacity-100" : "opacity-0 -z-10"
+                  }`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: showOptions[post._id] ? 1 : 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <DeletePost />
+                </motion.div>
               </div>
             </div>
+
             <div
               className={`${
                 post.picture
@@ -87,7 +120,21 @@ const UserActivity = () => {
               )}
             </div>
 
-            <div className="font-light truncate">{post.content}</div>
+            <div className="flex items-center">
+              <p
+                className={`font-light ${seeMore[post._id] ? "" : "truncate"}`}
+              >
+                {post.content}
+              </p>
+              {post.content.length > 100 && (
+                <button
+                  className="text-xs text-gray-300 ml-2 shrink-0 cursor-pointer hover-underline"
+                  onClick={() => toggleSeeMore(post._id)}
+                >
+                  {seeMore[post._id] ? "Show less" : "Show more"}
+                </button>
+              )}
+            </div>
           </div>
         </div>
       ))}
