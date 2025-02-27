@@ -1,7 +1,6 @@
 import react, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { LoginPageBg2 } from "..";
 import { ThreeDotIcon } from "./icons";
 import { WindowContext } from "../utils";
 import DeletePost from "./deletePost";
@@ -9,10 +8,11 @@ import DeletePost from "./deletePost";
 const UserActivity = () => {
   const [posts, setPosts] = useState([]);
   const token = localStorage.getItem("token");
-  const [loading, setLoading] = useState(false);
   const windowSize = useContext(WindowContext);
   const [seeMore, setSeeMore] = useState({});
   const [showOptions, setShowOptions] = useState({});
+  const [showDelete, setShowDelete] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   useEffect(() => {
     axios
@@ -62,8 +62,34 @@ const UserActivity = () => {
     }));
   };
 
+  const deletePost = (post_id) => {
+    const _id = findRoot();
+    axios
+      .delete(`http://localhost:5002/user/delete/${_id}`)
+      .then((response) => console.log(response.data.message))
+      .catch((error) => console.error(error.response.data.message));
+  };
+
+  const findRoot = () => {
+    for (const key in showOptions) {
+      if (showOptions[key]) {
+        return key;
+      }
+    }
+  };
+
+  if (confirmDelete) {
+    deletePost();
+  }
+
   return (
     <div className="flex flex-col justify-center items-center gap-12 h-full w-full">
+      {showDelete && (
+        <DeletePost
+          setConfirmDelete={setConfirmDelete}
+          setShowDelete={setShowDelete}
+        />
+      )}
       {posts.map((post) => (
         <div
           key={post._id}
@@ -89,14 +115,24 @@ const UserActivity = () => {
                   <ThreeDotIcon />
                 </div>
                 <motion.div
-                  className={`absolute top-9 select-none right-0 ${
+                  className={`w-42 bg-[#121212] border border-[#252525] rounded-sm overflow-hidden absolute top-9 select-none right-0 ${
                     showOptions[post._id] ? "opacity-100" : "opacity-0 -z-10"
                   }`}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: showOptions[post._id] ? 1 : 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <DeletePost />
+                  <ul className="flex flex-col justify-center items-center">
+                    <li
+                      className="hover:bg-[#242424] transition-all cursor-pointer p-2 text-red-500 border-b border-[#252525] w-full text-center"
+                      onClick={() => setShowDelete(true)}
+                    >
+                      Delete
+                    </li>
+                    <li className="hover:bg-[#242424] transition-all cursor-pointer p-2 w-full text-center">
+                      Edit
+                    </li>
+                  </ul>
                 </motion.div>
               </div>
             </div>

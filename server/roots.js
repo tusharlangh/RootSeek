@@ -63,6 +63,18 @@ router.get("/user/posts", auth, async (req, res) => {
   }
 });
 
+router.delete("/user/delete/:id", async (req, res) => {
+  try {
+    const { id } = req.params
+    const deletedPost = await Post.findByIdAndDelete(id)
+    if (!deletedPost) return res.status(404).json({message: "The root does not exist for it to be deleted."})
+    return res.status(201).json({message: "root deleted"})
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({message: "Internal server error"})
+  }
+})
+
 // Create a new post for a user
 router.post("/user/create",upload.single("image"), auth, async (req, res) => {
   try {

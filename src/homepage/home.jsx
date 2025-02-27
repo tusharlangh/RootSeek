@@ -16,6 +16,7 @@ import { jwtDecode } from "jwt-decode";
 import WindowSize from "../utils";
 import Sidebar from "./Sidebar";
 import Logout from "./Logout";
+import DeletePost from "./deletePost";
 
 const checkTokenExpiration = () => {
   const token = localStorage.getItem("token");
