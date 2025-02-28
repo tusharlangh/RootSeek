@@ -2,7 +2,10 @@ import express from "express"
 import mongoose from "mongoose"
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs"
-import { body } from "framer-motion/client";
+import sendVerificationEmail from "./emailverif.js";
+import dotenv from "dotenv"
+
+dotenv.config()
 
 function auth(req, res, next) {
   const token = req.header("Authorization")?.split(" ")[1];
@@ -17,7 +20,7 @@ function auth(req, res, next) {
 }
 
 const router = express.Router()
-const uri = 'mongodb+srv://Tusharlanghnoda:VFWn9GNqI9yTSiSa@cluster0.p2fmz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+const uri = process.env.URI
 
 mongoose.connect(uri)
 .then(() => console.log("Connected to mongoose"))
@@ -29,9 +32,31 @@ const userSchema = new mongoose.Schema({
     username: {type: String, unique: true, sparse: true, required: true},
     email: {type: String, unique: true, sparse: true, required: true},
     password: {type: String, required: true},
+    verificationCode: { type: String },
+    verified: { type: Boolean, default: false },
 })
 
 const User = mongoose.model("User", userSchema)
+
+router.post("/user/verify", async (req, res) => {
+    try {
+        let {email, verificationCode} = req.body
+        email = email.toLowerCase();
+        const user = await User.findOne({email})
+        if (!user) return res.status(400).json({message: "user not found."})
+        if (String(user.verificationCode) !== String(verificationCode)) {
+            return res.status(400).json({message:"Invalid verification code."})
+        }
+        
+        user.verificationCode = null
+        user.verified = true
+        await user.save()
+
+        res.json({message : "Email successfully verified!"})
+    } catch (error) {
+        res.status(500).json({message:"Server error"})
+    }
+})
 
 router.get("/users/all", async (req, res) => {
     try {
@@ -43,8 +68,6 @@ router.get("/users/all", async (req, res) => {
         res.status(500).json({message: "error occured."})
     }
 })
-
-
 
 router.get("/user/details", auth, async (req, res) => {
     try {
@@ -66,7 +89,7 @@ router.post("/user/login", async (req, res) => {
     if (!user) return res.status(400).json({message: "Invalid email and password."})
     const isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) return res.status(400).json({message: "Invalid password"})
-    const token = jwt.sign({userId: user._id}, "your_jwt_secret_key", {expiresIn: "1h"})
+    const token = jwt.sign({userId: user._id}, "your_jwt_secret_key", {expiresIn: "5h"})
     res.json({token}) 
 })
 
@@ -82,14 +105,20 @@ router.post("/user/signin", async (req, res) => {
             return res.status(400).json({message: "The email already exists."})
         }
         const hashedPassword = await bcrypt.hash(password, 10)
-        const user = new User({firstName, lastName, username, email, password:hashedPassword})
+        const verificationCode = Math.floor(100000 + Math.random() * 900000).toString()
+
+        const user = new User({firstName, lastName, username, email, password:hashedPassword, verificationCode, verified: false})
+
         await user.save()
+        await sendVerificationEmail(email, verificationCode)
+
         res.status(201).json({message: "User registered."})
     } catch (error) {
         console.error("Error during user registration:", error);
         res.status(500).json({ message: "An error occurred during registration." });
     }
-    
 })
+
+
 
 export default router

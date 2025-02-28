@@ -4,6 +4,7 @@ import LoginPage from "./loginPage";
 import SignInPage from "./signinPage";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { HomePageBgVid, LoginPageBg, LoginPageBg2 } from "..";
+import VerifPage from "./verifPage";
 
 const UserMain = () => {
   const location = useLocation();
@@ -26,6 +27,7 @@ const UserMain = () => {
           <Routes location={location}>
             <Route path="login" element={<LoginPage />} />
             <Route path="signin" element={<SignInPage />} />
+            <Route path="verify" element={<VerifPage />} />
           </Routes>
         </motion.div>
       </AnimatePresence>

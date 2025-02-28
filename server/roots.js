@@ -9,20 +9,9 @@ const router = express.Router();
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const uploadDir = path.join(__dirname, "uploads");
+
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-function auth(req, res, next) {
-  const token = req.header("Authorization")?.split(" ")[1];
-  if (!token) return res.status(401).json({ message: "Access denied." });
-  try {
-    const decoded = jwt.verify(token, "your_jwt_secret_key"); // Use environment variable for secret
-    req.userId = decoded.userId;
-    next();
-  } catch (ex) {
-    res.status(400).json({ message: "Invalid token." });
-  }
 }
 
 const storage = multer.diskStorage({
@@ -35,6 +24,18 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({storage: storage})
+
+function auth(req, res, next) {
+  const token = req.header("Authorization")?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "Access denied." });
+  try {
+    const decoded = jwt.verify(token, "your_jwt_secret_key"); // Use environment variable for secret
+    req.userId = decoded.userId;
+    next();
+  } catch (ex) {
+    res.status(400).json({ message: "Invalid token." });
+  }
+}
 
 const postScheme = new mongoose.Schema(
   {

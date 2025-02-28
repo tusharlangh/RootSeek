@@ -4,9 +4,13 @@ import rootsRoutes from "./roots.js"
 import cors from "cors"
 import path from "path"
 import { fileURLToPath } from "url"
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const app = express()
 //app.use('/uploads', express.static('uploads'));
+
 
 app.use(cors());
 app.use(express.json())

@@ -33,8 +33,8 @@ const SignInPage = () => {
         "http://localhost:5002/user/signin",
         DataToSend
       );
-      console.log(response.data.message); // Log success message
-      navigate("/user/login"); // Redirect to login page after successful registration
+      console.log(response.data.message);
+      navigate(`/user/verify?email=${email}`);
     } catch (error) {
       const message = error.response.data.message;
       setError(message);

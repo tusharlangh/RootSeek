@@ -11,7 +11,7 @@ const ActivityList = ({ showCreate }) => {
       : windowSize >= 800
       ? "w-[60vw]"
       : "w-[80vw]"
-  } overflow-y-auto`;
+  } overflow-y-auto `;
   return (
     <div className="">
       <div className={DailyTabStyles}>
