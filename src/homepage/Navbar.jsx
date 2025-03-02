@@ -65,7 +65,7 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
             : "w-full fixed left-0 bottom-0 py-2 border-t"
         } ${
           windowSize >= 1110 ? "px-4" : "px-2"
-        } bg-[#121212] border-[#252525] z-40 rounded-xl`}
+        } bg-[#F9F9F9] border border-[#F0F0F0] z-40 rounded-xl`}
       >
         <ul
           className={`flex ${
@@ -81,7 +81,7 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
               key={path}
               className={`flex gap-4 ${windowSize >= 1110 ? "w-32" : ""} ${
                 location.pathname !== path
-                  ? "hover:bg-[#242424] cursor-pointer"
+                  ? "hover:bg-[#EEEEEE] cursor-pointer"
                   : ""
               } transition-colors p-3 rounded-lg`}
               onClick={() => {

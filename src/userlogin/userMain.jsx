@@ -9,13 +9,21 @@ import VerifPage from "./verifPage";
 const UserMain = () => {
   const location = useLocation();
   const pageVariants = {
-    initial: { opacity: 0, filter: "blur(10px)" },
-    animate: { opacity: 1, filter: "blur(0px)", transition: { duration: 1 } },
-    exit: { opacity: 0, transition: { duration: 1 } },
+    initial: { opacity: 0, x: "100%" },
+    animate: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.7, ease: "easeInOut" },
+    },
+    exit: {
+      opacity: 0,
+      x: "-100%",
+      transition: { duration: 0.7, ease: "easeInOut" },
+    },
   };
 
   return (
-    <div className="flex justify-center items-center h-screen w-full bg-[#121212] rootseekBg">
+    <div className="flex justify-center items-center h-screen w-full rootseekBg">
       <AnimatePresence mode="wait">
         <motion.div
           key={location.pathname}

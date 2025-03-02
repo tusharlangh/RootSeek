@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { EyeIconClosed, EyeIconOpen } from "../homepage/icons";
 
 const SignInPage = () => {
@@ -44,19 +44,13 @@ const SignInPage = () => {
     }
   };
 
-  const inputStyle = "bg-[#1F1F1F] border border-[#252525] rounded-sm p-3";
+  const inputStyle = "border border-[#252525] rounded-md p-3";
 
   return (
-    <div
-      className="flex flex-col p-12 max-sm:p-8 rounded-sm border border-[#252525]"
-      style={{ background: "linear-gradient(rgb(21, 21, 21), #121212)" }}
-    >
-      <p className="font-bold text-4xl">Start your journey today!</p>
-      <p className="font-light mt-2">
-        Please fill up the form below to register your new account.
-      </p>
+    <div className="flex flex-col max-sm:w-92">
+      <p className="font-bold text-4xl text-center">Create an account</p>
       <form
-        className="flex flex-col gap-4 mt-4 select-none"
+        className="flex flex-col gap-4 mt-10 select-none"
         onSubmit={handleSignin}
       >
         <input
@@ -70,7 +64,7 @@ const SignInPage = () => {
         <p className={`text-red-500 ${error !== "" ? "" : "hidden"}`}>
           {error}
         </p>
-        <div className="flex gap-10">
+        <div className="flex max-sm:gap-4 gap-10 max-sm:flex-col">
           <input
             type="text"
             className={inputStyle}
@@ -116,13 +110,19 @@ const SignInPage = () => {
         <div className="mt-4 rounded-4xl text-center">
           <button
             type="submit"
-            className="font-medium w-full text-black px-8 py-4 cursor-pointer rounded-sm bg-[#2AA3A3] hover:bg-[#E6E6E6] transition-colors"
+            className="text-white font-medium w-full px-8 py-4 cursor-pointer rounded-md bg-[#0000CD] hover:bg-[#0404B5] transition-colors"
             disabled={loading}
           >
             {loading ? "Signing up..." : "Sign in to your account"}
           </button>
         </div>
       </form>
+      <p className="mt-4 text-center">
+        Have an account?{" "}
+        <span className="hover:underline cursor-pointer text-[#0000CD]">
+          <Link to="/user/login">Login</Link>
+        </span>
+      </p>
     </div>
   );
 };

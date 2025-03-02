@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 body {
-    background-color: black;
-    color: white;
+    font-family: 'Inter', sans-serif;
+    background-color: white;
+    color: black;
     overflow: scroll;
     scrollbar-width: none;
 }
@@ -11,5 +12,6 @@ body::-webkit-scrollbar {
   }
 
 .rootseekBg {
-    background: linear-gradient(135deg, #0D0D0D, #1A1A1A);
+    background-color: white;
+    /*background: linear-gradient(135deg, #0D0D0D, #1A1A1A);*/
 }

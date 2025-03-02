@@ -44,30 +44,10 @@ const Home = () => {
   });
   return (
     <>
-      <div className={`flex justify-center items-center w-full h-screen`}>
-        {showCreate && (
-          <div className="fixed z-40 w-[100vw] h-[100vh] flex justify-center items-center">
-            <Create />
-            <div
-              className="absolute top-4 right-4 cursor-pointer"
-              onClick={() => setShowCreate(false)}
-            >
-              <CloseIcon />
-            </div>
-          </div>
-        )}
-
-        {showLogout && (
-          <div className="fixed z-40 w-[100vw] h-[100vh] flex justify-center items-center">
-            <Logout setShowLogout={setShowLogout} />
-          </div>
-        )}
-
-        <div
-          className={`h-full ${
-            showCreate || showLogout ? "opacity-40 pointer-events-none" : ""
-          }`}
-        >
+      <div
+        className={`bg-white flex justify-center items-center w-full h-screen`}
+      >
+        <div className={`h-full`}>
           <Navbar
             showCreate={showCreate}
             setShowCreate={setShowCreate}
@@ -78,6 +58,8 @@ const Home = () => {
             {/*<Route path="create" element={<Create />} />*/}
           </Routes>
           <Sidebar />
+          {showCreate && <Create setShowCreate={setShowCreate} />}
+          {showLogout && <Logout setShowLogout={setShowLogout} />}
         </div>
       </div>
     </>

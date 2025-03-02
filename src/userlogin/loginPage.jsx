@@ -56,14 +56,11 @@ const LoginPage = () => {
   };
 
   const boxStyle =
-    "border border-[#252525] w-full flex flex-col justify-center items-center p-12 max-sm:p-8 rounded-sm";
+    "w-full flex flex-col justify-center items-center p-12 max-sm:p-8 rounded-md";
 
   return (
-    <div
-      className={boxStyle}
-      style={{ background: "linear-gradient(rgb(21, 21, 21), #121212)" }}
-    >
-      <h1 className="font-bold text-4xl">Log in to RootSeek</h1>
+    <div className={boxStyle}>
+      <h1 className="font-bold text-4xl">Welcome back</h1>
       <div className="flex flex-col gap-4 items-end">
         <form
           className="flex flex-col gap-4 mt-10 select-none"
@@ -79,9 +76,9 @@ const LoginPage = () => {
           <div className="relative">
             <input
               type="email"
-              className={`w-92 h-12 bg-[#1F1F1F] border border-[#252525] rounded-sm p-3 ${
+              className={`w-92 h-12 border border-[#252525] rounded-md p-3 ${
                 error !== "" && !isPasswordError
-                  ? "outline outline-red-500"
+                  ? "outline-2 outline-red-500"
                   : ""
               }`}
               placeholder="E-mail address"
@@ -99,8 +96,8 @@ const LoginPage = () => {
             </div>
             <input
               type={`${seePassword ? "text" : "password"}`}
-              className={`bg-[#1F1F1F] border border-[#252525] rounded-sm p-3 w-92 h-12 ${
-                error !== "" ? "outline outline-red-500" : ""
+              className={`border border-[#252525] rounded-md p-3 w-92 h-12 ${
+                error !== "" ? "outline-2 outline-red-500" : ""
               }`}
               placeholder="Password"
               value={password}
@@ -113,13 +110,8 @@ const LoginPage = () => {
               Forgot your password?
             </span>
           </p>
-          <div
-            className="text-center"
-            style={{
-              backgroundColor: "rgb(43, 39, 39)",
-            }}
-          >
-            <button className="text-black font-medium px-8 py-4 cursor-pointer rounded-sm bg-[#2AA3A3] hover:bg-[#E6E6E6] transition-colors w-full">
+          <div className="text-center">
+            <button className="text-white font-medium px-8 py-4 cursor-pointer rounded-md bg-[#0000CD] hover:bg-[#0404B5] transition-colors w-full">
               {loading ? "Logging in" : "Log in to your account"}
             </button>
           </div>
@@ -135,9 +127,9 @@ const LoginPage = () => {
       </div>
 
       <p className="mt-4">
-        Just getting started?{" "}
-        <span className="hover:underline cursor-pointer text-[#2AA3A3]">
-          <Link to="/user/signin">Create an account</Link>
+        Don't have an account?{" "}
+        <span className="hover:underline cursor-pointer text-[#0000CD]">
+          <Link to="/user/signin">Sign Up</Link>
         </span>
       </p>
     </div>

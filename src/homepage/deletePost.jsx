@@ -4,11 +4,11 @@ import { TrashIcon } from "./icons";
 
 const DeletePost = ({ setShowDelete, setConfirmDelete }) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-60">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-60">
       <div className="absolute inset-0"></div>
 
       <motion.div
-        className="w-78 bg-[#121212] border border-[#252525] rounded-sm overflow-hidden z-50"
+        className="w-78 bg-[#F9F9F9] border border-[#F0F0F0] rounded-md overflow-hidden z-50"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.2 }}
@@ -20,7 +20,7 @@ const DeletePost = ({ setShowDelete, setConfirmDelete }) => {
           </p>
           <div className="w-full mt-4">
             <button
-              className="p-3 text-red-500 hover:bg-[#242424] border-t border-[#252525] cursor-pointer flex justify-center transition-all w-full"
+              className="p-3 text-red-500 hover:bg-[#EEEEEE] border-t border-[#E6E6E6] cursor-pointer flex justify-center transition-all w-full"
               onClick={() => {
                 setShowDelete(false);
                 setConfirmDelete(true);
@@ -29,7 +29,7 @@ const DeletePost = ({ setShowDelete, setConfirmDelete }) => {
               <TrashIcon />
             </button>
             <button
-              className="p-3 hover:bg-[#242424] border-t border-[#252525] cursor-pointer transition-all w-full"
+              className="p-3 hover:bg-[#EEEEEE] border-t border-[#E6E6E6]  cursor-pointer transition-all w-full"
               onClick={() => setShowDelete(false)}
             >
               Cancel

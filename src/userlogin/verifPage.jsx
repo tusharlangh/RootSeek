@@ -8,7 +8,7 @@ const VerifPage = () => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const boxStyle =
-    "border border-[#252525] w-full flex flex-col justify-center items-center p-12 max-sm:p-8 rounded-sm";
+    "w-full flex flex-col justify-center items-center p-12 max-sm:p-8";
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -39,10 +39,7 @@ const VerifPage = () => {
   };
 
   return (
-    <div
-      className={boxStyle}
-      style={{ background: "linear-gradient(rgb(21, 21, 21), #121212)" }}
-    >
+    <div className={boxStyle}>
       <div className="flex flex-col gap-4 justify-center items-center">
         <h1 className="font-bold text-4xl">Please verify yourself</h1>
         <h3 className="">
@@ -51,21 +48,21 @@ const VerifPage = () => {
         <form className="flex flex-col mt-4" onSubmit={onSubmit}>
           <input
             type="text"
-            placeholder="Code"
-            className={`w-62 h-12 bg-[#1F1F1F] border border-[#252525] rounded-sm p-3`}
+            placeholder="Enter your code*"
+            className={`w-82 h-12 border border-[#252525] rounded-md p-3`}
             value={verifCode}
             onChange={(el) => setVerifCode(el.target.value)}
           />
           <p
             className={`${
               message.includes("successfully")
-                ? "text-green-500"
+                ? "text-green-600"
                 : "text-red-500"
             }  mt-4 ${message === "" ? "hidden" : "block"}`}
           >
             {message}
           </p>
-          <button className="mt-4 text-black font-medium px-8 py-4 cursor-pointer rounded-sm bg-[#2AA3A3] hover:bg-[#E6E6E6] transition-colors w-62">
+          <button className="text-white w-full mt-6 font-medium px-8 py-4 cursor-pointer rounded-md bg-[#0000CD] hover:bg-[#0404B5] transition-colors outline-none">
             Continue
           </button>
         </form>

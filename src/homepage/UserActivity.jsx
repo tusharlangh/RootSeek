@@ -93,29 +93,28 @@ const UserActivity = () => {
       {posts.map((post) => (
         <div
           key={post._id}
-          className={`w-full bg-[#1F1F1F] border border-[#252525] py-4 px-4 rounded-xl`}
-          style={{ background: "linear-gradient(rgb(21, 21, 21), #121212)" }}
+          className={`w-full bg-[#F9F9F9] border border-[#F0F0F0] py-4 px-4 rounded-xl`}
         >
           <div className="relative flex flex-col gap-4 justify-between">
-            <div className="flex gap-1 text-gray-300">
+            <div className="flex gap-1">
               <div className="relative flex items-center flex-1">
                 <div className="w-4/5">
-                  <span className="text-xl text-white">{post.title}</span>
-                  <span className="text-sm text-gray-300 mx-1">•</span>
-                  <span className="text-sm text-gray-300 shrink-0">
+                  <span className="text-xl text-black">{post.title}</span>
+                  <span className="text-sm text-black mx-1">•</span>
+                  <span className="text-sm text-black shrink-0">
                     {formatTime(post)}
                   </span>
                 </div>
               </div>
               <div className="">
                 <div
-                  className="w-full hover:bg-[#242424] transition-all cursor-pointer rounded-sm p-1"
+                  className="w-full hover:bg-[#EEEEEE] transition-all cursor-pointer rounded-md p-1"
                   onClick={() => toggleOptions(post._id)}
                 >
                   <ThreeDotIcon />
                 </div>
                 <motion.div
-                  className={`w-42 bg-[#121212] border border-[#252525] rounded-sm overflow-hidden absolute top-9 select-none right-0 ${
+                  className={`w-42 bg-[#F9F9F9] border border-[#F0F0F0] rounded-md overflow-hidden absolute top-9 select-none right-0 ${
                     showOptions[post._id] ? "opacity-100" : "opacity-0 -z-10"
                   }`}
                   initial={{ opacity: 0 }}
@@ -124,12 +123,12 @@ const UserActivity = () => {
                 >
                   <ul className="flex flex-col justify-center items-center">
                     <li
-                      className="hover:bg-[#242424] transition-all cursor-pointer p-2 text-red-500 border-b border-[#252525] w-full text-center"
+                      className="hover:hover:bg-[#EEEEEE] transition-all cursor-pointer p-2 text-red-500 border-b border-[#E6E6E6] w-full text-center"
                       onClick={() => setShowDelete(true)}
                     >
                       Delete
                     </li>
-                    <li className="hover:bg-[#242424] transition-all cursor-pointer p-2 w-full text-center">
+                    <li className="hover:hover:bg-[#EEEEEE] transition-all cursor-pointer p-2 w-full text-center">
                       Edit
                     </li>
                   </ul>
