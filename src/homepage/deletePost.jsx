@@ -15,9 +15,7 @@ const DeletePost = ({ setShowDelete, setConfirmDelete }) => {
       >
         <div className="flex flex-col justify-center items-center mt-4">
           <p className="text-xl">Delete this root?</p>
-          <p className="text-sm mt-2 text-gray-300">
-            The root will be permanently deleted.
-          </p>
+          <p className="text-sm mt-2">The root will be permanently deleted.</p>
           <div className="w-full mt-4">
             <button
               className="p-3 text-red-500 hover:bg-[#EEEEEE] border-t border-[#E6E6E6] cursor-pointer flex justify-center transition-all w-full"

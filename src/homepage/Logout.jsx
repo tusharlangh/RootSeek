@@ -12,7 +12,7 @@ const Logout = ({ setShowLogout }) => {
   };
 
   const DailyTabStyles =
-    "flex justify-center items-center p-6 rounded-xl bg-[#F9F9F9] border border-[#F0F0F0]";
+    "flex justify-center items-center px-5 py-5 rounded-xl bg-[#F9F9F9] border border-[#F0F0F0]";
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-black/60 z-50"
@@ -22,9 +22,9 @@ const Logout = ({ setShowLogout }) => {
       <div className="relative overflow-hidden z-50 w-full h-full flex justify-center items-center">
         <motion.div
           className={DailyTabStyles}
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
         >
           <div className="text-medium">
             <p className="">Are you sure you want to logout?</p>

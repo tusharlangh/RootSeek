@@ -10,8 +10,12 @@ body {
 body::-webkit-scrollbar {
     display: none; /* For Webkit browsers (Chrome, Safari) */
   }
-
 .rootseekBg {
     background-color: white;
-    /*background: linear-gradient(135deg, #0D0D0D, #1A1A1A);*/
+}
+
+.btn {
+    /*linear-gradient(45deg,rgb(3, 79, 154), #0099cc, #00bcd4)*/
+    background: linear-gradient(45deg, #0077b6, #00b4d8, #90e0ef);
+    color: white;
 }

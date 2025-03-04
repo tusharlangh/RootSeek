@@ -16,7 +16,7 @@ const ActivityList = ({ showCreate }) => {
     <div className="">
       <div className={DailyTabStyles}>
         <div className={`mt-24 mb-24`}>
-          <p className="text-2xl font-medium mb-4">Your daily log</p>
+          <p className="text-2xl font-bold mb-4">Your daily log</p>
           <UserActivity />
         </div>
       </div>

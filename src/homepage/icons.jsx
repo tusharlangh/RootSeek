@@ -19,8 +19,7 @@ export const HomeIconSolid = () => (
 export const HomeIconOutline = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    //fill="white"
-    color={defaultColor}
+    fill="white"
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
@@ -34,12 +33,12 @@ export const HomeIconOutline = () => (
   </svg>
 );
 
-export const SearchIconOutline = () => (
+export const SearchIconOutline = ({ size }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     fill="currentColor"
-    className="size-6"
+    className={`size-${size}`}
     color={defaultColor}
   >
     <path
@@ -411,14 +410,14 @@ export const PictureIcon = () => (
   </svg>
 );
 
-export const CloseIcon = () => (
+export const CloseIcon = ({ size }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={2}
     stroke="currentColor"
-    className="size-7"
+    className={`size-${size}`}
     color="white"
   >
     <path

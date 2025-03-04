@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import { HomePageBgVid, LoginPageBg2, RootSeekTransparentWhite } from "..";
+import {
+  HomePageBgVid,
+  LoginPageBg2,
+  Rootseeklogo,
+  RootSeekTransparentWhite,
+} from "..";
 import ActivityList from "./ActivityList";
 import {
   Link,
@@ -13,7 +18,7 @@ import {
 import Create from "./createpage/create";
 import { CloseIcon, LockIcon } from "./icons";
 import { jwtDecode } from "jwt-decode";
-import WindowSize from "../utils";
+import WindowSize, { WindowContext } from "../utils";
 import Sidebar from "./Sidebar";
 import Logout from "./Logout";
 import DeletePost from "./deletePost";
@@ -28,12 +33,14 @@ const checkTokenExpiration = () => {
 };
 
 const Home = () => {
+  const windowSize = useContext(WindowContext);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [showCreate, setShowCreate] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
 
   useEffect(() => {
+    console.log(windowSize);
     if (!token) {
       navigate("/user/login?sessionExpired=true");
     }
@@ -47,6 +54,13 @@ const Home = () => {
       <div
         className={`bg-white flex justify-center items-center w-full h-screen`}
       >
+        <div
+          className={`fixed top-3 left-5 z-[100] cursor-pointer ${
+            windowSize >= 1110 ? "block" : "hidden"
+          }`}
+        >
+          <img src={Rootseeklogo} className="object-cover h-10" />
+        </div>
         <div className={`h-full`}>
           <Navbar
             showCreate={showCreate}

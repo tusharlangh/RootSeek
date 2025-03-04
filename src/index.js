@@ -3,11 +3,14 @@ import RootSeekTransparentPng from "../src/assets/images/RootSeekTransparent.png
 import RootSeekTransparentWhitePng from "../src/assets/images/RootSeekTransparentWhite.png"
 import _LoginPageBg from "../src/assets/images/app-bg.jpg"
 import _LoginPageBg2 from "../src/assets/images/pexels-creationsbyfaik-1025469.jpg"
-import logo from "../src/assets/images/logo-transparent.png"
+import _rootseeklogo from "../src/assets/images/rootseeklogo.png"
+import _r_rootseeklogo from "../src/assets/images/r_rootseeklogo.png"
+
 import bgvideo from '../src/assets/videos/12681526_3840_2160_30fps.mp4'
 import dfpfp from '../src/assets/images/defaultpfp.jpeg'
 
-export const RootSeekLogo = logo;
+export const Rootseeklogo = _rootseeklogo
+export const R_rootseeklogo = _r_rootseeklogo
 export const RootSeekLoginPageBg = bgvideo
 export const HomePageBgVid = HomePageVidHd
 export const RootSeekTransparent = RootSeekTransparentPng

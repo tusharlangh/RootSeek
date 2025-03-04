@@ -1,26 +1,26 @@
-import React, { useContext, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   CreateIconOutline,
   CreateIconSolid,
   HomeIconOutline,
   HomeIconSolid,
   LogoutIcon,
-  MenuIcon,
   SearchIconOutline,
   SearchIconSolid,
   SettingsIconOutline,
   SettingsIconSolid,
 } from "./icons";
-import { RootSeekTransparent } from "..";
-import { useLocation, useNavigate } from "react-router-dom";
-import { path } from "framer-motion/client";
 import { WindowContext } from "../utils";
 
 const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const windowSize = useContext(WindowContext);
+
+  const isLargeScreen = windowSize >= 1110;
+  const isMediumScreen = windowSize >= 800;
+
   const menuItems = [
     {
       name: "Home",
@@ -32,7 +32,7 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
       name: "Search",
       path: "/home/search",
       solid: <SearchIconSolid />,
-      outline: <SearchIconOutline />,
+      outline: <SearchIconOutline size={6} />,
     },
     {
       name: "Create",
@@ -42,7 +42,7 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
     },
     {
       name: "Settings",
-      path: "",
+      path: "/settings",
       solid: <SettingsIconSolid />,
       outline: <SettingsIconOutline />,
     },
@@ -55,60 +55,47 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
   ];
 
   return (
-    <>
-      <div
-        className={`${
-          windowSize >= 1110
-            ? "h-[100vh] fixed left-0 top-0 pt-[35vh] border-r"
-            : windowSize >= 800
-            ? "h-[100vh] fixed left-0 top-0 pt-[35vh] border-r"
-            : "w-full fixed left-0 bottom-0 py-2 border-t"
-        } ${
-          windowSize >= 1110 ? "px-4" : "px-2"
-        } bg-[#F9F9F9] border border-[#F0F0F0] z-40 rounded-xl`}
+    <div
+      className={`fixed left-0 ${
+        isLargeScreen || isMediumScreen
+          ? "top-0 h-[100vh] pt-[35vh] border-r"
+          : "bottom-0 w-full py-2 border-t"
+      } px-${
+        isLargeScreen ? "4" : "2"
+      } bg-[#F9F9F9] border border-[#F0F0F0] z-40 rounded-xl`}
+    >
+      <ul
+        className={`flex ${
+          isLargeScreen || isMediumScreen ? "flex-col" : ""
+        } justify-center items-center gap-4`}
       >
-        <ul
-          className={`flex ${
-            windowSize >= 1110
-              ? "flex-col"
-              : windowSize >= 800
-              ? "flex-col"
-              : ""
-          } justify-center items-center gap-4`}
-        >
-          {menuItems.map(({ name, path, solid, outline }) => (
+        {menuItems.map(({ name, path, solid, outline }) => {
+          const isActive = location.pathname === path;
+          return (
             <li
-              key={path}
-              className={`flex gap-4 ${windowSize >= 1110 ? "w-32" : ""} ${
-                location.pathname !== path
-                  ? "hover:bg-[#EEEEEE] cursor-pointer"
-                  : ""
+              key={name}
+              className={`flex gap-4 ${isLargeScreen ? "w-32" : ""} ${
+                !isActive ? "hover:bg-[#EEEEEE] cursor-pointer" : ""
               } transition-colors p-3 rounded-lg`}
               onClick={() => {
-                if (name === "Create") {
-                  setShowCreate(true);
-                } else if (name === "Logout") {
-                  setShowLogout(true);
-                } else {
-                  navigate(path);
-                }
+                if (name === "Create") setShowCreate(true);
+                else if (name === "Logout") setShowLogout(true);
+                else if (path) navigate(path);
               }}
             >
-              <div className="">
-                {path === "" && name === "Create"
-                  ? showCreate
-                    ? solid
-                    : outline
-                  : location.pathname === path
+              <div>
+                {name === "Create" && showCreate
+                  ? solid
+                  : isActive
                   ? solid
                   : outline}
               </div>
-              {windowSize >= 1110 ? name : ""}
+              {isLargeScreen && name}
             </li>
-          ))}
-        </ul>
-      </div>
-    </>
+          );
+        })}
+      </ul>
+    </div>
   );
 };
 

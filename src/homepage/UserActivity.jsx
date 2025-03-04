@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ThreeDotIcon } from "./icons";
 import { WindowContext } from "../utils";
 import DeletePost from "./deletePost";
+import PreviewImage from "./previewImage";
 
 const UserActivity = () => {
   const [posts, setPosts] = useState([]);
@@ -11,6 +12,7 @@ const UserActivity = () => {
   const windowSize = useContext(WindowContext);
   const [seeMore, setSeeMore] = useState({});
   const [showOptions, setShowOptions] = useState({});
+  const [previewImages, setPreviewImages] = useState({});
   const [showDelete, setShowDelete] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
@@ -39,7 +41,7 @@ const UserActivity = () => {
   if (!posts) {
     return (
       <motion.div
-        className="w-8 h-8 border-4 border-gray-300 border-t-black rounded-full"
+        className="w-7 h-7 border-3 border-gray-300 border-t-black rounded-full"
         animate={{ rotate: 360 }}
         transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
       />
@@ -59,6 +61,13 @@ const UserActivity = () => {
     setShowOptions((prev) => ({
       ...prev,
       [post_id]: !prev[post_id], //the [] in [post_id] is used because we are trying to get the key using the variable.
+    }));
+  };
+
+  const toggleImage = (post_id) => {
+    setPreviewImages((prev) => ({
+      ...prev,
+      [post_id]: !prev[post_id],
     }));
   };
 
@@ -93,9 +102,9 @@ const UserActivity = () => {
       {posts.map((post) => (
         <div
           key={post._id}
-          className={`w-full bg-[#F9F9F9] border border-[#F0F0F0] py-4 px-4 rounded-xl`}
+          className={`w-full bg-[#F9F9F9] border border-[#F0F0F0] py-4 px-4 rounded-xl shadow-xs`}
         >
-          <div className="relative flex flex-col gap-4 justify-between">
+          <div className="relative flex flex-col gap-2 justify-between">
             <div className="flex gap-1">
               <div className="relative flex items-center flex-1">
                 <div className="w-4/5">
@@ -147,13 +156,20 @@ const UserActivity = () => {
             >
               {post.picture ? (
                 <img
-                  className="w-full h-full aspect-[16/9] object-cover"
+                  className="w-full h-full aspect-[16/9] object-cover cursor-pointer"
                   src={"server/" + post.picture}
+                  onClick={() => toggleImage(post._id)}
                 />
               ) : (
                 ""
               )}
             </div>
+            {previewImages[post._id] && (
+              <PreviewImage
+                image={"server/" + post.picture}
+                setPreview={() => toggleImage(post._id)}
+              />
+            )}
 
             <div className="flex items-center">
               <p

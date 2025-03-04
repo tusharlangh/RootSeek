@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ExclamationIcon, EyeIconClosed, EyeIconOpen } from "../homepage/icons";
+import { Rootseeklogo } from "..";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -58,12 +58,16 @@ const LoginPage = () => {
   const boxStyle =
     "w-full flex flex-col justify-center items-center p-12 max-sm:p-8 rounded-md";
 
+  const btnStyle =
+    "btn font-medium px-8 py-4 cursor-pointer rounded-md w-full transition duration-300 ease-in-out hover:scale-104 hover:shadow-md";
   return (
     <div className={boxStyle}>
-      <h1 className="font-bold text-4xl">Welcome back</h1>
+      <div className="object-cover pointer-events-none">
+        <img src={Rootseeklogo} className="object-cover h-18" />
+      </div>
       <div className="flex flex-col gap-4 items-end">
         <form
-          className="flex flex-col gap-4 mt-10 select-none"
+          className="flex flex-col gap-4 mt-8 select-none"
           onSubmit={handleLogin}
         >
           {sessionExpired && (
@@ -76,7 +80,7 @@ const LoginPage = () => {
           <div className="relative">
             <input
               type="email"
-              className={`w-92 h-12 border border-[#252525] rounded-md p-3 ${
+              className={`w-92 h-12 border border-[#DEDEDE] rounded-md p-3 ${
                 error !== "" && !isPasswordError
                   ? "outline-2 outline-red-500"
                   : ""
@@ -96,7 +100,7 @@ const LoginPage = () => {
             </div>
             <input
               type={`${seePassword ? "text" : "password"}`}
-              className={`border border-[#252525] rounded-md p-3 w-92 h-12 ${
+              className={`border border-[#DEDEDE] rounded-md p-3 w-92 h-12 ${
                 error !== "" ? "outline-2 outline-red-500" : ""
               }`}
               placeholder="Password"
@@ -111,7 +115,7 @@ const LoginPage = () => {
             </span>
           </p>
           <div className="text-center">
-            <button className="text-white font-medium px-8 py-4 cursor-pointer rounded-md bg-[#0000CD] hover:bg-[#0404B5] transition-colors w-full">
+            <button className={btnStyle}>
               {loading ? "Logging in" : "Log in to your account"}
             </button>
           </div>
@@ -128,7 +132,7 @@ const LoginPage = () => {
 
       <p className="mt-4">
         Don't have an account?{" "}
-        <span className="hover:underline cursor-pointer text-[#0000CD]">
+        <span className="hover:underline cursor-pointer text-[#0077b6]">
           <Link to="/user/signin">Sign Up</Link>
         </span>
       </p>

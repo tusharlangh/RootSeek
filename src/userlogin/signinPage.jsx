@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { EyeIconClosed, EyeIconOpen } from "../homepage/icons";
+import { Rootseeklogo } from "..";
 
 const SignInPage = () => {
   const [email, setEmail] = useState("");
@@ -44,13 +45,20 @@ const SignInPage = () => {
     }
   };
 
-  const inputStyle = "border border-[#252525] rounded-md p-3";
+  const inputStyle = "border border-[#DEDEDE] rounded-md p-3";
+  const btnStyle =
+    "btn font-medium px-8 py-4 cursor-pointer rounded-md w-full transition duration-300 ease-in-out hover:scale-104 hover:shadow-md";
 
   return (
     <div className="flex flex-col max-sm:w-92">
-      <p className="font-bold text-4xl text-center">Create an account</p>
+      <div className="object-cover flex justify-center pointer-events-none">
+        <img src={Rootseeklogo} className="object-cover h-18" />
+      </div>
+      <p className="text-center mt-2 font-bold">
+        Every day is a new story. Let’s write yours.
+      </p>
       <form
-        className="flex flex-col gap-4 mt-10 select-none"
+        className="flex flex-col gap-4 mt-6 select-none"
         onSubmit={handleSignin}
       >
         <input
@@ -108,18 +116,14 @@ const SignInPage = () => {
         </div>
 
         <div className="mt-4 rounded-4xl text-center">
-          <button
-            type="submit"
-            className="text-white font-medium w-full px-8 py-4 cursor-pointer rounded-md bg-[#0000CD] hover:bg-[#0404B5] transition-colors"
-            disabled={loading}
-          >
+          <button type="submit" className={btnStyle} disabled={loading}>
             {loading ? "Signing up..." : "Sign in to your account"}
           </button>
         </div>
       </form>
       <p className="mt-4 text-center">
         Have an account?{" "}
-        <span className="hover:underline cursor-pointer text-[#0000CD]">
+        <span className="hover:underline cursor-pointer text-[#0077b6]">
           <Link to="/user/login">Login</Link>
         </span>
       </p>
