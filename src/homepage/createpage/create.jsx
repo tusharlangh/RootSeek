@@ -33,6 +33,7 @@ const Create = ({ setShowCreate }) => {
   const [pictureURL, setPictureURL] = useState(null);
 
   const [showSongSelection, selectShowSongSelection] = useState(false);
+  const [selectedSong, setSelectedSong] = useState({});
 
   const DailyTabStyles =
     "max-sm:w-[80vw] w-[55vw] rounded-xl bg-white border border-[#F0F0F0] relative";
@@ -49,6 +50,11 @@ const Create = ({ setShowCreate }) => {
     formData.append("title", title);
     formData.append("content", content);
     formData.append("mood", "happy");
+    formData.append("trackId", selectedSong.id);
+    formData.append("trackName", selectedSong.name);
+    formData.append("trackArtist", selectedSong.artist);
+    formData.append("trackAlbumCover", selectedSong.albumCover);
+
     if (picture) {
       formData.append("image", picture);
     }

@@ -44,7 +44,11 @@ const postScheme = new mongoose.Schema(
     content: { type: String, required: true },
     date: { type: Date, default: Date.now },
     mood: { type: String },
-    picture: {type: String}
+    picture: {type: String},
+    trackId: {type: String, default: ""},
+    trackName: {type: String, default: ""},
+    trackArtist: {type: String, default: ""},
+    trackAlbumCover: {type: String, default: ""},
   },
   { timestamps: true }
 );
@@ -79,14 +83,18 @@ router.delete("/user/delete/:id", async (req, res) => {
 // Create a new post for a user
 router.post("/user/create",upload.single("image"), auth, async (req, res) => {
   try {
-    const { title, content, mood } = req.body;
+    const { title, content, mood, trackId, trackName, trackArtist, trackAlbumCover } = req.body;
     const post = new Post({
       user: req.userId,
       title,
       content,
       date: Date.now(), 
       mood,
-      picture: req.file ? `/uploads/${req.file.filename}` : ""
+      picture: req.file ? `/uploads/${req.file.filename}` : "",
+      trackId,
+      trackName,
+      trackArtist,
+      trackAlbumCover,
     });
     await post.save();
     res.status(201).json({ message: "Post created successfully." });

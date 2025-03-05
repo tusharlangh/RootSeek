@@ -1,7 +1,7 @@
-import react, { useState, useEffect, useContext } from "react";
+import react, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { ThreeDotIcon } from "./icons";
+import { PauseIcon, PlayIcon, ThreeDotIcon } from "./icons";
 import { WindowContext } from "../utils";
 import DeletePost from "./deletePost";
 import PreviewImage from "./previewImage";
@@ -10,11 +10,21 @@ const UserActivity = () => {
   const [posts, setPosts] = useState([]);
   const token = localStorage.getItem("token");
   const windowSize = useContext(WindowContext);
-  const [seeMore, setSeeMore] = useState({});
   const [showOptions, setShowOptions] = useState({});
   const [previewImages, setPreviewImages] = useState({});
   const [showDelete, setShowDelete] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const audioRef = useRef({});
+  const trackCache = useRef({});
+
+  const [info, setInfo] = useState({
+    seeMore: {},
+    showOptions: {},
+    previewImages: {},
+    isPlaying: {},
+    track: {},
+  });
 
   useEffect(() => {
     axios
@@ -51,9 +61,12 @@ const UserActivity = () => {
   }
 
   const toggleSeeMore = (post_id) => {
-    setSeeMore((prev) => ({
-      ...prev,
-      [post_id]: !prev[post_id],
+    setInfo((prevInfo) => ({
+      ...prevInfo,
+      seeMore: {
+        ...prevInfo.seeMore,
+        [post_id]: !prevInfo.seeMore[post_id],
+      },
     }));
   };
 
@@ -71,14 +84,6 @@ const UserActivity = () => {
     }));
   };
 
-  const deletePost = (post_id) => {
-    const _id = findRoot();
-    axios
-      .delete(`http://localhost:5002/user/delete/${_id}`)
-      .then((response) => console.log(response.data.message))
-      .catch((error) => console.error(error.response.data.message));
-  };
-
   const findRoot = () => {
     for (const key in showOptions) {
       if (showOptions[key]) {
@@ -87,9 +92,78 @@ const UserActivity = () => {
     }
   };
 
+  const deletePost = () => {
+    const _id = findRoot();
+    axios
+      .delete(`http://localhost:5002/user/delete/${_id}`)
+      .then((response) => console.log(response.data.message))
+      .catch((error) => console.error(error.response.data.message));
+  };
+
   if (confirmDelete) {
     deletePost();
   }
+
+  const updateSongPlaying = (id) => {
+    setInfo((prevInfo) => ({
+      ...prevInfo,
+      isPlaying: {
+        ...prevInfo.isPlaying,
+        [id]: !prevInfo.isPlaying[id],
+      },
+    }));
+  };
+
+  const togglePlayPause = (id, trackId) => {
+    const audio = audioRef.current[id];
+    if (!audio) return;
+
+    audio.onended = () => {
+      audio.play();
+    };
+
+    if (audio) {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    }
+    updateSongPlaying(id);
+  };
+
+  const retriveSong = (id, trackId) => {
+    if (trackCache.current[id]) return; // Check cache before making request
+
+    trackCache.current[id] = true;
+
+    axios
+      .get(
+        `https://cors-anywhere.herokuapp.com/https://api.deezer.com/track/${trackId}`
+      )
+      .then((response) => {
+        const previewUrl = response.data.preview;
+        setInfo((prevInfo) => ({
+          ...prevInfo,
+          track: {
+            ...prevInfo.track,
+            [id]: previewUrl,
+          },
+        }));
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const run = () => {
+    for (let post of posts) {
+      const trackId = post.trackId;
+      if (trackId) {
+        retriveSong(post._id, trackId);
+      }
+    }
+  };
+
+  run();
 
   return (
     <div className="flex flex-col justify-center items-center gap-12 h-full w-full">
@@ -173,7 +247,9 @@ const UserActivity = () => {
 
             <div className="flex items-center">
               <p
-                className={`font-light ${seeMore[post._id] ? "" : "truncate"}`}
+                className={`font-light ${
+                  info.seeMore[post._id] ? "" : "truncate"
+                }`}
               >
                 {post.content}
               </p>
@@ -182,10 +258,42 @@ const UserActivity = () => {
                   className="text-xs text-gray-300 ml-2 shrink-0 cursor-pointer hover-underline"
                   onClick={() => toggleSeeMore(post._id)}
                 >
-                  {seeMore[post._id] ? "Show less" : "Show more"}
+                  {info.seeMore[post._id] ? "Show less" : "Show more"}
                 </button>
               )}
             </div>
+
+            {post.trackId !== "undefined" ? (
+              <div className="flex items-center gap-2 mt-4 w-full">
+                <div className="flex items-center justify-center bg-red-200 relative group h-10 w-10">
+                  <button
+                    onClick={() => togglePlayPause(post._id, post.trackId)}
+                    className="absolute cursor-pointer text-white rounded-md opacity-0 group-hover:opacity-100 duration-400"
+                  >
+                    {info["isPlaying"][post._id] ? (
+                      <PauseIcon color={"white"} />
+                    ) : (
+                      <PlayIcon color={"white"} />
+                    )}
+                  </button>
+                  <img
+                    className="h-full w-full rounded-md"
+                    src={post.trackAlbumCover}
+                  />
+                  <audio ref={(el) => (audioRef.current[post._id] = el)}>
+                    <source src={info.track[post._id]} type="audio/mp3" />
+                    Your browser does not support the audio element.
+                  </audio>
+                </div>
+
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium">{post.trackName}</span>
+                  <span className="text-xs">{post.trackArtist}</span>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       ))}
