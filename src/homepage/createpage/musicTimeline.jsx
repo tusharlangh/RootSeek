@@ -1,12 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { PauseIcon, PlayIcon, SearchIconOutline } from "./icons";
+import { PauseIcon, PlayIcon, SearchIconOutline } from "../icons";
 
-const MusicSearch = ({ onSelectSong }) => {
+const MusicTimeline = ({ onSelectSong }) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
-  const [isPlaying, setIsPlaying] = useState({});
   const audioRef = useRef({});
+
+  const [songStates, setSongStates] = useState({
+    isPlaying: {},
+    checkedSongs: {},
+  });
 
   useEffect(() => {
     if (!query) return;
@@ -16,7 +20,7 @@ const MusicSearch = ({ onSelectSong }) => {
       .get(
         "https://cors-anywhere.herokuapp.com/https://api.deezer.com/search",
         {
-          params: { q: query, limit: 5 },
+          params: { q: query, limit: 8 },
         }
       )
       .then((response) => {
@@ -37,9 +41,12 @@ const MusicSearch = ({ onSelectSong }) => {
   }, [query]);
 
   const updateSongPlaying = (id) => {
-    return setIsPlaying((prev) => ({
+    setSongStates((prev) => ({
       ...prev,
-      [id]: !prev[id],
+      isPlaying: {
+        ...prev.isPlaying,
+        [id]: !prev.isPlaying[id],
+      },
     }));
   };
 
@@ -69,7 +76,7 @@ const MusicSearch = ({ onSelectSong }) => {
   };
 
   return (
-    <div className="w-82 p-4 bg-white shadow rounded-lg">
+    <div className="w-full px-10 max-sm:px-6 mt-8 max-md:mt-4">
       <div className="relative">
         <div className="absolute top-2.75 left-3">
           <SearchIconOutline size={5} />
@@ -80,16 +87,27 @@ const MusicSearch = ({ onSelectSong }) => {
           placeholder="Search music"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="pl-9 bg-[#FAFAFA] border border-[#DEDEDE] rounded-md px-3 py-2"
+          className="w-full pl-9 bg-[#FAFAFA] border border-[#DEDEDE] rounded-md px-3 py-2"
         />
       </div>
 
-      <ul className="mt-4">
+      <ul className="mt-4 max-h-120 overflow-y-auto">
         {results.map((song) => (
           <li
             key={song.id}
-            className="cursor-pointer hover:bg-[#EEEEEE] transition-all duration-300 p-2 rounded-md flex justify-between items-center"
-            onClick={() => onSelectSong(song)}
+            className={`${
+              songStates.checkedSongs[song.id] ? "bg-[#EEEEEE]" : ""
+            } cursor-pointer hover:bg-[#EEEEEE] transition-all duration-300 p-2 rounded-md flex justify-between items-center`}
+            onClick={() => {
+              onSelectSong(song);
+              setSongStates((prev) => ({
+                ...prev,
+                checkedSongs: {
+                  ...prev.checkedSongs,
+                  [song.id]: !prev.checkedSongs[song.id],
+                },
+              }));
+            }}
           >
             <div className="flex gap-4 items-center">
               <div className="">
@@ -99,7 +117,7 @@ const MusicSearch = ({ onSelectSong }) => {
                 />
               </div>
               <div className="flex flex-col">
-                <div className="font-semibold text-sm w-40 truncate">
+                <div className="font-semibold text-sm w-44 truncate">
                   {song.name}
                 </div>
                 <div className="text-xs">{song.artist}</div>
@@ -110,7 +128,7 @@ const MusicSearch = ({ onSelectSong }) => {
               onClick={() => togglePlayPause(song.id, song.previewUrl)}
               className="cursor-pointer text-white px-4 py-2 rounded-md"
             >
-              {isPlaying[song.id] ? (
+              {songStates.isPlaying[song.id] ? (
                 <PauseIcon color={"black"} />
               ) : (
                 <PlayIcon color={"black"} />
@@ -128,4 +146,4 @@ const MusicSearch = ({ onSelectSong }) => {
   );
 };
 
-export default MusicSearch;
+export default MusicTimeline;

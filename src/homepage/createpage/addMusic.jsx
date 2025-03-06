@@ -7,3 +7,5 @@ const AddMusic = () => {
     </div>
   );
 };
+
+export default AddMusic;

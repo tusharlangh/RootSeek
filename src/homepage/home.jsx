@@ -22,6 +22,7 @@ import WindowSize, { WindowContext } from "../utils";
 import Sidebar from "./Sidebar";
 import Logout from "./Logout";
 import DeletePost from "./deletePost";
+import CreateMain from "./createpage/createMain";
 
 const checkTokenExpiration = () => {
   const token = localStorage.getItem("token");
@@ -72,7 +73,7 @@ const Home = () => {
             {/*<Route path="create" element={<Create />} />*/}
           </Routes>
           <Sidebar />
-          {showCreate && <Create setShowCreate={setShowCreate} />}
+          {showCreate && <CreateMain setShowCreate={setShowCreate} />}
           {showLogout && <Logout setShowLogout={setShowLogout} />}
         </div>
       </div>

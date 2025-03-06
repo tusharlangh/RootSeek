@@ -265,7 +265,7 @@ const UserActivity = () => {
 
             {post.trackId !== "undefined" ? (
               <div className="flex items-center gap-2 mt-4 w-full">
-                <div className="flex items-center justify-center bg-red-200 relative group h-10 w-10">
+                <div className="flex items-center justify-center relative group h-10 w-10">
                   <button
                     onClick={() => togglePlayPause(post._id, post.trackId)}
                     className="absolute cursor-pointer text-white rounded-md opacity-0 group-hover:opacity-100 duration-400"

@@ -194,7 +194,7 @@ export const SmileIcon = () => (
     strokeWidth={1.5}
     stroke="currentColor"
     className="size-6"
-    color="rgb(228,198,90)"
+    color={defaultColor}
   >
     <path
       strokeLinecap="round"
@@ -392,15 +392,15 @@ export const MapPin = () => (
   </svg>
 );
 
-export const PictureIcon = () => (
+export const PictureIcon = ({ size }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="size-6"
-    color="rgb(73,205,253)"
+    className={`size-${size}`}
+    color="#49CDFD"
   >
     <path
       strokeLinecap="round"
@@ -469,15 +469,15 @@ export const EyeIconClosed = () => (
   </svg>
 );
 
-export const Music = () => (
+export const Music = ({ size }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="size-6"
     color="#CC99FF"
+    className={`size-${size}`}
   >
     <path
       strokeLinecap="round"
