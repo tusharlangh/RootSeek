@@ -23,6 +23,7 @@ import Sidebar from "./Sidebar";
 import Logout from "./Logout";
 import DeletePost from "./deletePost";
 import CreateMain from "./createpage/createMain";
+import Search from "./search";
 
 const checkTokenExpiration = () => {
   const token = localStorage.getItem("token");
@@ -70,7 +71,7 @@ const Home = () => {
           />
           <Routes>
             <Route path="" element={<ActivityList showCreate={showCreate} />} />
-            {/*<Route path="create" element={<Create />} />*/}
+            <Route path="search" element={<Search />} />
           </Routes>
           <Sidebar />
           {showCreate && <CreateMain setShowCreate={setShowCreate} />}

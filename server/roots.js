@@ -68,6 +68,24 @@ router.get("/user/posts", auth, async (req, res) => {
   }
 });
 
+router.get("/search/posts", auth, async (req, res) => {
+  try {
+    const searchItem = req.query.q
+    if (!searchItem) {
+      const p = await Post.find({user: req.userId})
+      return res.json(p)
+    }
+    const userPosts = await Post.find({user:req.userId, title: { $regex: searchItem, $options: "i" }});
+    if (!userPosts || userPosts.length === 0) {
+      return res.status(400).json({message: "No posts found."})
+    }
+    res.json(userPosts)
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    res.status(500).json({message: "Error fetching posts."})
+  }
+})
+
 router.delete("/user/delete/:id", async (req, res) => {
   try {
     const { id } = req.params
@@ -108,5 +126,7 @@ router.get("/posts/all", async (req, res) => {
     const posts = await Post.find()
     res.json(posts)
 })
+
+
 
 export default router;
