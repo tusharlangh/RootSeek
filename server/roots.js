@@ -58,7 +58,8 @@ const Post = mongoose.model("Post", postScheme);
 // Get all posts for a user
 router.get("/user/posts", auth, async (req, res) => {
   try {
-    const userPosts = await Post.find({ user: req.userId });
+    const twentyfourhoursago = new Date(Date.now() - 24 * 60 * 60 * 1000)
+    const userPosts = await Post.find({ user: req.userId, date: {$gte: twentyfourhoursago} });
     if (!userPosts || userPosts.length === 0)
       return res.status(400).json({ message: "No posts found for this user." });
     res.json(userPosts);
