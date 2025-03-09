@@ -3,8 +3,7 @@ import { motion } from "framer-motion";
 import { CloseIcon, TrashIcon } from "./icons";
 
 const PreviewImage = ({ image, setPreview }) => {
-  const DailyTabStyles =
-    "flex justify-center items-center mx-12 px-3 py-3 rounded-xl bg-[#F9F9F9] border border-[#F0F0F0]";
+  const DailyTabStyles = "flex justify-center items-center mx-12 rounded-md";
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
@@ -21,7 +20,7 @@ const PreviewImage = ({ image, setPreview }) => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.2 }}
       >
-        <img className="object-fit max-h-[45vw]" src={image} />
+        <img className="object-fit max-h-[45vw] rounded-md" src={image} />
       </motion.div>
     </div>
   );

@@ -90,7 +90,7 @@ router.post("/user/create",upload.single("image"), auth, async (req, res) => {
       content,
       date: Date.now(), 
       mood,
-      picture: req.file ? `/uploads/${req.file.filename}` : "",
+      picture: req.file ? `/uploads/${req.file.filename}` : "",//the filename is changed from the original to the new file. its changed by the mutler
       trackId,
       trackName,
       trackArtist,

@@ -56,7 +56,7 @@ const Home = () => {
         className={`bg-white flex justify-center items-center w-full h-screen`}
       >
         <div
-          className={`fixed top-3 left-5 z-[100] cursor-pointer ${
+          className={`fixed top-4 left-5 z-[100] cursor-pointer ${
             windowSize >= 1110 ? "block" : "hidden"
           }`}
         >

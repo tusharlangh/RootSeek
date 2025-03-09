@@ -1,7 +1,13 @@
 import react, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { PauseIcon, PlayIcon, ThreeDotIcon } from "./icons";
+import {
+  EditIcon,
+  PauseIcon,
+  PlayIcon,
+  ThreeDotIcon,
+  TrashIcon,
+} from "./icons";
 import { WindowContext } from "../utils";
 import DeletePost from "./deletePost";
 import PreviewImage from "./previewImage";
@@ -176,7 +182,7 @@ const UserActivity = () => {
       {posts.map((post) => (
         <div
           key={post._id}
-          className={`w-full bg-[#F9F9F9] border border-[#F0F0F0] py-4 px-4 rounded-xl shadow-xs`}
+          className={`w-full bg-[#F9F9F9] border border-[#F0F0F0] py-4 px-4 rounded-xl shadow`}
         >
           <div className="relative flex flex-col gap-2 justify-between">
             <div className="flex gap-1">
@@ -209,10 +215,10 @@ const UserActivity = () => {
                       className="hover:hover:bg-[#EEEEEE] transition-all cursor-pointer p-2 text-red-500 border-b border-[#E6E6E6] w-full text-center"
                       onClick={() => setShowDelete(true)}
                     >
-                      Delete
+                      <span>Delete</span>
                     </li>
                     <li className="hover:hover:bg-[#EEEEEE] transition-all cursor-pointer p-2 w-full text-center">
-                      Edit
+                      <span>Edit</span>
                     </li>
                   </ul>
                 </motion.div>

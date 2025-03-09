@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Music } from "../icons";
 import MusicTimeline from "./musicTimeline";
 
-const MusicSearch = ({ handleSongSelect }) => {
+const MusicSearch = ({ handleSongSelect, selectedSong }) => {
   const [showMusic, setShowMusic] = useState(false);
+
+  useEffect(() => {
+    if (Object.keys(selectedSong).length !== 0) {
+      setShowMusic(true);
+    }
+  });
+
   return (
     <div className="w-full h-full">
       {!showMusic && (

@@ -1,10 +1,17 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { PictureIcon } from "../icons";
 
-const PictureSearch = ({ onSelectPicture }) => {
+const PictureSearch = ({ onSelectPicture, picture }) => {
   const [showPicture, setShowPicture] = useState(false);
   const [pictureURL, setPictureURL] = useState(null);
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    if (picture) {
+      setPictureURL(URL.createObjectURL(picture));
+      setShowPicture(true);
+    }
+  }, [picture]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -41,7 +48,7 @@ const PictureSearch = ({ onSelectPicture }) => {
 
       {showPicture && (
         <div className="flex justify-center items-center h-full w-full">
-          <img src={pictureURL} className="h-full w-full object-contain" />
+          {<img src={pictureURL} className="h-full w-full object-cover" />}
         </div>
       )}
     </div>

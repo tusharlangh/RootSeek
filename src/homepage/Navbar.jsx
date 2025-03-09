@@ -56,13 +56,11 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
 
   return (
     <div
-      className={`fixed left-0 ${
+      className={`fixed left-0 flex justify-center items-center ${
         isLargeScreen || isMediumScreen
-          ? "top-0 h-[100vh] pt-[35vh] border-r"
-          : "bottom-0 w-full py-2 border-t"
-      } px-${
-        isLargeScreen ? "4" : "2"
-      } bg-[#F9F9F9] border border-[#F0F0F0] z-40 rounded-xl`}
+          ? "top-0 h-[100vh]"
+          : "bottom-0 w-full py-2"
+      } px-${isLargeScreen ? "4" : "2"} bg-white z-40 rounded-xl`}
     >
       <ul
         className={`flex ${
@@ -74,7 +72,7 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
           return (
             <li
               key={name}
-              className={`flex gap-4 ${isLargeScreen ? "w-32" : ""} ${
+              className={`flex gap-4 ${isLargeScreen ? "" : ""} ${
                 !isActive ? "hover:bg-[#EEEEEE] cursor-pointer" : ""
               } transition-colors p-3 rounded-lg`}
               onClick={() => {
@@ -90,7 +88,6 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
                   ? solid
                   : outline}
               </div>
-              {isLargeScreen && name}
             </li>
           );
         })}
