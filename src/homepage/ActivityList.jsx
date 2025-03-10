@@ -41,7 +41,7 @@ const ActivityList = ({ showCreate }) => {
         className={DailyTabStyles}
       >
         <div className={`mt-24 mb-24`}>
-          <p className="text-2xl font-bold mb-4">Your daily log</p>
+          <p className="text-3xl font-bold mb-4">Your daily log</p>
           <DisplayPosts posts={posts} />
         </div>
       </motion.div>

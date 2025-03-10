@@ -24,7 +24,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`bg-white dark:bg-black fixed top-0 right-6 w-full p-4 py-4`}
+      className={`bg-white dark:bg-[#101217] fixed top-0 right-6 w-full p-4 py-4`}
     >
       <div className={sidebarStyles}>
         <div className="flex rounded-full w-10 overflow-hidden">

@@ -3,49 +3,40 @@ const defaultColor = "black dark:white";
 export const HomeIconSolid = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
+    height="30px"
+    width="30px"
+    viewBox="0 -960 960 960"
     fill="currentColor"
-    className="size-6"
-    color={defaultColor}
   >
-    <path
-      fillRule="evenodd"
-      d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z"
-      clipRule="evenodd"
-    />
+    <path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z" />
   </svg>
 );
 
 export const HomeIconOutline = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    fill="white"
-    viewBox="0 0 24 24"
-    strokeWidth={1.5}
-    stroke="currentColor"
-    className="size-6"
-    color={defaultColor}
+    height="30px"
+    viewBox="0 -960 960 960"
+    width="30px"
+    fill="currentColor"
   >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-    />
+    <path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
   </svg>
 );
 
 export const SearchIconOutline = ({ size }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
+    fill="none"
     viewBox="0 0 24 24"
-    fill="currentColor"
+    strokeWidth={1.5}
+    stroke="currentColor"
     className={`size-${size}`}
-    color={defaultColor}
   >
     <path
-      fillRule="evenodd"
-      d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
-      clipRule="evenodd"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
     />
   </svg>
 );
@@ -55,10 +46,9 @@ export const SearchIconSolid = () => (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    strokeWidth={3.5}
+    strokeWidth={3}
     stroke="currentColor"
-    className="size-6"
-    color={defaultColor}
+    className="size-7"
   >
     <path
       strokeLinecap="round"
@@ -75,7 +65,7 @@ export const CreateIconOutline = () => (
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="size-6"
+    className="size-7"
     color={defaultColor}
   >
     <path
@@ -91,7 +81,7 @@ export const CreateIconSolid = () => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     fill="currentColor"
-    className="size-6"
+    className="size-7"
     color={defaultColor}
   >
     <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
@@ -302,7 +292,7 @@ export const SettingsIconOutline = () => (
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="size-6"
+    className="size-7"
     color={defaultColor}
   >
     <path
@@ -323,7 +313,7 @@ export const SettingsIconSolid = () => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     fill="currentColor"
-    className="size-6"
+    className="size-7"
     color={defaultColor}
   >
     <path
@@ -337,7 +327,7 @@ export const SettingsIconSolid = () => (
 export const LogoutIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className="h-6 w-6"
+    className="size-7"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
@@ -506,7 +496,7 @@ export const TrashIcon = () => (
   </svg>
 );
 
-export const PlayIcon = ({ color }) => (
+export const PlayIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -514,7 +504,7 @@ export const PlayIcon = ({ color }) => (
     strokeWidth={2}
     stroke="currentColor"
     className="size-5"
-    color={color}
+    color={defaultColor}
   >
     <path
       strokeLinecap="round"
@@ -524,7 +514,7 @@ export const PlayIcon = ({ color }) => (
   </svg>
 );
 
-export const PauseIcon = ({ color }) => (
+export const PauseIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -532,7 +522,7 @@ export const PauseIcon = ({ color }) => (
     strokeWidth={2}
     stroke="currentColor"
     className="size-5"
-    color={color}
+    color={defaultColor}
   >
     <path
       strokeLinecap="round"

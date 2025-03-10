@@ -79,7 +79,7 @@ const MusicTimeline = ({ onSelectSong }) => {
     <div className="w-full px-10 max-sm:px-6 mt-8 max-md:mt-4">
       <div className="relative">
         <div className="absolute top-2.75 left-3">
-          <SearchIconOutline size={5} />
+          <SearchIconOutline size={6} />
         </div>
 
         <input
@@ -87,7 +87,11 @@ const MusicTimeline = ({ onSelectSong }) => {
           placeholder="Search music"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="w-full pl-9 bg-[#FAFAFA] border border-[#DEDEDE] rounded-md px-3 py-2"
+          className="text-lg font-light w-full pl-10 bg-[#F9F9F9] dark:bg-[#13151B] 
+                   border border-[#F0F0F0] dark:border-[#171A21] 
+                   hover:border-[#F0F0F0] dark:hover:border-[#171A21] 
+                   hover:bg-white dark:hover:bg-[#1A1D24] 
+                   transition-colors duration-400 rounded-md p-2"
         />
       </div>
 
@@ -97,7 +101,7 @@ const MusicTimeline = ({ onSelectSong }) => {
             key={song.id}
             className={`${
               songStates.checkedSongs[song.id] ? "bg-[#EEEEEE]" : ""
-            } cursor-pointer hover:bg-[#EEEEEE] transition-all duration-300 p-2 rounded-md flex justify-between items-center`}
+            } cursor-pointer hover:bg-[#EEEEEE] dark:hover:bg-[#1E2025] transition-all duration-300 p-2 rounded-md flex justify-between items-center`}
             onClick={() => {
               onSelectSong(song);
               setSongStates((prev) => ({
@@ -128,11 +132,7 @@ const MusicTimeline = ({ onSelectSong }) => {
               onClick={() => togglePlayPause(song.id, song.previewUrl)}
               className="cursor-pointer text-white px-4 py-2 rounded-md"
             >
-              {songStates.isPlaying[song.id] ? (
-                <PauseIcon color={"black"} />
-              ) : (
-                <PlayIcon color={"black"} />
-              )}
+              {songStates.isPlaying[song.id] ? <PauseIcon /> : <PlayIcon />}
             </button>
 
             <audio ref={(el) => (audioRef.current[song.id] = el)}>

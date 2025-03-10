@@ -188,7 +188,7 @@ const UserActivity = () => {
             <div className="flex gap-1">
               <div className="relative flex items-center flex-1">
                 <div className="w-4/5">
-                  <span className="text-xl text-black">{post.title}</span>
+                  <span className="text-2xl text-black">{post.title}</span>
                   <span className="text-sm text-black mx-1">•</span>
                   <span className="text-sm text-black shrink-0">
                     {formatTime(post)}

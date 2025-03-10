@@ -49,12 +49,21 @@ const Search = () => {
         className={DailyTabStyles}
       >
         <form className="w-full mt-24 px-1">
-          <div className="">
+          <div className="relative">
+            <div className="absolute top-2.75 left-3">
+              <SearchIconOutline size={6} />
+            </div>
+
             <input
-              placeholder="Search"
-              className="border border-[#F0F0F0] dark:border-[#252525] rounded-md p-2 w-full "
+              type="text"
+              placeholder="Search root"
               value={searchContent}
               onChange={(el) => setSearchContent(el.target.value)}
+              className="text-lg font-light w-full pl-10 bg-[#F9F9F9] dark:bg-[#13151B] 
+             border border-[#F0F0F0] dark:border-[#171A21] 
+             hover:border-[#F0F0F0] dark:hover:border-[#171A21] 
+             hover:bg-white dark:hover:bg-[#1A1D24] 
+             transition-colors duration-400 rounded-md p-2"
             />
           </div>
         </form>

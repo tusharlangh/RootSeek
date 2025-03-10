@@ -165,7 +165,7 @@ const DisplayPosts = ({ posts }) => {
       {posts.map((post) => (
         <div
           key={post._id}
-          className={`w-full py-4 px-4 rounded-xl border border-[#F0F0F0] dark:border-[#252525]`}
+          className={`w-full py-4 px-4 rounded-lg box_shadow bg-[#FCFCFC] dark:bg-[#13151B]`}
         >
           <div className="relative flex flex-col gap-2 justify-between">
             <div className="flex gap-1">
@@ -177,13 +177,13 @@ const DisplayPosts = ({ posts }) => {
               </div>
               <div className="">
                 <div
-                  className="w-full hover:bg-[#EEEEEE] dark:hover:bg-[#252525] transition-all cursor-pointer rounded-md p-1"
+                  className="w-full hover:bg-[#EEEEEE] dark:hover:bg-[#1E2025] transition-all cursor-pointer rounded-md p-1"
                   onClick={() => toggleOptions(post._id)}
                 >
                   <ThreeDotIcon />
                 </div>
                 <motion.div
-                  className={`w-42 bg-white dark:bg-[#111111] border border-[#F0F0F0] dark:border-[#252525] rounded-md overflow-hidden absolute top-9 select-none right-0 ${
+                  className={`w-42 bg-white dark:bg-[#13151B] border border-[#F0F0F0] dark:border-[#171A21] rounded-md overflow-hidden absolute top-9 select-none right-0 ${
                     showOptions[post._id] ? "opacity-100" : "opacity-0 -z-10"
                   }`}
                   initial={{ opacity: 0 }}
@@ -192,12 +192,12 @@ const DisplayPosts = ({ posts }) => {
                 >
                   <ul className="flex flex-col justify-center items-center">
                     <li
-                      className="hover:bg-[#EEEEEE] dark:hover:bg-[#252525] transition-all cursor-pointer p-2 text-red-500 border-b border-[#E6E6E6] dark:border-[#252525] w-full text-center"
+                      className="hover:bg-[#EEEEEE] dark:hover:bg-[#1E2025] transition-all cursor-pointer p-2 text-red-500 border-b border-[#E6E6E6] dark:border-[#171A21] w-full text-center"
                       onClick={() => setShowDelete(true)}
                     >
                       <span>Delete</span>
                     </li>
-                    <li className="hover:bg-[#EEEEEE] dark:hover:bg-[#252525] transition-all cursor-pointer p-2 w-full text-center">
+                    <li className="hover:bg-[#EEEEEE] dark:hover:bg-[#1E2025] transition-all cursor-pointer p-2 w-full text-center">
                       <span>Edit</span>
                     </li>
                   </ul>

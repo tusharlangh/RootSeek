@@ -12,7 +12,7 @@ const Logout = ({ setShowLogout }) => {
   };
 
   const DailyTabStyles =
-    "flex justify-center items-center px-5 py-5 rounded-xl bg-[#F9F9F9] dark:bg-[#111111] border border-[#F0F0F0] dark:border-[#252525]";
+    "flex justify-center items-center px-5 py-5 rounded-xl bg-[#F9F9F9] dark:bg-[#13151B] border border-[#F0F0F0] dark:border-[#171A21]";
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-black/60 z-50"

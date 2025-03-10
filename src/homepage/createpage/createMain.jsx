@@ -127,8 +127,8 @@ const CreateMain = ({ setShowCreate }) => {
           <CloseIcon size={7} />
         </div>
 
-        <div className="rounded-xl bg-white dark:bg-[#111111] relative overflow-hidden">
-          <div className="flex border-b border-[#F0F0F0] dark:border-[#252525] p-1.5 w-full">
+        <div className="rounded-xl bg-white dark:bg-[#13151B] relative overflow-hidden">
+          <div className="flex border-b border-[#F0F0F0] dark:border-[#171A21] p-1.5 w-full">
             <button
               className={`${
                 currentPage === 0 ? "opacity-0" : "text-[#00b4d8]"
