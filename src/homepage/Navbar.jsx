@@ -60,7 +60,7 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
         isLargeScreen || isMediumScreen
           ? "top-0 h-[100vh]"
           : "bottom-0 w-full py-2"
-      } px-${isLargeScreen ? "4" : "2"} bg-white z-40 rounded-xl`}
+      } px-${isLargeScreen ? "4" : "2"} z-40 rounded-xl bg-white dark:bg-black`}
     >
       <ul
         className={`flex ${
@@ -73,7 +73,9 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
             <li
               key={name}
               className={`flex gap-4 ${isLargeScreen ? "" : ""} ${
-                !isActive ? "hover:bg-[#EEEEEE] cursor-pointer" : ""
+                !isActive
+                  ? "hover:bg-[#EEEEEE] dark:hover:bg-[#252525] cursor-pointer"
+                  : ""
               } transition-colors p-3 rounded-lg`}
               onClick={() => {
                 if (name === "Create") setShowCreate(true);

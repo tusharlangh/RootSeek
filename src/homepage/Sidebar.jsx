@@ -23,7 +23,9 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <div className={`fixed top-0 right-6 w-full bg-white p-4 py-4`}>
+    <div
+      className={`bg-white dark:bg-black fixed top-0 right-6 w-full p-4 py-4`}
+    >
       <div className={sidebarStyles}>
         <div className="flex rounded-full w-10 overflow-hidden">
           <img src={DefaultPfp} draggable={false} />

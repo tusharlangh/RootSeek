@@ -1,4 +1,4 @@
-const defaultColor = "black";
+const defaultColor = "black dark:white";
 
 export const HomeIconSolid = () => (
   <svg
@@ -24,6 +24,7 @@ export const HomeIconOutline = () => (
     strokeWidth={1.5}
     stroke="currentColor"
     className="size-6"
+    color={defaultColor}
   >
     <path
       strokeLinecap="round"

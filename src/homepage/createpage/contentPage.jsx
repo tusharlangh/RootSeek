@@ -1,7 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Hashtag, SmileIcon } from "../icons";
+import EmojiPicker from "emoji-picker-react";
 
-const ContentPage = ({ title, content, setTitle, setContent }) => {
+const ContentPage = ({
+  mood,
+  setMood,
+  title,
+  content,
+  setTitle,
+  setContent,
+}) => {
+  const [countChar, setCountChar] = useState(content.length);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
+  useEffect(() => {
+    setCountChar(content.length);
+  }, [content]);
+
   return (
     <div className="w-full h-full">
       <form className="flex flex-col gap-4 p-5 w-full">
@@ -18,14 +33,30 @@ const ContentPage = ({ title, content, setTitle, setContent }) => {
           placeholder="Content"
           className="h-[40vh] p-3 outline-none resize-none"
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={(e) => {
+            if (e.target.value.length <= 2000) {
+              setContent(e.target.value);
+            }
+          }}
           required
         />
         <div className="w-full flex items-center">
           <div className="cursor-pointer">
-            <SmileIcon />
+            <div onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
+              {mood ? mood : <SmileIcon />}
+            </div>
+
+            {showEmojiPicker && (
+              <div className="absolute top-4 left-24">
+                <EmojiPicker
+                  onEmojiClick={(emojiObject) => setMood(emojiObject.emoji)}
+                />
+              </div>
+            )}
           </div>
-          <div className="w-full flex justify-end text-xs">0/5,000</div>
+          <div className="w-full flex justify-end text-xs">
+            {countChar}/2000
+          </div>
         </div>
         <div className="flex gap-2 mt-4">
           <Hashtag />

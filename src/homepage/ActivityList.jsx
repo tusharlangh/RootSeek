@@ -4,6 +4,7 @@ import { WindowContext } from "../utils";
 import Create from "./createpage/create";
 import DisplayPosts from "./display-posts";
 import axios from "axios";
+import { motion, AnimatePresence, easeInOut } from "framer-motion";
 
 const ActivityList = ({ showCreate }) => {
   const [posts, setPosts] = useState([]);
@@ -14,7 +15,7 @@ const ActivityList = ({ showCreate }) => {
       ? "w-[60vw]"
       : windowSize >= 800
       ? "w-[60vw]"
-      : "w-[80vw]"
+      : "w-[90vw]"
   } overflow-y-auto `;
 
   useEffect(() => {
@@ -31,14 +32,20 @@ const ActivityList = ({ showCreate }) => {
   }, []);
 
   return (
-    <div className="">
-      <div className={DailyTabStyles}>
+    <AnimatePresence mode="wait">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.4, ease: easeInOut }}
+        className={DailyTabStyles}
+      >
         <div className={`mt-24 mb-24`}>
           <p className="text-2xl font-bold mb-4">Your daily log</p>
           <DisplayPosts posts={posts} />
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

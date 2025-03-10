@@ -16,13 +16,12 @@ const UserMain = () => {
     },
     exit: {
       opacity: 0,
-      transition: { duration: 0.7, ease: "easeInOut" },
     },
   };
 
   return (
     <div className="flex flex-col justify-center items-center h-screen w-full rootseekBg">
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="popLayout">
         <motion.div
           key={location.pathname}
           variants={pageVariants}

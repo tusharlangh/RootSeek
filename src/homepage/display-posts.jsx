@@ -39,7 +39,7 @@ const DisplayPosts = ({ posts }) => {
     return formattedTime;
   };
 
-  if (!posts) {
+  if (posts.length === 0) {
     return (
       <motion.div
         className="w-7 h-7 border-3 border-gray-300 border-t-black rounded-full"
@@ -47,8 +47,6 @@ const DisplayPosts = ({ posts }) => {
         transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
       />
     );
-  } else if (posts.length === 0) {
-    return <p>No roots made</p>;
   }
 
   const toggleSeeMore = (post_id) => {
@@ -157,7 +155,7 @@ const DisplayPosts = ({ posts }) => {
   run();
 
   return (
-    <div className="flex flex-col justify-center items-center gap-12 h-full w-full">
+    <div className="flex flex-col justify-center items-center gap-8 h-full w-full">
       {showDelete && (
         <DeletePost
           setConfirmDelete={setConfirmDelete}
@@ -167,28 +165,25 @@ const DisplayPosts = ({ posts }) => {
       {posts.map((post) => (
         <div
           key={post._id}
-          className={`w-full bg-[#F9F9F9] border border-[#F0F0F0] py-4 px-4 rounded-xl shadow`}
+          className={`w-full py-4 px-4 rounded-xl border border-[#F0F0F0] dark:border-[#252525]`}
         >
           <div className="relative flex flex-col gap-2 justify-between">
             <div className="flex gap-1">
-              <div className="relative flex items-center flex-1">
-                <div className="w-4/5">
-                  <span className="text-xl text-black">{post.title}</span>
-                  <span className="text-sm text-black mx-1">•</span>
-                  <span className="text-sm text-black shrink-0">
-                    {formatTime(post)}
-                  </span>
-                </div>
+              <div className="w-4/5 relative flex items-center flex-1">
+                <span className="text-lg font-medium">{post.title}</span>
+                <span className="text-xs text-[#737373] shrink-0 mx-2 mt-0.5">
+                  {formatTime(post)}
+                </span>
               </div>
               <div className="">
                 <div
-                  className="w-full hover:bg-[#EEEEEE] transition-all cursor-pointer rounded-md p-1"
+                  className="w-full hover:bg-[#EEEEEE] dark:hover:bg-[#252525] transition-all cursor-pointer rounded-md p-1"
                   onClick={() => toggleOptions(post._id)}
                 >
                   <ThreeDotIcon />
                 </div>
                 <motion.div
-                  className={`w-42 bg-[#F9F9F9] border border-[#F0F0F0] rounded-md overflow-hidden absolute top-9 select-none right-0 ${
+                  className={`w-42 bg-white dark:bg-[#111111] border border-[#F0F0F0] dark:border-[#252525] rounded-md overflow-hidden absolute top-9 select-none right-0 ${
                     showOptions[post._id] ? "opacity-100" : "opacity-0 -z-10"
                   }`}
                   initial={{ opacity: 0 }}
@@ -197,12 +192,12 @@ const DisplayPosts = ({ posts }) => {
                 >
                   <ul className="flex flex-col justify-center items-center">
                     <li
-                      className="hover:hover:bg-[#EEEEEE] transition-all cursor-pointer p-2 text-red-500 border-b border-[#E6E6E6] w-full text-center"
+                      className="hover:bg-[#EEEEEE] dark:hover:bg-[#252525] transition-all cursor-pointer p-2 text-red-500 border-b border-[#E6E6E6] dark:border-[#252525] w-full text-center"
                       onClick={() => setShowDelete(true)}
                     >
                       <span>Delete</span>
                     </li>
-                    <li className="hover:hover:bg-[#EEEEEE] transition-all cursor-pointer p-2 w-full text-center">
+                    <li className="hover:bg-[#EEEEEE] dark:hover:bg-[#252525] transition-all cursor-pointer p-2 w-full text-center">
                       <span>Edit</span>
                     </li>
                   </ul>
@@ -231,7 +226,7 @@ const DisplayPosts = ({ posts }) => {
             </div>
             {previewImages[post._id] && (
               <PreviewImage
-                image={"server/" + post.picture}
+                image={"../server/" + post.picture}
                 setPreview={() => toggleImage(post._id)}
               />
             )}
@@ -243,6 +238,7 @@ const DisplayPosts = ({ posts }) => {
                 }`}
               >
                 {post.content}
+                <span className="ml-1">{post.mood}</span>
               </p>
               {post.content.length > 100 && (
                 <button
@@ -268,7 +264,7 @@ const DisplayPosts = ({ posts }) => {
                     )}
                   </button>
                   <img
-                    className="h-full w-full rounded-md"
+                    className="h-full w-full rounded-md pointer-events-none"
                     src={post.trackAlbumCover}
                   />
                   <audio ref={(el) => (audioRef.current[post._id] = el)}>

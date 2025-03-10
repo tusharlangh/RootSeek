@@ -62,9 +62,7 @@ const LoginPage = () => {
     "btn font-medium px-8 py-4 cursor-pointer rounded-md w-full transition duration-300 ease-in-out hover:scale-104 hover:shadow-md";
   return (
     <div className={boxStyle}>
-      <div className="object-cover pointer-events-none">
-        <img src={Rootseeklogo} className="object-cover h-18" />
-      </div>
+      <div className="text-6xl logo text-black dark:text-white">RootSeek</div>
       <div className="flex flex-col gap-4 items-end">
         <form
           className="flex flex-col gap-4 mt-8 select-none"
@@ -80,7 +78,7 @@ const LoginPage = () => {
           <div className="relative">
             <input
               type="email"
-              className={`w-92 h-12 border border-[#DEDEDE] rounded-md p-3 ${
+              className={`w-92 h-12 border border-[#F0F0F0] dark:border-[#252525] rounded-md p-3 ${
                 error !== "" && !isPasswordError
                   ? "outline-2 outline-red-500"
                   : ""
@@ -100,7 +98,7 @@ const LoginPage = () => {
             </div>
             <input
               type={`${seePassword ? "text" : "password"}`}
-              className={`border border-[#DEDEDE] rounded-md p-3 w-92 h-12 ${
+              className={`border border-[#F0F0F0] dark:border-[#252525] rounded-md p-3 w-92 h-12 ${
                 error !== "" ? "outline-2 outline-red-500" : ""
               }`}
               placeholder="Password"

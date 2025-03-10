@@ -45,14 +45,15 @@ const SignInPage = () => {
     }
   };
 
-  const inputStyle = "border border-[#DEDEDE] rounded-md p-3";
+  const inputStyle =
+    "border border-[#F0F0F0] dark:border-[#252525] rounded-md p-3";
   const btnStyle =
     "btn font-medium px-8 py-4 cursor-pointer rounded-md w-full transition duration-300 ease-in-out hover:scale-104 hover:shadow-md";
 
   return (
     <div className="flex flex-col max-sm:w-92">
-      <div className="object-cover flex justify-center pointer-events-none">
-        <img src={Rootseeklogo} className="object-cover h-18" />
+      <div className="text-center text-6xl logo text-black dark:text-white">
+        RootSeek
       </div>
       <p className="text-center mt-2 font-bold">
         Every day is a new story. Let’s write yours.

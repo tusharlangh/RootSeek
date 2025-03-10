@@ -24,6 +24,7 @@ const CreateMain = ({ setShowCreate }) => {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [mood, setMood] = useState();
 
   const token = localStorage.getItem("token");
 
@@ -50,6 +51,8 @@ const CreateMain = ({ setShowCreate }) => {
       name: "content",
       component: () => (
         <ContentPage
+          mood={mood}
+          setMood={setMood}
           title={title}
           content={content}
           setTitle={setTitle}
@@ -66,7 +69,7 @@ const CreateMain = ({ setShowCreate }) => {
 
     formData.append("title", title);
     formData.append("content", content);
-    formData.append("mood", "happy");
+    formData.append("mood", mood);
     formData.append("trackId", selectedSong.id);
     formData.append("trackName", selectedSong.name);
     formData.append("trackArtist", selectedSong.artist);
@@ -124,8 +127,8 @@ const CreateMain = ({ setShowCreate }) => {
           <CloseIcon size={7} />
         </div>
 
-        <div className="rounded-xl bg-white relative overflow-hidden">
-          <div className="flex border-b border-[#F0F0F0] p-1 w-full">
+        <div className="rounded-xl bg-white dark:bg-[#111111] relative overflow-hidden">
+          <div className="flex border-b border-[#F0F0F0] dark:border-[#252525] p-1.5 w-full">
             <button
               className={`${
                 currentPage === 0 ? "opacity-0" : "text-[#00b4d8]"

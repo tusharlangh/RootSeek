@@ -5,10 +5,12 @@ import _LoginPageBg from "../src/assets/images/app-bg.jpg"
 import _LoginPageBg2 from "../src/assets/images/pexels-creationsbyfaik-1025469.jpg"
 import _rootseeklogo from "../src/assets/images/rootseeklogo.png"
 import _r_rootseeklogo from "../src/assets/images/r_rootseeklogo.png"
+import _r_rootseeklogodark from "../src/assets/images/rootseekdark.jpeg"
 
 import bgvideo from '../src/assets/videos/12681526_3840_2160_30fps.mp4'
 import dfpfp from '../src/assets/images/defaultpfp.jpeg'
 
+export const Rootseekdark = _r_rootseeklogodark
 export const Rootseeklogo = _rootseeklogo
 export const R_rootseeklogo = _r_rootseeklogo
 export const RootSeekLoginPageBg = bgvideo

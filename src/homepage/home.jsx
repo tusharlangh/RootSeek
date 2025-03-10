@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import {
   HomePageBgVid,
   LoginPageBg2,
+  Rootseekdark,
   Rootseeklogo,
   RootSeekTransparentWhite,
 } from "..";
@@ -24,6 +25,7 @@ import Logout from "./Logout";
 import DeletePost from "./deletePost";
 import CreateMain from "./createpage/createMain";
 import Search from "./search";
+import { motion, AnimatePresence, easeInOut } from "framer-motion";
 
 const checkTokenExpiration = () => {
   const token = localStorage.getItem("token");
@@ -38,6 +40,7 @@ const Home = () => {
   const windowSize = useContext(WindowContext);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const location = useLocation();
   const [showCreate, setShowCreate] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
 
@@ -50,29 +53,42 @@ const Home = () => {
     if (checkTokenExpiration()) {
       localStorage.removeItem("token");
     }
-  });
+  }, [token, navigate]);
   return (
     <>
-      <div
-        className={`bg-white flex justify-center items-center w-full h-screen`}
-      >
+      <div className={`flex justify-center items-center w-full h-screen`}>
         <div
-          className={`fixed top-4 left-5 z-[100] cursor-pointer ${
+          className={`text-black dark:text-white logo text-3xl fixed top-4 left-5 z-[100] cursor-pointer ${
             windowSize >= 1110 ? "block" : "hidden"
           }`}
         >
-          <img src={Rootseeklogo} className="object-cover h-10" />
+          RootSeek
         </div>
+
         <div className={`h-full`}>
           <Navbar
             showCreate={showCreate}
             setShowCreate={setShowCreate}
             setShowLogout={setShowLogout}
           />
-          <Routes>
-            <Route path="" element={<ActivityList showCreate={showCreate} />} />
-            <Route path="search" element={<Search />} />
-          </Routes>
+          <AnimatePresence mode="popLayout">
+            <motion.div
+              key={location.pathname}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.7, ease: easeInOut }}
+            >
+              <Routes location={location}>
+                <Route
+                  path=""
+                  element={<ActivityList showCreate={showCreate} />}
+                />
+                <Route path="search" element={<Search />} />
+              </Routes>
+            </motion.div>
+          </AnimatePresence>
+
           <Sidebar />
           {showCreate && <CreateMain setShowCreate={setShowCreate} />}
           {showLogout && <Logout setShowLogout={setShowLogout} />}
