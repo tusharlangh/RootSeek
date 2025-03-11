@@ -10,13 +10,7 @@ const ActivityList = ({ showCreate }) => {
   const [posts, setPosts] = useState([]);
   const token = localStorage.getItem("token");
   const windowSize = useContext(WindowContext);
-  const DailyTabStyles = `${
-    windowSize >= 1110
-      ? "w-[60vw]"
-      : windowSize >= 800
-      ? "w-[60vw]"
-      : "w-[90vw]"
-  } overflow-y-auto `;
+  const DailyTabStyles = `md:ml-24 w-full px-2 overflow-y-auto`;
 
   useEffect(() => {
     axios
@@ -40,8 +34,10 @@ const ActivityList = ({ showCreate }) => {
         transition={{ duration: 0.4, ease: easeInOut }}
         className={DailyTabStyles}
       >
-        <div className={`mt-24 mb-24`}>
-          <p className="text-3xl font-bold mb-4">Your daily log</p>
+        <div
+          className={`mt-16 bg-[#F6F6F6] dark:bg-[#121212] px-6 py-5 rounded-md w-full min-h-[92vh]`}
+        >
+          <p className="text-2xl font-bold mb-4">Your daily log</p>
           <DisplayPosts posts={posts} />
         </div>
       </motion.div>

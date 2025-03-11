@@ -32,7 +32,7 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
       name: "Search",
       path: "/home/search",
       solid: <SearchIconSolid />,
-      outline: <SearchIconOutline size={7} />,
+      outline: <SearchIconOutline size={6.5} />,
     },
     {
       name: "Create",
@@ -56,13 +56,13 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
 
   return (
     <div
-      className={`fixed left-0 flex justify-center items-center ${
+      className={`fixed flex justify-center items-center ${
         isLargeScreen || isMediumScreen
           ? "top-0 h-[100vh]"
           : "bottom-0 w-full py-2"
       } px-${
-        isLargeScreen ? "4" : "2"
-      } z-40 rounded-xl bg-white dark:bg-[#101217]`}
+        isLargeScreen ? "4" : "4"
+      } z-40 bg-[#F6F6F6] dark:bg-[#121212] rounded-md mt-16 md:ml-2`}
     >
       <ul
         className={`flex ${
@@ -76,9 +76,9 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
               key={name}
               className={`flex gap-4 ${isLargeScreen ? "" : ""} ${
                 !isActive
-                  ? "hover:bg-[#EEEEEE] dark:hover:bg-[#1E2025] duration-400 hover:scale-110 transition-transform duration-300 cursor-pointer"
-                  : "bg-[#EEEEEE] dark:bg-[#1E2025]"
-              } transition-colors p-3 rounded-lg`}
+                  ? "hover:bg-[#EEEEEE] dark:hover:bg-[#2A2A2A] duration-400 hover:scale-104 transition-transform duration-300 cursor-pointer"
+                  : "bg-[#EEEEEE] dark:bg-[#2A2A2A]"
+              } transition-colors p-3.5 rounded-lg`}
               onClick={() => {
                 if (name === "Create") setShowCreate(true);
                 else if (name === "Logout") setShowLogout(true);

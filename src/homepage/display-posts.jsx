@@ -3,6 +3,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import {
   EditIcon,
+  ExpandIcon,
   PauseIcon,
   PlayIcon,
   ThreeDotIcon,
@@ -18,6 +19,21 @@ const DisplayPosts = ({ posts }) => {
   const [previewImages, setPreviewImages] = useState({});
   const [showDelete, setShowDelete] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [isHover, setIsHover] = useState({});
+
+  const handleHoverStart = (postId) => {
+    setIsHover((prevState) => ({
+      ...prevState,
+      [postId]: true,
+    }));
+  };
+
+  const handleHoverEnd = (postId) => {
+    setIsHover((prevState) => ({
+      ...prevState,
+      [postId]: false,
+    }));
+  };
 
   const audioRef = useRef({});
   const trackCache = useRef({});
@@ -41,11 +57,13 @@ const DisplayPosts = ({ posts }) => {
 
   if (posts.length === 0) {
     return (
-      <motion.div
-        className="w-7 h-7 border-3 border-gray-300 border-t-black rounded-full"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-      />
+      <div className="w-[100vw] h-[100vh] flex justify-center items-center pb-42 pr-42">
+        <motion.div
+          className="w-7 h-7 border-3 dark:border-t-[#121200] rounded-full"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        />
+      </div>
     );
   }
 
@@ -155,7 +173,7 @@ const DisplayPosts = ({ posts }) => {
   run();
 
   return (
-    <div className="flex flex-col justify-center items-center gap-8 h-full w-full">
+    <div className="grid grid-cols-2 max-lg:grid-cols-1 gap-8 w-full">
       {showDelete && (
         <DeletePost
           setConfirmDelete={setConfirmDelete}
@@ -163,18 +181,29 @@ const DisplayPosts = ({ posts }) => {
         />
       )}
       {posts.map((post) => (
-        <div
+        <motion.div
           key={post._id}
-          className={`w-full py-4 px-4 rounded-lg box_shadow bg-[#FCFCFC] dark:bg-[#13151B]`}
+          initial={{ scale: 1, height: "100px" }}
+          whileHover={{ scale: 1.03, height: "165px" }}
+          onHoverStart={() => handleHoverStart(post._id)}
+          onHoverEnd={() => handleHoverEnd(post._id)}
+          transition={{ duration: 0.4 }}
+          className={`w-full py-4 px-4 rounded-lg box_shadow bg-[#FCFCFC] dark:bg-[#181818] dark:hover:bg-[#282828] transition-colors duration-500 group`}
         >
+          <div className="font-extrabold text-xs absolute bottom-3 right-3 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white dark:text-black bg-black dark:bg-white rounded-full w-8 h-8 flex items-center justify-center leading-2.5 z-[20]">
+            <ExpandIcon />
+          </div>
           <div className="relative flex flex-col gap-2 justify-between">
-            <div className="flex gap-1">
-              <div className="w-4/5 relative flex items-center flex-1">
-                <span className="text-lg font-medium">{post.title}</span>
-                <span className="text-xs text-[#737373] shrink-0 mx-2 mt-0.5">
+            <div className="">
+              <div className="relative flex items-center flex-1">
+                <span className="text-2xl md:text-3xl font-semibold truncate">
+                  {post.title}
+                </span>
+                <span className="text-xs text-[#737373] shrink-0 mx-2 mt-1">
                   {formatTime(post)}
                 </span>
               </div>
+              {/*
               <div className="">
                 <div
                   className="w-full hover:bg-[#EEEEEE] dark:hover:bg-[#1E2025] transition-all cursor-pointer rounded-md p-1"
@@ -203,8 +232,9 @@ const DisplayPosts = ({ posts }) => {
                   </ul>
                 </motion.div>
               </div>
+              */}
             </div>
-
+            {/*
             <div
               className={`${
                 post.picture
@@ -230,28 +260,15 @@ const DisplayPosts = ({ posts }) => {
                 setPreview={() => toggleImage(post._id)}
               />
             )}
-
+            */}
             <div className="flex items-center">
-              <p
-                className={`font-light ${
-                  info.seeMore[post._id] ? "" : "truncate"
-                }`}
-              >
+              <p className={`text-sm font-light dark:text-[#B3B3B3] truncate`}>
                 {post.content}
-                <span className="ml-1">{post.mood}</span>
+                <span className="ml-1"></span>
               </p>
-              {post.content.length > 100 && (
-                <button
-                  className="text-xs text-gray-300 ml-2 shrink-0 cursor-pointer hover-underline"
-                  onClick={() => toggleSeeMore(post._id)}
-                >
-                  {info.seeMore[post._id] ? "Show less" : "Show more"}
-                </button>
-              )}
             </div>
-
             {post.trackId !== "undefined" ? (
-              <div className="flex items-center gap-2 mt-4 w-full">
+              <motion.div className="flex items-center gap-2 mt-4 w-full scale-0 group-hover:scale-100 transition-transform duration-400 origin-left">
                 <div className="flex items-center justify-center relative group h-10 w-10">
                   <button
                     onClick={() => togglePlayPause(post._id, post.trackId)}
@@ -277,12 +294,12 @@ const DisplayPosts = ({ posts }) => {
                   <span className="text-sm font-medium">{post.trackName}</span>
                   <span className="text-xs">{post.trackArtist}</span>
                 </div>
-              </div>
+              </motion.div>
             ) : (
               ""
             )}
           </div>
-        </div>
+        </motion.div>
       ))}
     </div>
   );

@@ -3,8 +3,8 @@ const defaultColor = "black dark:white";
 export const HomeIconSolid = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    height="30px"
-    width="30px"
+    height="28px"
+    width="28px"
     viewBox="0 -960 960 960"
     fill="currentColor"
   >
@@ -15,9 +15,9 @@ export const HomeIconSolid = () => (
 export const HomeIconOutline = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    height="30px"
+    height="28px"
     viewBox="0 -960 960 960"
-    width="30px"
+    width="28px"
     fill="currentColor"
   >
     <path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
@@ -48,7 +48,7 @@ export const SearchIconSolid = () => (
     viewBox="0 0 24 24"
     strokeWidth={3}
     stroke="currentColor"
-    className="size-7"
+    className="size-6"
   >
     <path
       strokeLinecap="round"
@@ -65,7 +65,7 @@ export const CreateIconOutline = () => (
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="size-7"
+    className="size-6.5"
     color={defaultColor}
   >
     <path
@@ -81,7 +81,7 @@ export const CreateIconSolid = () => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     fill="currentColor"
-    className="size-7"
+    className="size-6.5"
     color={defaultColor}
   >
     <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
@@ -292,7 +292,7 @@ export const SettingsIconOutline = () => (
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="size-7"
+    className="size-6.5"
     color={defaultColor}
   >
     <path
@@ -313,7 +313,7 @@ export const SettingsIconSolid = () => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     fill="currentColor"
-    className="size-7"
+    className="size-6.5"
     color={defaultColor}
   >
     <path
@@ -327,7 +327,7 @@ export const SettingsIconSolid = () => (
 export const LogoutIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className="size-7"
+    className="size-6.5"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
@@ -547,5 +547,17 @@ export const EditIcon = () => (
       strokeLinejoin="round"
       d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
     />
+  </svg>
+);
+
+export const ExpandIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24px"
+    height="24px"
+    viewBox="0 -960 960 960"
+    fill="currentColor"
+  >
+    <path d="M200-200v-240h80v160h160v80H200Zm480-320v-160H520v-80h240v240h-80Z" />
   </svg>
 );

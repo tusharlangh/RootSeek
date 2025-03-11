@@ -39,10 +39,18 @@ const checkTokenExpiration = () => {
 const Home = () => {
   const windowSize = useContext(WindowContext);
   const token = localStorage.getItem("token");
+
   const navigate = useNavigate();
   const location = useLocation();
+
   const [showCreate, setShowCreate] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
+
+  const [posts, setPosts] = useState([]);
+
+  const togglePosts = (posts) => {
+    setPosts(posts);
+  };
 
   useEffect(() => {
     console.log(windowSize);
@@ -57,39 +65,30 @@ const Home = () => {
   return (
     <>
       <div className={`flex justify-center items-center w-full h-screen`}>
+        {/*
         <div
-          className={`text-black dark:text-white logo text-3xl fixed top-4 left-5 z-[100] cursor-pointer ${
+          className={`text-black dark:text-white logo text-2xl fixed top-4 left-5 z-[100] cursor-pointer ${
             windowSize >= 1110 ? "block" : "hidden"
           }`}
         >
           RootSeek
         </div>
+        */}
 
-        <div className={`h-full`}>
+        <div className={`w-full h-full md:flex md:justify-between`}>
           <Navbar
             showCreate={showCreate}
             setShowCreate={setShowCreate}
             setShowLogout={setShowLogout}
           />
-          <AnimatePresence mode="popLayout">
-            <motion.div
-              key={location.pathname}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.7, ease: easeInOut }}
-            >
-              <Routes location={location}>
-                <Route
-                  path=""
-                  element={<ActivityList showCreate={showCreate} />}
-                />
-                <Route path="search" element={<Search />} />
-              </Routes>
-            </motion.div>
-          </AnimatePresence>
 
-          <Sidebar />
+          <Sidebar posts={posts} togglePosts={togglePosts} />
+
+          <Routes location={location}>
+            <Route path="" element={<ActivityList showCreate={showCreate} />} />
+            <Route path="search" element={<Search posts={posts} />} />
+          </Routes>
+
           {showCreate && <CreateMain setShowCreate={setShowCreate} />}
           {showLogout && <Logout setShowLogout={setShowLogout} />}
         </div>
