@@ -4,11 +4,15 @@ import mongoose from "mongoose";
 import multer from "multer";
 import path from "path"
 import fs from "fs";
+import cors from "cors"
+import axios from "axios";
 
 const router = express.Router();
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const uploadDir = path.join(__dirname, "uploads");
+
+router.use(cors())
 
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
@@ -138,6 +142,36 @@ router.post("/user/create",upload.single("image"), auth, async (req, res) => {
 router.get("/posts/all", async (req, res) => {
     const posts = await Post.find()
     res.json(posts)
+})
+
+router.get("/deezer-proxy", async (req,res) => {
+  try {
+    let { q, limit=8 } = req.query;
+    if (!q) {
+      q = "timeless"
+    }
+    const response = await axios.get('https://api.deezer.com/search', {
+      params: { q, limit }
+    })
+    res.json(response.data)
+  } catch (error) {
+    console.error('Error fetching data from Deezer:', error);
+    res.status(500).json({ error: 'Error fetching data from Deezer' });
+  }
+})
+
+router.get("/deezer-search-song", async (req, res) => {
+  try {
+    const {trackId} = req.query;
+    if (!trackId) {
+      return res.status(400).json({ error: 'trackId is required' });
+    }
+    const response = await axios.get(`https://api.deezer.com/track/${trackId}`)
+    res.json(response.data.preview)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Error fetching data from Deezer' });
+  }
 })
 
 

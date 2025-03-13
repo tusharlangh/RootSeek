@@ -22,7 +22,7 @@ const MusicSearch = ({ handleSongSelect, selectedSong }) => {
             Add music to describe your mood
           </p>
           <button
-            className="bg-[#CC99FF] text-white p-1 px-4 rounded-md cursor-pointer hover:shadow-lg duration-400 mt-4"
+            className="bg-[#CC99FF] text-white p-1 px-4 rounded-md cursor-pointer hover:scale-103 transition-transform hover:shadow-lg duration-400 mt-4"
             onClick={() => setShowMusic(true)}
           >
             Add music

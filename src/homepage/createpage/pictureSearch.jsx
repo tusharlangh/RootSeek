@@ -31,7 +31,7 @@ const PictureSearch = ({ onSelectPicture, picture }) => {
             Add a picture to emphasize your root
           </p>
           <button
-            className="bg-[#49CDFD] text-white p-1 px-4 rounded-md cursor-pointer hover:shadow-lg duration-400 mt-4"
+            className="bg-[#49CDFD] text-white p-1 px-4 rounded-md cursor-pointer hover:scale-103 transition-transform hover:shadow-lg duration-400 mt-4"
             onClick={() => fileInputRef.current.click()}
           >
             Add a picture

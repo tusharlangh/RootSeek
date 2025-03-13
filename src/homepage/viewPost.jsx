@@ -129,17 +129,6 @@ const ViewPost = () => {
             </div>
             <div className="mt-12">
               <ul className="flex gap-24 flex-wrap max-lg:gap-12">
-                {post.picture && (
-                  <li className="hidden">
-                    <h1 className="text-2xl max-md:text-xl font-semibold mb-2">
-                      Featured Image
-                    </h1>
-                    <img
-                      className="rounded-lg w-120 h-120 aspect-[16/9] object-cover"
-                      src={"/server/" + post.picture}
-                    />
-                  </li>
-                )}
                 {post.trackId !== "undefined" && (
                   <li>
                     <h1 className="text-2xl max-md:text-xl font-semibold mb-2">
@@ -151,7 +140,7 @@ const ViewPost = () => {
                           className="rounded-lg"
                           src={post.trackAlbumCover}
                         />
-                        <div className="absolute top-8 left-8 hover:scale-120 transition-transform duration-500">
+                        <div className="w-9 absolute top-8 left-8 hover:scale-120 transition-transform duration-500">
                           <PlayMusic trackId={post.trackId} />
                         </div>
                       </div>

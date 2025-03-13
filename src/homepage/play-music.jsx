@@ -6,21 +6,17 @@ const PlayMusic = ({ trackId }) => {
   const audioRef = useRef(null);
   const [song, setSong] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [trackCached, setTrackCached] = useState(false);
 
   useEffect(() => {
-    if (trackCached) return;
-
     axios
-      .get(
-        `https://cors-anywhere.herokuapp.com/https://api.deezer.com/track/${trackId}`
-      )
+      .get(`http://localhost:5002/deezer-search-song?trackId=${trackId}`)
       .then((response) => {
-        setSong(response.data.preview);
-        setTrackCached(true);
+        setSong(response.data);
       })
-      .catch((error) => console.error(error));
-  }, [trackCached, trackId]);
+      .catch((error) => {
+        console.error("Error searching music:", error);
+      });
+  }, [trackId]);
 
   const togglePlayPause = () => {
     if (!audioRef.current) return;
@@ -34,8 +30,8 @@ const PlayMusic = ({ trackId }) => {
   };
 
   return (
-    <div>
-      <div className="text-white cursor-pointer" onClick={togglePlayPause}>
+    <div className="">
+      <div className="cursor-pointer" onClick={togglePlayPause}>
         {isPlaying ? <PauseIcon size={8} /> : <PlayIcon size={8} />}
       </div>
       <audio ref={audioRef} src={song} onEnded={() => setIsPlaying(false)} />

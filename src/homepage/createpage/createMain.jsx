@@ -71,9 +71,9 @@ const CreateMain = ({ setShowCreate }) => {
     formData.append("content", content);
     formData.append("mood", mood);
     formData.append("trackId", selectedSong.id);
-    formData.append("trackName", selectedSong.name);
-    formData.append("trackArtist", selectedSong.artist);
-    formData.append("trackAlbumCover", selectedSong.albumCover);
+    formData.append("trackName", selectedSong.title);
+    formData.append("trackArtist", selectedSong.artist.name);
+    formData.append("trackAlbumCover", selectedSong.album.cover);
 
     if (picture) {
       formData.append("image", picture);
