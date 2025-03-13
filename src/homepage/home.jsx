@@ -26,6 +26,7 @@ import DeletePost from "./deletePost";
 import CreateMain from "./createpage/createMain";
 import Search from "./search";
 import { motion, AnimatePresence, easeInOut } from "framer-motion";
+import ViewPost from "./viewPost";
 
 const checkTokenExpiration = () => {
   const token = localStorage.getItem("token");
@@ -85,8 +86,12 @@ const Home = () => {
           <Sidebar posts={posts} togglePosts={togglePosts} />
 
           <Routes location={location}>
-            <Route path="" element={<ActivityList showCreate={showCreate} />} />
-            <Route path="search" element={<Search posts={posts} />} />
+            <Route
+              path="/home"
+              element={<ActivityList showCreate={showCreate} />}
+            />
+            <Route path="/home/search" element={<Search posts={posts} />} />
+            <Route path="/home/root/:id" element={<ViewPost />} />
           </Routes>
 
           {showCreate && <CreateMain setShowCreate={setShowCreate} />}

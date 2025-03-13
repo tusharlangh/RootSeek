@@ -62,7 +62,7 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
           : "bottom-0 w-full py-2"
       } px-${
         isLargeScreen ? "4" : "4"
-      } z-40 bg-[#F6F6F6] dark:bg-[#121212] rounded-md mt-16 md:ml-2`}
+      } z-40 bg-[#F8F8F8] dark:bg-[#121212] rounded-md mt-16 md:ml-2`}
     >
       <ul
         className={`flex ${

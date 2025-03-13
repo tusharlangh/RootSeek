@@ -7,7 +7,7 @@ import { WindowContext } from "../utils";
 import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 
-const Sidebar = ({ posts, togglePosts }) => {
+const Sidebar = ({ togglePosts }) => {
   const token = localStorage.getItem("token");
   const windowSize = useContext(WindowContext);
   const [searchContent, setSearchContent] = useState("");

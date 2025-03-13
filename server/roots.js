@@ -60,7 +60,7 @@ router.get("/user/posts", auth, async (req, res) => {
   try {
     const twentyfourhoursago = new Date(Date.now() - 24 * 60 * 60 * 1000)
     const userPosts = await Post.find({ user: req.userId, date: {$gte: twentyfourhoursago} });
-    if (!userPosts || userPosts.length === 0)
+    if (!userPosts)
       return res.status(400).json({ message: "No posts found for this user." });
     res.json(userPosts);
   } catch (error) {
@@ -99,16 +99,28 @@ router.delete("/user/delete/:id", async (req, res) => {
   }
 })
 
+router.get("/user/post/:id", async (req,res) => {
+  try {
+    const {id} = req.params
+    const post = await Post.findById(id)
+    if (!post) return res.status(404).json({message: "The root does not exist."})
+    return res.json(post)
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({message: "Internal server error"})
+  }
+})
+
 // Create a new post for a user
 router.post("/user/create",upload.single("image"), auth, async (req, res) => {
   try {
-    const { title, content, mood, trackId, trackName, trackArtist, trackAlbumCover } = req.body;
+    const { title, content, trackId, trackName, trackArtist, trackAlbumCover } = req.body;
     const post = new Post({
       user: req.userId,
       title,
       content,
       date: Date.now(), 
-      mood,
+      mood: "happy",
       picture: req.file ? `/uploads/${req.file.filename}` : "",//the filename is changed from the original to the new file. its changed by the mutler
       trackId,
       trackName,

@@ -5,10 +5,9 @@ import axios from "axios";
 import DisplayPosts from "./display-posts";
 import { motion, AnimatePresence, easeInOut } from "framer-motion";
 
-const Search = ({ posts }) => {
+const Search = ({ posts, loading }) => {
   const windowSize = useContext(WindowContext);
   const DailyTabStyles = `md:ml-26 mx-2 overflow-y-auto`;
-
   const token = localStorage.getItem("token");
 
   return (
@@ -21,9 +20,9 @@ const Search = ({ posts }) => {
           transition={{ duration: 0.4, ease: easeInOut }}
           className={DailyTabStyles}
         >
-          <div className="mt-16 bg-[#F6F6F6] dark:bg-[#121212] rounded-md px-5 py-1 w-full min-h-[92vh]">
+          <div className="mt-16 bg-[#F8F8F8] dark:bg-[#121212] rounded-md px-5 py-1 w-full min-h-[92vh]">
             <div className="mt-6 mb-24">
-              <DisplayPosts posts={posts} />
+              <DisplayPosts posts={posts} loading={loading} />
             </div>
           </div>
         </motion.div>
