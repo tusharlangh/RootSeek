@@ -58,7 +58,7 @@ const LoginPage = () => {
     "w-full flex flex-col justify-center items-center p-12 max-sm:p-8 rounded-md";
 
   const btnStyle =
-    "text-white bg-[#6E5092] font-medium px-8 py-4 cursor-pointer rounded-md w-full transition duration-300 ease-in-out hover:scale-104 hover:shadow-md";
+    "text-white dark:text-black bg-black dark:bg-white font-medium px-8 py-4 cursor-pointer rounded-md w-full transition duration-300 ease-in-out hover:scale-104 hover:shadow-md";
   return (
     <div className={boxStyle}>
       <div className="text-6xl logo text-black dark:text-white">RootSeek</div>
@@ -129,7 +129,7 @@ const LoginPage = () => {
 
       <p className="mt-4">
         Don't have an account?{" "}
-        <span className="hover:underline cursor-pointer text-[#6E5092]">
+        <span className="underline cursor-pointer">
           <Link to="/user/signin">Sign Up</Link>
         </span>
       </p>

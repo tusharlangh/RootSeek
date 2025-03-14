@@ -62,7 +62,7 @@ const VerifPage = () => {
           >
             {message}
           </p>
-          <button className="text-white w-full mt-6 font-medium px-8 py-4 cursor-pointer rounded-md bg-[#0000CD] hover:bg-[#0404B5] transition-colors outline-none">
+          <button className="text-white dark:text-black bg-black dark:bg-white w-full mt-6 font-medium px-8 py-4 cursor-pointer rounded-md transition duration-300 ease-in-out hover:scale-104 hover:shadow-md">
             Continue
           </button>
         </form>

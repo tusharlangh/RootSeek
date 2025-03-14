@@ -17,6 +17,7 @@ const CreateMain = ({ setShowCreate }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [mood, setMood] = useState();
+  const [hashTags, setHashTags] = useState("");
 
   const token = localStorage.getItem("token");
 
@@ -29,6 +30,15 @@ const CreateMain = ({ setShowCreate }) => {
   const handlePictureSelect = useCallback((picture) => {
     setPicture(picture);
   }, []);
+
+  const handleHashTags = useCallback((event) => {
+    let input = event.target.value.replace(/\s/g, "");
+    setHashTags(input);
+  });
+
+  useEffect(() => {
+    console.log(hashTags);
+  }, [hashTags]);
 
   const pages = [
     {
@@ -59,6 +69,7 @@ const CreateMain = ({ setShowCreate }) => {
           content={content}
           setTitle={setTitle}
           setContent={setContent}
+          handleHashTags={handleHashTags}
         />
       ),
     },
@@ -148,7 +159,7 @@ const CreateMain = ({ setShowCreate }) => {
           <div className="flex border-b border-[#F0F0F0] dark:border-[#171A21] p-1.5 w-full">
             <button
               className={`${
-                currentPage === 0 ? "opacity-0" : "text-[#00b4d8]"
+                currentPage === 0 ? "opacity-0" : ""
               } text-sm pl-3 font-medium hover:underline cursor-pointer`}
               onClick={previousPage}
               disabled={currentPage === 0}
@@ -160,7 +171,7 @@ const CreateMain = ({ setShowCreate }) => {
             </p>
             <button
               className={`${
-                currentPage === pages.length - 1 ? "hidden" : "text-[#00b4d8]"
+                currentPage === pages.length - 1 ? "hidden" : ""
               } text-sm pr-3 font-medium hover:underline cursor-pointer`}
               onClick={nextPage}
               disabled={currentPage === pages.length - 1}
@@ -169,7 +180,7 @@ const CreateMain = ({ setShowCreate }) => {
             </button>
             {currentPage === pages.length - 1 && (
               <button
-                className={`pr-2 font-medium hover:underline cursor-pointer text-[#00b4d8]`}
+                className={`pr-2 font-medium hover:underline cursor-pointer`}
                 onClick={onClick}
               >
                 {creating ? "Creating" : "Create"}

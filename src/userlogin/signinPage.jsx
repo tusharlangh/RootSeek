@@ -47,7 +47,7 @@ const SignInPage = () => {
   const inputStyle =
     "border border-[#F0F0F0] dark:border-[#252525] rounded-md p-3";
   const btnStyle =
-    "bg-[#6E5092] font-medium px-8 py-4 cursor-pointer rounded-md w-full transition duration-300 ease-in-out hover:scale-104 hover:shadow-md";
+    "text-white dark:text-black bg-black dark:bg-white font-medium px-8 py-4 cursor-pointer rounded-md w-full transition duration-300 ease-in-out hover:scale-104 hover:shadow-md";
 
   return (
     <div className="flex flex-col max-sm:w-92">
@@ -123,7 +123,7 @@ const SignInPage = () => {
       </form>
       <p className="mt-4 text-center">
         Have an account?{" "}
-        <span className="hover:underline cursor-pointer text-[#6E5092]">
+        <span className="underline cursor-pointer">
           <Link to="/user/login">Login</Link>
         </span>
       </p>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { EditIcon, TrashIcon } from "./icons";
 import { useNavigate } from "react-router-dom";
@@ -70,7 +70,7 @@ const PostOptions = ({ id, showDeleteMessage }) => {
               Are you sure you want to permanently remove this root?
             </p>
             <div
-              className="flex justify-center text-[#6E5092] p-1 hover:bg-[#D7D7D7] dark:hover:bg-[#464646] rounded-md"
+              className="flex justify-center p-1 hover:bg-[#D7D7D7] dark:hover:bg-[#464646] rounded-md"
               onClick={confirmDeleteCont}
             >
               <TrashIcon size={5} />

@@ -9,6 +9,7 @@ const ContentPage = ({
   content,
   setTitle,
   setContent,
+  handleHashTags,
 }) => {
   const [countChar, setCountChar] = useState(content.length);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -64,6 +65,7 @@ const ContentPage = ({
             className="text-sm p-1 outline-none"
             type="text"
             placeholder="Add hashtags"
+            onChange={handleHashTags}
           />
         </div>
       </form>

@@ -1,6 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
+import mongoose, { set } from "mongoose";
 import multer from "multer";
 import path from "path"
 import fs from "fs";
@@ -53,6 +53,7 @@ const postScheme = new mongoose.Schema(
     trackName: {type: String, default: ""},
     trackArtist: {type: String, default: ""},
     trackAlbumCover: {type: String, default: ""},
+    hashTags: {type: String, default: ""},
   },
   { timestamps: true }
 );
