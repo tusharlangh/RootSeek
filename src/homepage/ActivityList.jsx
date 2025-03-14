@@ -1,15 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
-import UserActivity from "./UserActivity";
-import { WindowContext } from "../utils";
-import Create from "./createpage/create";
+import React, { useState, useEffect } from "react";
 import DisplayPosts from "./display-posts";
 import axios from "axios";
 import { motion, AnimatePresence, easeInOut } from "framer-motion";
 
-const ActivityList = ({ showCreate }) => {
+const ActivityList = () => {
   const [posts, setPosts] = useState([]);
   const token = localStorage.getItem("token");
-  const windowSize = useContext(WindowContext);
+
   const DailyTabStyles = `md:ml-24 w-full px-2 overflow-y-auto`;
 
   useEffect(() => {

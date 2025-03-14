@@ -1,8 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { EyeIconClosed, EyeIconOpen } from "../homepage/icons";
-import { Rootseeklogo } from "..";
 
 const SignInPage = () => {
   const [email, setEmail] = useState("");

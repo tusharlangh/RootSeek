@@ -135,12 +135,12 @@ const ViewPost = () => {
                       Song of the moment
                     </h1>
                     <div className="flex items-center gap-2">
-                      <div className="w-24 h-24 relative">
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 relative">
                         <img
                           className="rounded-lg"
                           src={post.trackAlbumCover}
                         />
-                        <div className="w-9 absolute top-8 left-8 hover:scale-120 transition-transform duration-500">
+                        <div className="text-white w-8 sm:w-9 absolute top-6 left-6 sm:top-7.5 sm:left-7.5 hover:scale-120 transition-transform duration-500">
                           <PlayMusic trackId={post.trackId} />
                         </div>
                       </div>

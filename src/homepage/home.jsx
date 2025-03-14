@@ -16,13 +16,11 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import Create from "./createpage/create";
 import { CloseIcon, LockIcon } from "./icons";
 import { jwtDecode } from "jwt-decode";
 import WindowSize, { WindowContext } from "../utils";
 import Sidebar from "./Sidebar";
 import Logout from "./Logout";
-import DeletePost from "./deletePost";
 import CreateMain from "./createpage/createMain";
 import Search from "./search";
 import { motion, AnimatePresence, easeInOut } from "framer-motion";
@@ -86,10 +84,7 @@ const Home = () => {
           <Sidebar posts={posts} togglePosts={togglePosts} />
 
           <Routes location={location}>
-            <Route
-              path="/home"
-              element={<ActivityList showCreate={showCreate} />}
-            />
+            <Route path="/home" element={<ActivityList />} />
             <Route path="/home/search" element={<Search posts={posts} />} />
             <Route path="/home/root/:id" element={<ViewPost />} />
           </Routes>

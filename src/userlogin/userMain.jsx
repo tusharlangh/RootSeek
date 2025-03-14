@@ -1,9 +1,8 @@
 import React from "react";
-import { animate, AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import LoginPage from "./loginPage";
 import SignInPage from "./signinPage";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { HomePageBgVid, LoginPageBg, LoginPageBg2, Rootseeklogo } from "..";
 import VerifPage from "./verifPage";
 
 const UserMain = () => {

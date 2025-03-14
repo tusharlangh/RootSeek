@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ExclamationIcon, EyeIconClosed, EyeIconOpen } from "../homepage/icons";
-import { Rootseeklogo } from "..";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");

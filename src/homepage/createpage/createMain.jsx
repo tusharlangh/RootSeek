@@ -1,19 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CloseIcon, Music, PictureIcon } from "../icons";
+import { CloseIcon } from "../icons";
 import PictureSearch from "./pictureSearch";
 import MusicSearch from "./musicSearch";
 import ContentPage from "./contentPage";
 
 import axios from "axios";
-
-const Loading = () => (
-  <motion.div
-    className="w-6 h-6 border-3 border-gray-200 border-t-white rounded-full"
-    animate={{ rotate: 360 }}
-    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-  />
-);
 
 const CreateMain = ({ setShowCreate }) => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -27,6 +19,16 @@ const CreateMain = ({ setShowCreate }) => {
   const [mood, setMood] = useState();
 
   const token = localStorage.getItem("token");
+
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSongSelect = useCallback((song) => {
+    setSelectedSong(song);
+  }, []);
+
+  const handlePictureSelect = useCallback((picture) => {
+    setPicture(picture);
+  }, []);
 
   const pages = [
     {
@@ -63,6 +65,10 @@ const CreateMain = ({ setShowCreate }) => {
   ];
 
   const onClick = () => {
+    if (title === "" || content === "") {
+      setErrorMessage("Please fill up the title and the content.");
+      return;
+    }
     const formData = new FormData();
 
     setCreating(true);
@@ -70,10 +76,10 @@ const CreateMain = ({ setShowCreate }) => {
     formData.append("title", title);
     formData.append("content", content);
     formData.append("mood", mood);
-    formData.append("trackId", selectedSong.id);
-    formData.append("trackName", selectedSong.title);
-    formData.append("trackArtist", selectedSong.artist.name);
-    formData.append("trackAlbumCover", selectedSong.album.cover);
+    formData.append("trackId", selectedSong?.id);
+    formData.append("trackName", selectedSong?.title);
+    formData.append("trackArtist", selectedSong?.artist?.name);
+    formData.append("trackAlbumCover", selectedSong?.album?.cover);
 
     if (picture) {
       formData.append("image", picture);
@@ -94,15 +100,8 @@ const CreateMain = ({ setShowCreate }) => {
       })
       .catch((error) => {
         console.error(error);
+        setErrorMessage("Something went wrong. Please try again later.");
       });
-  };
-
-  const handleSongSelect = (song) => {
-    setSelectedSong(song);
-  };
-
-  const handlePictureSelect = (picture) => {
-    setPicture(picture);
   };
 
   const nextPage = () => {
@@ -116,6 +115,13 @@ const CreateMain = ({ setShowCreate }) => {
     }
   };
 
+  useEffect(() => {
+    if (errorMessage !== "") {
+      const timeoutId = setTimeout(() => setErrorMessage(""), 2000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [errorMessage]);
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-60">
       <div className="relative absolute inset-0"></div>
@@ -125,6 +131,17 @@ const CreateMain = ({ setShowCreate }) => {
           onClick={() => setShowCreate(false)}
         >
           <CloseIcon size={7} />
+        </div>
+        <div
+          className={`absolute h-full w-full flex justify-center items-center z-[40] ${
+            errorMessage === "" ? "hidden" : "block"
+          }`}
+        >
+          <div
+            className={`text-white p-3 bg-red-500 rounded-md drop-shadow-xl`}
+          >
+            {errorMessage}
+          </div>
         </div>
 
         <div className="rounded-xl bg-white dark:bg-[#121212] relative overflow-hidden">
@@ -166,7 +183,7 @@ const CreateMain = ({ setShowCreate }) => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.7, ease: "easeInOut" }}
               key={pages[currentPage].name}
-              className="max-sm:w-[80vw] w-[55vw] h-[80vh] overflow-hidden"
+              className="max-sm:w-[90vw] w-[55vw] h-[80vh] overflow-hidden"
             >
               {pages[currentPage].component()}
             </motion.div>

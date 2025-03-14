@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { CloseIcon, TrashIcon } from "./icons";
+import { CloseIcon } from "./icons";
 
 const PreviewImage = ({ image, setPreview }) => {
   const DailyTabStyles = "flex justify-center items-center mx-12 rounded-md";
