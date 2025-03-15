@@ -29,7 +29,7 @@ const Sidebar = ({ togglePosts }) => {
         togglePosts(response.data);
       })
       .catch((error) => {
-        console.error(error);
+        return;
       });
   }, [searchContent]);
 

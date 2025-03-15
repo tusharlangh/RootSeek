@@ -11,9 +11,9 @@ const ViewPost = () => {
   const [post, setPost] = useState({});
   const DailyTabStyles = `md:ml-26 mx-2 overflow-y-auto`;
   const options =
-    "cursor-pointer hover:scale-104 transition-transform duration-300 rounded-full px-4 py-1 text-sm ";
+    "cursor-pointer hover:scale-104 transition-transform duration-300 rounded-full px-2 sm:px-4 py-1 text-xs sm:text-sm ";
   const [showOptions, setShowOptions] = useState(false);
-  const [deleteMessage, setDeleteMessage] = useState(false);
+
   const navigate = useNavigate();
 
   const formatTime = () => {
@@ -47,9 +47,9 @@ const ViewPost = () => {
     );
   }
 
-  const showDeleteMessage = () => {
-    setDeleteMessage(true);
-    setTimeout(() => navigate("/home"), 3000);
+  const getHashTags = () => {
+    const hashTags = post.hashTags.split("#").filter((h) => h.length > 0);
+    return hashTags;
   };
 
   return (
@@ -62,22 +62,6 @@ const ViewPost = () => {
           transition={{ duration: 0.4, ease: easeInOut }}
           className={DailyTabStyles + " relative"}
         >
-          {deleteMessage && (
-            <div className="absolute flex items-center justify-center h-[100vh] w-full bg-red-900/10 z-[100] pr-4">
-              <AnimatePresence mode="popLayout">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0 }}
-                  transition={{ duration: 0.4, ease: easeInOut }}
-                  className="w-20 bg-red-500 p-3 rounded-lg"
-                >
-                  <TrashIcon size={4} />
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          )}
-
           {post.picture && (
             <img
               className="mt-16 absolute inset-0 w-full h-full object-cover opacity-40 -z-10 rounded-md"
@@ -95,33 +79,40 @@ const ViewPost = () => {
               <div className="text-4xl sm:text-5xl font-bold">{post.title}</div>
               <div className="font-light mt-2">{formatTime()}</div>
             </div>
+            <div className="relative">
+              <ul className="flex items-center gap-2 mt-8">
+                <li
+                  className={
+                    options + "bg-[#3EA1D2] dark:bg-[#2F85B0] text-white"
+                  }
+                >
+                  Bookmark
+                </li>
+                {post.hashTags &&
+                  getHashTags().map((hashTag, index) => (
+                    <li
+                      key={index}
+                      className={
+                        "rounded-full px-2 sm:px-4 py-1 text-xs sm:text-sm bg-black dark:bg-white text-white dark:text-black"
+                      }
+                    >
+                      #{hashTag}
+                    </li>
+                  ))}
 
-            <ul className="flex items-center gap-4 mt-8">
-              <li
-                className={
-                  options + "bg-[#3EA1D2] dark:bg-[#2F85B0] text-white"
-                }
-              >
-                Bookmark
-              </li>
-              <li
-                className={
-                  options + "bg-black dark:bg-white text-white dark:text-black"
-                }
-              >
-                #
-              </li>
-              <li
-                className="p-1 rounded-lg hover:bg-[#EEEEEE] dark:hover:bg-[#2A2A2A] hover:scale-104 transition-transform duration-300 cursor-pointer"
-                onClick={() => setShowOptions(!showOptions)}
-              >
-                <ThreeDotIcon />
-              </li>
-            </ul>
-            <div className="absolute left-52">
-              {showOptions && (
-                <PostOptions id={id} showDeleteMessage={showDeleteMessage} />
-              )}
+                <li className="relative">
+                  <div
+                    className="p-1 rounded-lg hover:bg-[#EEEEEE] dark:hover:bg-[#2A2A2A] hover:scale-104 transition-transform duration-300 cursor-pointer"
+                    onClick={() => setShowOptions(!showOptions)}
+                  >
+                    <ThreeDotIcon />
+                  </div>
+
+                  <div className="absolute top-12 w-42">
+                    {showOptions && <PostOptions id={id} />}
+                  </div>
+                </li>
+              </ul>
             </div>
 
             <div className="text-lg font-normal dark:text-[#B3B3B3] mt-6">

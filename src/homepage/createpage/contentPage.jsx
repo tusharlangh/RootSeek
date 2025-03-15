@@ -12,7 +12,6 @@ const ContentPage = ({
   handleHashTags,
 }) => {
   const [countChar, setCountChar] = useState(content.length);
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   useEffect(() => {
     setCountChar(content.length);
@@ -43,17 +42,16 @@ const ContentPage = ({
         />
         <div className="w-full flex items-center">
           <div className="cursor-pointer">
-            <div onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
-              {mood ? mood : <SmileIcon />}
+            <div className="flex relative items-center">
+              <SmileIcon />
+              <input
+                className="text-sm p-1 outline-none ml-1.25"
+                type="text"
+                placeholder="Add mood"
+                value={mood}
+                onChange={(el) => setMood(el.target.value)}
+              />
             </div>
-
-            {showEmojiPicker && (
-              <div className="absolute top-4 left-24">
-                <EmojiPicker
-                  onEmojiClick={(emojiObject) => setMood(emojiObject.emoji)}
-                />
-              </div>
-            )}
           </div>
           <div className="w-full flex justify-end text-xs">
             {countChar}/2000

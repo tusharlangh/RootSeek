@@ -34,7 +34,7 @@ const DisplayPosts = ({ posts }) => {
     return (
       <div className="absolute top-0 left-0 w-[100vw] h-[100vh] flex justify-center items-center sm:pl-24">
         <motion.div
-          className="w-7 h-7 border-3 dark:border-t-[#121200] rounded-full"
+          className="w-7 h-7 border-3 border-t-[#FCFCFC] dark:border-t-[#121200] rounded-full"
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
         />
@@ -44,11 +44,16 @@ const DisplayPosts = ({ posts }) => {
 
   if (posts.length === 0) {
     return (
-      <div className="">
-        <p>No roots are made</p>
+      <div className="absolute top-0 left-0 w-[100vw] h-[100vh] flex justify-center items-center sm:pl-24">
+        <p>No roots found</p>
       </div>
     );
   }
+
+  const getHashTags = (hashTags) => {
+    const ht = hashTags.split("#").filter((h) => h.length > 0);
+    return ht;
+  };
 
   return (
     <div className="grid grid-cols-2 max-lg:grid-cols-1 gap-8 w-full">
@@ -81,8 +86,13 @@ const DisplayPosts = ({ posts }) => {
             <div className="flex items-center">
               <p className={`text-sm font-light dark:text-[#B3B3B3] truncate`}>
                 {post.content}
-                <span className="ml-1"></span>
               </p>
+              {post.hashTags &&
+                getHashTags(post.hashTags).map((hashtag, index) => (
+                  <div className="text-sm font-medium" key={index}>
+                    #{hashtag}
+                  </div>
+                ))}
             </div>
 
             {post.trackId !== "undefined" ? (

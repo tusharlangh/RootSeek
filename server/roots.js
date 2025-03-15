@@ -81,10 +81,17 @@ router.get("/search/posts", auth, async (req, res) => {
       const p = await Post.find({user: req.userId})
       return res.json(p)
     }
-    const userPosts = await Post.find({user:req.userId, title: { $regex: searchItem, $options: "i" }});
-    if (!userPosts || userPosts.length === 0) {
-      return res.status(400).json({message: "No posts found."})
+    const filter = { user: req.userId };
+
+    if (searchItem.startsWith("#")) {
+      filter.hashTags = { $regex: searchItem, $options: "i" };
+    } else {
+      filter.$or = [{title: { $regex: searchItem, $options: "i" }}, {content: { $regex: searchItem, $options: "i" }}]
     }
+
+    const userPosts = await Post.find(filter);
+
+    
     res.json(userPosts)
   } catch (error) {
     console.error("Error fetching posts:", error);
@@ -119,18 +126,19 @@ router.get("/user/post/:id", async (req,res) => {
 // Create a new post for a user
 router.post("/user/create",upload.single("image"), auth, async (req, res) => {
   try {
-    const { title, content, trackId, trackName, trackArtist, trackAlbumCover } = req.body;
+    const { title, mood, content, trackId, trackName, trackArtist, trackAlbumCover, hashTags } = req.body;
     const post = new Post({
       user: req.userId,
       title,
       content,
       date: Date.now(), 
-      mood: "happy",
+      mood,
       picture: req.file ? `/uploads/${req.file.filename}` : "",//the filename is changed from the original to the new file. its changed by the mutler
       trackId,
       trackName,
       trackArtist,
       trackAlbumCover,
+      hashTags
     });
     await post.save();
     res.status(201).json({ message: "Post created successfully." });

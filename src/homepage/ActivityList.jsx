@@ -35,7 +35,9 @@ const ActivityList = () => {
           className={`mt-16 bg-[#F6F6F6] dark:bg-[#121212] px-6 py-5 rounded-md w-full min-h-[92vh]`}
         >
           <p className="text-2xl font-bold mb-4">Your daily log</p>
-          <DisplayPosts posts={posts} />
+          <div className="mb-24">
+            <DisplayPosts posts={posts} />
+          </div>
         </div>
       </motion.div>
     </AnimatePresence>

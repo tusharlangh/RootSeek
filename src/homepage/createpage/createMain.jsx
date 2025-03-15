@@ -16,7 +16,7 @@ const CreateMain = ({ setShowCreate }) => {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [mood, setMood] = useState();
+  const [mood, setMood] = useState("");
   const [hashTags, setHashTags] = useState("");
 
   const token = localStorage.getItem("token");
@@ -91,6 +91,7 @@ const CreateMain = ({ setShowCreate }) => {
     formData.append("trackName", selectedSong?.title);
     formData.append("trackArtist", selectedSong?.artist?.name);
     formData.append("trackAlbumCover", selectedSong?.album?.cover);
+    formData.append("hashTags", hashTags);
 
     if (picture) {
       formData.append("image", picture);

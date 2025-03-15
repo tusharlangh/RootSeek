@@ -4,9 +4,10 @@ import { EditIcon, TrashIcon } from "./icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const PostOptions = ({ id, showDeleteMessage }) => {
-  const [confirmDelete, setConfirmDelete] = useState(false);
+const PostOptions = ({ id }) => {
   const navigate = useNavigate();
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleteMessage, setDeleteMessage] = useState(false);
 
   const options = [
     {
@@ -18,6 +19,7 @@ const PostOptions = ({ id, showDeleteMessage }) => {
       name: "Edit",
     },
   ];
+
   const deletePost = () => {
     axios
       .delete(`http://localhost:5002/user/delete/${id}`)
@@ -32,7 +34,7 @@ const PostOptions = ({ id, showDeleteMessage }) => {
   const confirmDeleteCont = () => {
     deletePost();
     setConfirmDelete(true);
-    showDeleteMessage();
+    setDeleteMessage(true);
     setTimeout(() => navigate("/home"), 2000);
   };
 
@@ -44,11 +46,11 @@ const PostOptions = ({ id, showDeleteMessage }) => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.2 }}
       >
-        <ul className="text-sm font-light">
+        <ul className="text-xs sm:text-sm font-light">
           {options.map((option, index) => (
             <li
               key={index}
-              className="p-3 w-full hover:bg-[#D7D7D7] dark:hover:bg-[#464646] rounded-md cursor-pointer"
+              className="p-2 sm:p-3 w-full hover:bg-[#D7D7D7] dark:hover:bg-[#464646] rounded-md cursor-pointer"
               onClick={() => {
                 if (option.name.includes("Delete")) {
                   setConfirmDelete(true);
@@ -65,15 +67,19 @@ const PostOptions = ({ id, showDeleteMessage }) => {
       </motion.div>
       <div className="absolute bg-[#EBEBEB] dark:bg-[#282828] rounded-md">
         {confirmDelete && (
-          <div className="flex flex-col gap-2 w-62 text-center font-light p-2">
-            <p className="text-md">
+          <div className="flex flex-col gap-2 w-62 text-center font-light p-1 sm:p-2 z-[100]">
+            <p className="text-sm sm:text-md">
               Are you sure you want to permanently remove this root?
             </p>
             <div
-              className="flex justify-center p-1 hover:bg-[#D7D7D7] dark:hover:bg-[#464646] rounded-md"
-              onClick={confirmDeleteCont}
+              className={`flex justify-center p-1 ${
+                deleteMessage
+                  ? ""
+                  : "hover:bg-[#D7D7D7] dark:hover:bg-[#464646]"
+              } rounded-md`}
+              onClick={deleteMessage ? null : confirmDeleteCont}
             >
-              <TrashIcon size={5} />
+              {deleteMessage ? "Deleting..." : <TrashIcon size={5} />}
             </div>
             <div
               className="p-1 hover:bg-[#D7D7D7] dark:hover:bg-[#464646] rounded-md"
