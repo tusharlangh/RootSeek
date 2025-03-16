@@ -84,7 +84,9 @@ const DisplayPosts = ({ posts }) => {
             </div>
 
             <div className="flex items-center">
-              <p className={`text-sm font-light dark:text-[#B3B3B3] truncate`}>
+              <p
+                className={`text-sm font-light dark:text-[#B3B3B3] truncate mr-1`}
+              >
                 {post.content}
               </p>
               {post.hashTags &&

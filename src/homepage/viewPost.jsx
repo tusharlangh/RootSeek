@@ -88,6 +88,7 @@ const ViewPost = () => {
                 >
                   Bookmark
                 </li>
+
                 {post.hashTags &&
                   getHashTags().map((hashTag, index) => (
                     <li

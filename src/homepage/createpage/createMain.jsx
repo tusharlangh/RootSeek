@@ -6,6 +6,7 @@ import MusicSearch from "./musicSearch";
 import ContentPage from "./contentPage";
 
 import axios from "axios";
+import DeleteDraft from "./deleteDraft";
 
 const CreateMain = ({ setShowCreate }) => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -22,6 +23,8 @@ const CreateMain = ({ setShowCreate }) => {
   const token = localStorage.getItem("token");
 
   const [errorMessage, setErrorMessage] = useState("");
+
+  const [discardPost, setDiscardPost] = useState(false);
 
   const handleSongSelect = useCallback((song) => {
     setSelectedSong(song);
@@ -137,10 +140,19 @@ const CreateMain = ({ setShowCreate }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-60">
       <div className="relative absolute inset-0"></div>
+
       <div className="relative overflow-hidden z-60 w-full h-full flex justify-center items-center">
+        {discardPost && (
+          <div className="absolute top-0 w-full h-full z-[100]">
+            <DeleteDraft
+              setShowCreate={setShowCreate}
+              setDiscardPost={setDiscardPost}
+            />
+          </div>
+        )}
         <div
           className="absolute top-4 right-4 z-[80] cursor-pointer"
-          onClick={() => setShowCreate(false)}
+          onClick={() => setDiscardPost(true)}
         >
           <CloseIcon size={7} />
         </div>

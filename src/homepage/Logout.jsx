@@ -12,7 +12,7 @@ const Logout = ({ setShowLogout }) => {
   };
 
   const DailyTabStyles =
-    "flex justify-center items-center px-5 py-5 rounded-xl bg-[#FCFCFC] dark:bg-[#181818]";
+    "flex justify-center items-center p-3.5 rounded-xl bg-[#FCFCFC] dark:bg-[#181818]";
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-black/60 z-50"
@@ -27,7 +27,7 @@ const Logout = ({ setShowLogout }) => {
           transition={{ duration: 0.2 }}
         >
           <div className="text-medium">
-            <p className="">Are you sure you want to logout?</p>
+            <p className="font-medium">Are you sure you want to logout?</p>
             <div className="flex gap-4 mt-4">
               <button
                 className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md cursor-pointer transition-all"

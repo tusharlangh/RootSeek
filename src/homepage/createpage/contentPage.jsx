@@ -57,7 +57,7 @@ const ContentPage = ({
             {countChar}/2000
           </div>
         </div>
-        <div className="flex gap-2 mt-4">
+        <div className="flex items-center gap-2 mt-4">
           <Hashtag />
           <input
             className="text-sm p-1 outline-none"
