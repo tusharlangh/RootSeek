@@ -47,14 +47,15 @@ const Home = () => {
 
   const [posts, setPosts] = useState([]);
 
+  const [scfLogout, setScfLogout] = useState(false);
+
   const togglePosts = (posts) => {
     setPosts(posts);
   };
 
   useEffect(() => {
-    console.log(windowSize);
     if (!token) {
-      navigate("/user/login?sessionExpired=true");
+      navigate(`/user/login?sessionExpired=${scfLogout ? "false" : "true"}`);
     }
 
     if (checkTokenExpiration()) {
@@ -90,7 +91,9 @@ const Home = () => {
           </Routes>
 
           {showCreate && <CreateMain setShowCreate={setShowCreate} />}
-          {showLogout && <Logout setShowLogout={setShowLogout} />}
+          {showLogout && (
+            <Logout setShowLogout={setShowLogout} setScfLogout={setScfLogout} />
+          )}
         </div>
       </div>
     </>

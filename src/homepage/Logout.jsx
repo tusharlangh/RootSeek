@@ -2,13 +2,13 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-const Logout = ({ setShowLogout }) => {
+const Logout = ({ setShowLogout, setScfLogout }) => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
   const onClick = () => {
     localStorage.removeItem("token");
-    navigate("/user/login");
+    setScfLogout(true);
   };
 
   const DailyTabStyles =

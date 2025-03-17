@@ -12,12 +12,15 @@ const LoginPage = () => {
   const [sessionExpired, setSessionExpired] = useState(false);
   const [seePassword, setSeePassword] = useState(false);
   const navigate = useNavigate();
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const expired = urlParams.get("sessionExpired");
     if (expired === "true") {
       setSessionExpired(true);
+    } else {
+      setSessionExpired(false);
     }
   }, []);
 
@@ -37,6 +40,7 @@ const LoginPage = () => {
       .then((response) => {
         console.log(response.data.message);
         localStorage.setItem("token", response.data.token);
+        setToken(response.data.token);
         navigate("/home");
       })
       .catch((error) => {
@@ -53,6 +57,10 @@ const LoginPage = () => {
         setLoading(false);
       });
   };
+
+  useEffect(() => {
+    console.log(localStorage.getItem("token"));
+  }, [token]);
 
   const boxStyle =
     "w-full flex flex-col justify-center items-center p-12 max-sm:p-8 rounded-md";
