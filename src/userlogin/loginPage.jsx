@@ -38,7 +38,6 @@ const LoginPage = () => {
     axios
       .post("http://localhost:5002/user/login", DataToSend)
       .then((response) => {
-        console.log(response.data.message);
         localStorage.setItem("token", response.data.token);
         setToken(response.data.token);
         navigate("/home");
@@ -51,16 +50,11 @@ const LoginPage = () => {
           setError(message);
           setIsPasswordError(true);
         }
-        console.error(error);
       })
       .finally(() => {
         setLoading(false);
       });
   };
-
-  useEffect(() => {
-    console.log(localStorage.getItem("token"));
-  }, [token]);
 
   const boxStyle =
     "w-full flex flex-col justify-center items-center p-12 max-sm:p-8 rounded-md";

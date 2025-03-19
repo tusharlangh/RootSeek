@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AnimatePresence, easeInOut, motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { ThreeDotIcon, TrashIcon } from "./icons";
+import { HeartIcon, ThreeDotIcon, TrashIcon } from "./icons";
 import PlayMusic from "./play-music";
 import PostOptions from "./post-options";
 
@@ -13,6 +13,7 @@ const ViewPost = () => {
   const options =
     "cursor-pointer hover:scale-104 transition-transform duration-300 rounded-full px-2 sm:px-4 py-1 text-xs sm:text-sm ";
   const [showOptions, setShowOptions] = useState(false);
+  const [like, setLike] = useState(false);
 
   const navigate = useNavigate();
 
@@ -83,10 +84,12 @@ const ViewPost = () => {
               <ul className="flex items-center gap-2 mt-8">
                 <li
                   className={
-                    options + "bg-[#3EA1D2] dark:bg-[#2F85B0] text-white"
+                    options + "bg-[#E53981] text-white flex items-center gap-1"
                   }
+                  onClick={() => setLike(!like)}
                 >
-                  Bookmark
+                  <HeartIcon size={5} fill={like} />
+                  Like
                 </li>
 
                 {post.hashTags &&

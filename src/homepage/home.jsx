@@ -1,30 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import {
-  HomePageBgVid,
-  LoginPageBg2,
-  Rootseekdark,
-  Rootseeklogo,
-  RootSeekTransparentWhite,
-} from "..";
 import ActivityList from "./ActivityList";
-import {
-  Link,
-  Route,
-  Router,
-  Routes,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
-import { CloseIcon, LockIcon } from "./icons";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import WindowSize, { WindowContext } from "../utils";
+import { WindowContext } from "../utils";
 import Sidebar from "./Sidebar";
 import Logout from "./Logout";
 import CreateMain from "./createpage/createMain";
 import Search from "./search";
-import { motion, AnimatePresence, easeInOut } from "framer-motion";
+
 import ViewPost from "./viewPost";
+import Settings from "./settings/settings";
+import SettingsPage from "./settings/settings-page";
 
 const checkTokenExpiration = () => {
   const token = localStorage.getItem("token");
@@ -88,6 +75,7 @@ const Home = () => {
             <Route path="/home" element={<ActivityList />} />
             <Route path="/home/search" element={<Search posts={posts} />} />
             <Route path="/home/root/:id" element={<ViewPost />} />
+            <Route path="/home/settings/*" element={<Settings />} />
           </Routes>
 
           {showCreate && <CreateMain setShowCreate={setShowCreate} />}

@@ -42,7 +42,7 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
     },
     {
       name: "Settings",
-      path: "/settings",
+      path: "/home/settings",
       solid: <SettingsIconSolid />,
       outline: <SettingsIconOutline />,
     },
