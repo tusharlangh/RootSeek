@@ -22,7 +22,7 @@ const SettingsPage = () => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="mt-6 overflow-y-auto"
+        className="mt-6"
       >
         {pageComponents[page] || <Profile />}
       </motion.div>
