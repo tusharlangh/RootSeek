@@ -76,7 +76,7 @@ const Sidebar = ({ togglePosts }) => {
       )}
 
       <div className="absolute top-2 right-0 flex items-center gap-2 mx-2">
-        <div className="flex rounded-full w-12 overflow-hidden border-[#F0F0F0] dark:border-[#282828] border-4">
+        <div className="flex rounded-full w-12 overflow-hidden border-[#F0F0F0] dark:border-[#282828] border-2">
           <img src={DefaultPfp} draggable={false} />
         </div>
       </div>

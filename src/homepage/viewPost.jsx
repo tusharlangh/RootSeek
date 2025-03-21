@@ -65,7 +65,7 @@ const ViewPost = () => {
         >
           {post.picture && (
             <img
-              className="mt-16 absolute inset-0 w-full h-full object-cover opacity-40 -z-10 rounded-md"
+              className="mt-16 absolute inset-0 w-full h-full object-cover opacity-40 -z-10 rounded-md "
               src={"/server/" + post.picture}
               alt="User's uploaded image"
             />
@@ -130,12 +130,12 @@ const ViewPost = () => {
                       Song of the moment
                     </h1>
                     <div className="flex items-center gap-2">
-                      <div className="w-20 h-20 sm:w-24 sm:h-24 relative">
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 relative group">
                         <img
-                          className="rounded-lg"
+                          className="rounded-lg opacity-100 group-hover:opacity-50 transition-opacity duration-300"
                           src={post.trackAlbumCover}
                         />
-                        <div className="text-white w-8 sm:w-9 absolute top-6 left-6 sm:top-7.5 sm:left-7.5 hover:scale-120 transition-transform duration-500">
+                        <div className="text-white w-8 sm:w-9 absolute top-6 left-6 sm:top-7.5 sm:left-7.5 hover:scale-120 opacity-0 group-hover:opacity-100 transition-transform duration-500">
                           <PlayMusic trackId={post.trackId} />
                         </div>
                       </div>

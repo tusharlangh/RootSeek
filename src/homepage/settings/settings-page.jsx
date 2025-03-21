@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-
-import Profile from "./Profile";
+import Profile from "./profileContents/Profile";
 
 const SettingsPage = () => {
   const { page } = useParams();
@@ -22,7 +21,7 @@ const SettingsPage = () => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="mt-6"
+        className="mt-6 flex justify-center items-center "
       >
         {pageComponents[page] || <Profile />}
       </motion.div>

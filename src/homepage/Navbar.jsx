@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   CreateIconOutline,
@@ -20,6 +20,8 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
 
   const isLargeScreen = windowSize >= 1110;
   const isMediumScreen = windowSize >= 800;
+
+  const [selectedPage, setSelectedPage] = useState("Home");
 
   const menuItems = [
     {
@@ -70,28 +72,24 @@ const Navbar = ({ showCreate, setShowCreate, setShowLogout }) => {
         } justify-center items-center gap-4`}
       >
         {menuItems.map(({ name, path, solid, outline }) => {
-          const isActive = location.pathname === path;
           return (
             <li
               key={name}
               className={`flex gap-4 ${isLargeScreen ? "" : ""} ${
-                !isActive
+                name !== selectedPage
                   ? "hover:bg-[#EEEEEE] dark:hover:bg-[#2A2A2A] duration-400 hover:scale-104 transition-transform duration-300 cursor-pointer"
                   : "bg-[#EEEEEE] dark:bg-[#2A2A2A]"
               } transition-colors p-3.5 rounded-lg`}
               onClick={() => {
                 if (name === "Create") setShowCreate(true);
                 else if (name === "Logout") setShowLogout(true);
-                else if (path) navigate(path);
+                else if (path) {
+                  setSelectedPage(name);
+                  navigate(path);
+                }
               }}
             >
-              <div>
-                {name === "Create" && showCreate
-                  ? solid
-                  : isActive
-                  ? solid
-                  : outline}
-              </div>
+              <div>{name === selectedPage ? solid : outline}</div>
             </li>
           );
         })}

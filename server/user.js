@@ -71,7 +71,7 @@ router.get("/users/all", async (req, res) => {
 
 router.get("/user/details", auth, async (req, res) => {
     try {
-        const user = await User.findById(req.userId).select("-password -email")
+        const user = await User.findById(req.userId)
         //const user = await User.find()
         if (!user) return res.status(400).json({message : "user not found"})
         res.json(user)
@@ -116,6 +116,20 @@ router.post("/user/signin", async (req, res) => {
     } catch (error) {
         console.error("Error during user registration:", error);
         res.status(500).json({ message: "An error occurred during registration." });
+    }
+})
+
+router.patch("/user/updateinformation", auth, async (req, res) => {
+    try {
+        const updates = req.body
+        if (!req.userId || !updates) return res.status(400).json({message:"Userid or the sent data is not valid."})
+        const updatedInfo = await User.findByIdAndUpdate(req.userId, updates, {
+            new: true,
+            runValidators: true
+        })
+        res.status(201).json({message: "User information updated."})
+    } catch (error) {
+        res.status(500).json({message:"Server had a problem"})
     }
 })
 

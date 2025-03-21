@@ -411,7 +411,7 @@ export const CloseIcon = ({ size }) => (
     strokeWidth={2}
     stroke="currentColor"
     className={`size-${size}`}
-    color="white"
+    color={defaultColor}
   >
     <path
       strokeLinecap="round"
