@@ -10,6 +10,7 @@ import axios from "axios";
 import Post from "./models/post-model.js";
 import dotenv from "dotenv";
 import OpenAI from "openai";
+import moment from "moment";
 
 dotenv.config();
 
@@ -90,10 +91,10 @@ async function getNLPInsights(postContent) {
   }
 }
 
-// Get all posts for a user
+// Get all posts for a user in the last 24 hours
 router.get("/user/posts", auth, async (req, res) => {
   try {
-    const twentyfourhoursago = new Date(Date.now() - 300 * 60 * 60 * 1000);
+    const twentyfourhoursago = moment().subtract(24, "hours");
     const userPosts = await Post.find({
       user: req.userId,
       date: { $gte: twentyfourhoursago },
@@ -257,22 +258,33 @@ router.post("/user/create", upload.single("image"), auth, async (req, res) => {
 
 router.get("/posts/growth-trace", auth, async (req, res) => {
   try {
-    //const { id } = req.query;
-    //const post = await Post.findOne({ user: req.userId, _id: id });
     const posts = await Post.find({ user: req.userId });
 
     const lastPost = posts[posts.length - 1];
 
-    const comparisonSummaries = posts.map(
-      (insight, i) =>
-        `Post ${i + 1}: mood - ${insight.nlpInsights.mood}, intensity - ${
+    const comparisonSummaries = posts.map((insight, i) => {
+      const daysAgo = moment(lastPost.createdAt).diff(
+        moment(insight.createdAt),
+        "days"
+      );
+
+      if (daysAgo < 60) {
+        return `Post ${i + 1}: mood - ${
+          insight.nlpInsights.mood
+        }, intensity - ${
           insight.nlpInsights.intensity
         }, topics - ${insight.nlpInsights.topics.join(
           ", "
         )}, entities - ${insight.nlpInsights.entities.join(", ")}, tone - ${
           insight.nlpInsights.tone
-        }, summary - ${insight.nlpInsights.summary} time - ${insight.createdAt}`
-    );
+        }, summary - ${insight.nlpInsights.summary} time - ${moment(
+          insight.createdAt
+        ).toDate()}`;
+      }
+      return null;
+    });
+
+    //console.log(comparisonSummaries);
 
     const currentSummary = `mood - ${lastPost.nlpInsights.mood}, intensity - ${
       lastPost.nlpInsights.intensity
@@ -282,27 +294,41 @@ router.get("/posts/growth-trace", auth, async (req, res) => {
       lastPost.nlpInsights.tone
     }, summary - ${lastPost.nlpInsights.summary} time - ${lastPost.createdAt}`;
 
-    const formedRoot = `Post to compare: ${currentSummary} and other posts ${comparisonSummaries}`;
+    const formedRoot = `New Root: ${currentSummary} and Recent Roots: ${comparisonSummaries.filter(
+      Boolean
+    )}`;
 
     const messages = [
       {
         role: "system",
         content: `
-      Compare this new journal entry with all past entries. Identify any personal growth, emotional change, 
-      recurring struggles, or emerging themes. Focus on changes in mood, intensity, tone, topics, and summary. 
-      If no significant change is found, note that as well. Keep the insight brief but reflective—like something 
-      a thoughtful guide would say after reading the user’s reflections. 
+        Act as a wise friend of mine and give genuine answer for the following request in simple plain english. 
+        I have given you a serires of roots which are memories. What your task is to analyze every single past memory given to you. 
+        Carefully take notes of the entities and the mood and the tone of the user while writing their memory. 
+        I have also given you the latest root created by the user. Now carefully note its mood, entities, tone etc.
+        Look at the growth of the user from the latest root to the given past roots. The growth is personal growth. What personal growth has imporved or disimproved. 
+        The most important thing to take into consideration is for every previous root you analyze and take note of please do not take a single root as a reference for your answer at all. 
+        Look at the most dominating themes and the most dominating roots for your consideration for your answer.
 
-      Add natural **timing** if it fits (like 'a few days ago,' 'prior months,' or 'this morning'). Only use these if they match the feeling of the root—don’t force them.
+        First track growth by looking back into the old roots.
+        Secondly notice what the user is doing differently in the latest root. If the user has done somethign similar in the past have they improved or they are constant or worsening.
+        
+        After you have thoroughly analyzed the latest and the previous roots create an answer by taking everything into consideration. 
+        Give the best answer so that the user can have a genuine feeling for your answer and really reads the entire output. The maximum words should be 50.
 
-      IMPORTANT: refer to the entries or journal as "roots" 
+        Explain these changes in simple, friendly language that anyone can understand. 
+        Avoid complex psychology terms. Use everyday words and concrete examples when possible. 
+        Keep the insight to 1–2 sentences.
 
-      IMPORTANT: Please wrap the most meaningful word(s) or phrase(s) in double asterisks. These highlights should help the user quickly understand the heart of the reflection—if they only read those, they should still grasp what the trace is trying to say. Aim to include at least one such highlight in each insight.
-      
-      Give me the answer in the following JSON response only. Think of yourself as an Therapist. refer to the memories as roots. keep the language so that a 14 year old can understand. Give a more human type answer. Do not use hard words keep it like high school level vocabulary.
-      {
-        trace: "the growth or the change you found. less than 30 words"
-      }
+        Example:
+        Complex: "You’ve grown from intense curiosity and stress toward calm reflection and self-care."
+        Simple: "You used to feel stressed and full of questions, but now you take more time to relax and enjoy the moment."
+
+
+        Respond ONLY in this exact JSON format:
+        {
+          "trace": ["max 50 words."]
+        }
       `,
       },
       {
@@ -352,12 +378,15 @@ router.get("/deezer-proxy", async (req, res) => {
   try {
     let { q, limit = 8 } = req.query;
     if (!q) {
-      q = "timeless";
+      const chartTracks = await getChart(); // <- FIX HERE
+      res.json(chartTracks);
+      return;
     }
     const response = await axios.get("https://api.deezer.com/search", {
       //no cors error will show because cors is only enforced if an request is made from an browser. Server to server no cors will be involved.
       params: { q, limit },
     });
+
     res.json(response.data);
   } catch (error) {
     console.error("Error fetching data from Deezer:", error);
@@ -378,5 +407,14 @@ router.get("/deezer-search-song", async (req, res) => {
     res.status(500).json({ error: "Error fetching data from Deezer" });
   }
 });
+
+const getChart = async () => {
+  try {
+    const response = await axios.get("https://api.deezer.com/chart/0");
+    return response.data.tracks;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export default router;
