@@ -29,7 +29,7 @@ const VerifPage = () => {
       .then((response) => {
         console.log(response.data.message);
         setMessage(response.data.message);
-        setTimeout(() => navigate("/user/login"), 500);
+        setTimeout(() => navigate("/user/login"), 2000);
       })
       .catch((error) => {
         const message = error.response.data.message;

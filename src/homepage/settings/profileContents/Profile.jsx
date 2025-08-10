@@ -3,11 +3,19 @@ import { EnterIcon } from "../../icons";
 import axios from "axios";
 import DefaultPfp from "../../../assets/images/defaultpfp.jpeg";
 import UpdateUsername from "./update-username";
+import UpdateFirstName from "./update-firstname";
+import UpdateLastName from "./update-lastname";
+import UpdateEmail from "./update-email";
+import UpdatePassword from "./update-password";
 
 const Profile = () => {
   const [userInformation, setUserInformation] = useState({});
   const token = localStorage.getItem("token");
   const [updateUsername, setUpdateUsername] = useState(false);
+  const [updateFirstName, setUpdateFirstName] = useState(false);
+  const [updateLastName, setUpdateLastName] = useState(false);
+  const [updateEmail, setUpdateEmail] = useState(false);
+  const [updatePassword, setUpdatePassword] = useState(false);
 
   useEffect(() => {
     axios
@@ -66,8 +74,10 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex flex-col gap-1 text-sm w-full mt-2 justify-center items-center">
-          <div className="font-bold">Tushar Langhnoda</div>
-          <div>tusharlanghnoda@gmail.com</div>
+          <div className="font-bold">
+            {emailPassword[3].data} {emailPassword[4].data}
+          </div>
+          <div>{emailPassword[0].data}</div>
         </div>
         <div className="mt-6 flex flex-col gap-12 mt-10">
           <div className="flex flex-col gap-4">
@@ -87,6 +97,14 @@ const Profile = () => {
                     onClick={() => {
                       if (option.title === "Username") {
                         setUpdateUsername(true);
+                      } else if (option.title === "First name") {
+                        setUpdateFirstName(true);
+                      } else if (option.title === "Last name") {
+                        setUpdateLastName(true);
+                      } else if (option.title === "Email") {
+                        setUpdateEmail(true);
+                      } else if (option.title === "Password") {
+                        setUpdatePassword(true);
                       }
                     }}
                   >
@@ -103,6 +121,38 @@ const Profile = () => {
           <UpdateUsername
             currUsername={emailPassword[2].data}
             setUpdateUsername={setUpdateUsername}
+          />
+        </div>
+      )}
+      {updateFirstName && (
+        <div className="w-full h-full absolute top-0 ">
+          <UpdateFirstName
+            currFirstName={emailPassword[3].data}
+            setUpdateFirstName={setUpdateFirstName}
+          />
+        </div>
+      )}
+      {updateLastName && (
+        <div className="w-full h-full absolute top-0 ">
+          <UpdateLastName
+            currLastName={emailPassword[4].data}
+            setUpdateLastName={setUpdateLastName}
+          />
+        </div>
+      )}
+      {updateEmail && (
+        <div className="w-full h-full absolute top-0 ">
+          <UpdateEmail
+            currEmail={emailPassword[0].data}
+            setUpdateEmail={setUpdateEmail}
+          />
+        </div>
+      )}
+      {updatePassword && (
+        <div className="w-full h-full absolute top-0 ">
+          <UpdatePassword
+            currPassword={userInformation.password}
+            setUpdatePassword={setUpdatePassword}
           />
         </div>
       )}
