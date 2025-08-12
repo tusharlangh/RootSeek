@@ -4,10 +4,8 @@ import path from "path";
 import fs from "fs";
 import cors from "cors";
 import axios from "axios";
-
 import Post from "./models/post-model.js";
 import dotenv from "dotenv";
-import OpenAI from "openai";
 import moment from "moment";
 import growthTrace from "./growthTrace/growthTrace.js";
 import { auth } from "./middleware.js";
