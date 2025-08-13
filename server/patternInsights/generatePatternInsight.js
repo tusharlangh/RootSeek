@@ -5,8 +5,8 @@ import {
   gatherInsight,
 } from "./collecter.js";
 
-export async function generatePatternInsight() {
-  const posts = await Post.find();
+export async function generatePatternInsight(userId) {
+  const posts = await Post.find({ user: userId });
   const randomPost = posts[Math.floor(Math.random() * posts.length)];
 
   const tags = await collectListOfTags(posts, randomPost);
