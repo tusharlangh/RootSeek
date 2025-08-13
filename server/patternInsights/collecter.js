@@ -1,5 +1,5 @@
 import { insightPrompt, moodPrompt, tagPrompt } from "./prompts.js";
-import { callOpenAI } from "./aiClient.js";
+import { callOpenAI } from "../aiClient.js";
 import { extractposts } from "./utility.js";
 
 export async function collectListOfTags(posts, randomPost) {

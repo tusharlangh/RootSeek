@@ -1,9 +1,6 @@
 import express from "express";
-import dotenv from "dotenv";
 import { auth } from "../middleware.js";
 import { getInsight } from "./getInsight.js";
-
-dotenv.config();
 
 const router = express.Router();
 
