@@ -5,31 +5,19 @@ import Post from "./models/post-model.js";
 import moment from "moment";
 import growthTrace from "./growthTrace/growthTrace.js";
 import createRoot from "./roots/create/routerHandler.js";
+import singleRoot from "./roots/get/singlePost/routerHandler.js";
+import allRoots from "./roots/get/allPosts/routerHandler.js";
+import twentyFourHPosts from "./roots/get/twentyFourPosts/routerHandler.js";
 import { auth } from "./middleware.js";
 
 const router = express.Router();
+router.use(cors());
 
 router.use("/me", growthTrace);
 router.use("/root", createRoot);
-
-router.use(cors());
-
-// Get all posts for a user in the last 24 hours
-router.get("/user/posts", auth, async (req, res) => {
-  try {
-    const twentyfourhoursago = moment().subtract(24, "hours");
-    const userPosts = await Post.find({
-      user: req.userId,
-      date: { $gte: twentyfourhoursago },
-    });
-    if (!userPosts)
-      return res.status(400).json({ message: "No posts found for this user." });
-    res.json(userPosts);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Error fetching posts." });
-  }
-});
+router.use("/find", singleRoot);
+router.use("/find", allRoots);
+router.use("/find", twentyFourHPosts);
 
 router.get("/search/posts", auth, async (req, res) => {
   try {
@@ -56,41 +44,6 @@ router.get("/search/posts", auth, async (req, res) => {
     console.error("Error fetching posts:", error);
     res.status(500).json({ message: "Error fetching posts." });
   }
-});
-
-router.delete("/user/delete/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const deletedPost = await Post.findByIdAndDelete(id);
-    if (!deletedPost)
-      return res
-        .status(404)
-        .json({ message: "The root does not exist for it to be deleted." });
-    return res.status(201).json({ message: "root deleted" });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-router.get("/user/post/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const post = await Post.findById(id);
-    if (!post)
-      return res.status(404).json({ message: "The root does not exist." });
-    return res.json(post);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-router.get("/posts/all", auth, async (req, res) => {
-  const posts = await Post.find({ user: req.userId });
-  if (!posts)
-    return res.status(400).json({ message: "No posts found for this user." });
-  res.json(posts);
 });
 
 router.get("/deezer-proxy", async (req, res) => {

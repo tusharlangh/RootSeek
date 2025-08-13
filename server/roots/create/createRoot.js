@@ -19,13 +19,13 @@ export async function createRoot(
   file,
   filename
 ) {
-  const nlpInsights = await callOpenAI(nlpPrompt);
+  const nlpInsights = await callOpenAI(nlpPrompt(content));
 
   const posts = await Post.find({ user: userId });
   const currentIndex = posts.length - 1;
 
   const post = new Post({
-    user: req.userId,
+    user: userId,
     title,
     content,
     date: Date.now(),
