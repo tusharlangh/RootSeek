@@ -9,5 +9,5 @@ export async function twentyFourPosts(userId) {
     date: { $gte: twentyfourhoursago },
   });
 
-  return userPosts;
+  return userPosts; 
 }

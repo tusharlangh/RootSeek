@@ -1,49 +1,22 @@
 import express from "express";
 import cors from "cors";
 import axios from "axios";
-import Post from "./models/post-model.js";
 import growthTrace from "./growthTrace/growthTrace.js";
 import createRoot from "./roots/create/routerHandler.js";
 import singleRoot from "./roots/get/singlePost/routerHandler.js";
 import allRoots from "./roots/get/allPosts/routerHandler.js";
 import twentyFourHPosts from "./roots/get/twentyFourPosts/routerHandler.js";
-import { auth } from "./middleware.js";
+import searchRoot from "./roots/search/routerHandler.js";
 
 const router = express.Router();
 router.use(cors());
 
 router.use("/me", growthTrace);
-router.use("/root", createRoot);
+router.use("/root", createRoot); //create.js
 router.use("/single", singleRoot);
 router.use("/all", allRoots);
 router.use("/24-hours", twentyFourHPosts); //home.js
-
-router.get("/search/posts", auth, async (req, res) => {
-  try {
-    const searchItem = req.query.q;
-    if (!searchItem) {
-      const p = await Post.find({ user: req.userId });
-      return res.json(p);
-    }
-    const filter = { user: req.userId };
-
-    if (searchItem.startsWith("#")) {
-      filter.hashTags = { $regex: searchItem, $options: "i" };
-    } else {
-      filter.$or = [
-        { title: { $regex: searchItem, $options: "i" } },
-        { content: { $regex: searchItem, $options: "i" } },
-      ];
-    }
-
-    const userPosts = await Post.find(filter);
-
-    res.json(userPosts);
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-    res.status(500).json({ message: "Error fetching posts." });
-  }
-});
+router.use("/search", searchRoot); // search.js
 
 router.get("/deezer-proxy", async (req, res) => {
   try {
