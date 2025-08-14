@@ -1,46 +1,17 @@
 import express from "express";
-import mongoose from "mongoose";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import sendVerificationEmail from "./emailverif.js";
-import dotenv from "dotenv";
-
-dotenv.config(); //imports the env stuff from the .env file
-
-function auth(req, res, next) {
-  const token = req.header("Authorization")?.split(" ")[1];
-  if (!token) return res.status(401).json({ message: "Access denied." });
-  try {
-    const decoded = jwt.verify(token, "your_jwt_secret_key");
-    req.userId = decoded.userId;
-    next();
-  } catch (ex) {
-    res.status(400).json({ message: "Invalid token." });
-  }
-}
+import { auth } from "./middleware.js";
+import User from "./models/user-model.js";
+import userlogin from "./user/login/routerHandler.js";
+import userSignin from "./user/signin/routerHandler.js";
+import cors from "cors";
 
 const router = express.Router(); //starts a routing system so that you can connect the router to your main server on your main server file.
-const uri = process.env.URI;
+router.use(cors());
 
-mongoose
-  .connect(uri)
-  .then(() => console.log("Connected to mongoose"))
-  .catch((err) =>
-    console.error(`Connection to mongoose failed. Error: ${err}`)
-  );
-
-const userSchema = new mongoose.Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  username: { type: String, unique: true, sparse: true, required: true },
-  email: { type: String, unique: true, sparse: true, required: true },
-  password: { type: String, required: true },
-  verificationCode: { type: String },
-  verified: { type: Boolean, default: false },
-  tempEmail: { type: String, default: "" },
-});
-
-const User = mongoose.model("User", userSchema);
+router.use("/user-login", userlogin);
+router.use("/user-signin", userSignin);
 
 router.post("/user/verify", async (req, res) => {
   try {
@@ -60,43 +31,6 @@ router.post("/user/verify", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
-});
-
-router.get("/users/all", async (req, res) => {
-  try {
-    const users = await User.find();
-    if (!users) return res.status(400).json({ message: "user not found" });
-    res.json(users);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "error occured." });
-  }
-});
-
-router.get("/user/details", auth, async (req, res) => {
-  try {
-    const user = await User.findById(req.userId);
-    //const user = await User.find()
-    if (!user) return res.status(400).json({ message: "user not found" });
-    res.json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "error occured." });
-  }
-});
-
-router.post("/user/login", async (req, res) => {
-  let { email, password } = req.body;
-  email = email.toLowerCase();
-  const user = await User.findOne({ email });
-  if (!user)
-    return res.status(400).json({ message: "Invalid email and password." });
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) return res.status(400).json({ message: "Invalid password" });
-  const token = jwt.sign({ userId: user._id }, "your_jwt_secret_key", {
-    expiresIn: "24h",
-  }); //the userId is the data that you are encoding inside the token. The key is used whenever you want to access the encoded data. Safety reason.
-  res.json({ token });
 });
 
 router.post("/user/signin", async (req, res) => {
@@ -135,6 +69,8 @@ router.post("/user/signin", async (req, res) => {
   }
 });
 
+{
+  /* NOT USING!!
 router.patch("/user/updateinformation", auth, async (req, res) => {
   try {
     const updates = req.body;
@@ -188,6 +124,46 @@ router.post("/user/updateEmail", auth, async (req, res) => {
   }
 });
 
+router.patch("/user/updatePassword", auth, async (req, res) => {
+  try {
+    const { password } = req.body;
+    const user = await User.findById(req.userId);
+    if (!user) return res.status(400).json({ message: "user not found." });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    user.password = hashedPassword;
+    await user.save();
+    res.status(200).json({ message: "Successfully updated password" });
+  } catch (error) {
+    res.status(500).json({ message: "An error occurred." });
+  }
+});
+
+router.get("/user/details", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId);
+    //const user = await User.find()
+    if (!user) return res.status(400).json({ message: "user not found" });
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "error occured." });
+  }
+});
+
+
+router.get("/users/all", async (req, res) => {
+  try {
+    const users = await User.find();
+    if (!users) return res.status(400).json({ message: "user not found" });
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "error occured." });
+  }
+});
+
 router.post("/user/verify-email", auth, async (req, res) => {
   try {
     let { email, verificationCode } = req.body;
@@ -218,21 +194,7 @@ router.post("/user/verify-email", auth, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
-router.patch("/user/updatePassword", auth, async (req, res) => {
-  try {
-    const { password } = req.body;
-    const user = await User.findById(req.userId);
-    if (!user) return res.status(400).json({ message: "user not found." });
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    user.password = hashedPassword;
-    await user.save();
-    res.status(200).json({ message: "Successfully updated password" });
-  } catch (error) {
-    res.status(500).json({ message: "An error occurred." });
-  }
-});
+*/
+}
 
 export default router;
