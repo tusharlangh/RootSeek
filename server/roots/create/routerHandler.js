@@ -18,7 +18,7 @@ router.post("/create", storage().single("image"), auth, async (req, res) => {
     } = req.body;
 
     const file = req.file;
-    const filename = req.file.filename;
+    const filename = file ? file.filename : "";
 
     const createdRoot = await createRoot(
       title,

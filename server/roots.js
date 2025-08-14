@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import axios from "axios";
 import Post from "./models/post-model.js";
-import moment from "moment";
 import growthTrace from "./growthTrace/growthTrace.js";
 import createRoot from "./roots/create/routerHandler.js";
 import singleRoot from "./roots/get/singlePost/routerHandler.js";
@@ -15,9 +14,9 @@ router.use(cors());
 
 router.use("/me", growthTrace);
 router.use("/root", createRoot);
-router.use("/find", singleRoot);
-router.use("/find", allRoots);
-router.use("/find", twentyFourHPosts);
+router.use("/single", singleRoot);
+router.use("/all", allRoots);
+router.use("/24-hours", twentyFourHPosts); //home.js
 
 router.get("/search/posts", auth, async (req, res) => {
   try {
