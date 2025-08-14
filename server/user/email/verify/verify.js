@@ -1,4 +1,4 @@
-import User from "../../models/user-model.js";
+import User from "../../../models/user-model.js";
 
 export async function verify(email, verificationCode) {
   const user = await User.findOne({ email });

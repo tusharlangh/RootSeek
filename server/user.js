@@ -1,10 +1,7 @@
 import express from "express";
-import bcrypt from "bcryptjs";
-import sendVerificationEmail from "./emailverif.js";
-import { auth } from "./middleware.js";
-import User from "./models/user-model.js";
 import userlogin from "./user/login/routerHandler.js";
 import userSignin from "./user/signin/routerHandler.js";
+import userVerify from "./user/email/verify/routerHandler.js";
 import cors from "cors";
 
 const router = express.Router(); //starts a routing system so that you can connect the router to your main server on your main server file.
@@ -12,62 +9,7 @@ router.use(cors());
 
 router.use("/user-login", userlogin);
 router.use("/user-signin", userSignin);
-
-router.post("/user/verify", async (req, res) => {
-  try {
-    let { email, verificationCode } = req.body;
-    email = email.toLowerCase();
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "user not found." });
-    if (String(user.verificationCode) !== String(verificationCode)) {
-      return res.status(400).json({ message: "Invalid verification code." });
-    }
-
-    user.verificationCode = null;
-    user.verified = true;
-    await user.save();
-
-    res.json({ message: "Email successfully verified!" });
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
-router.post("/user/signin", async (req, res) => {
-  try {
-    let { email, firstName, lastName, username, password } = req.body;
-    email = email.toLowerCase();
-    if (!email || !firstName || !lastName || !username || !password) {
-      return res.status(400).json({ message: "Fields are required." });
-    }
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: "The email already exists." });
-    }
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const verificationCode = Math.floor(
-      100000 + Math.random() * 900000
-    ).toString();
-
-    const user = new User({
-      firstName,
-      lastName,
-      username,
-      email,
-      password: hashedPassword,
-      verificationCode,
-      verified: false,
-    });
-
-    await user.save();
-    await sendVerificationEmail(email, verificationCode);
-
-    res.status(201).json({ message: "User registered." });
-  } catch (error) {
-    console.error("Error during user registration:", error);
-    res.status(500).json({ message: "An error occurred during registration." });
-  }
-});
+router.use("/user-verify", userVerify);
 
 {
   /* NOT USING!!

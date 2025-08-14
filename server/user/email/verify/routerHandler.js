@@ -1,8 +1,8 @@
 import { verify } from "./verify.js";
-import express, { json } from "express";
+import express from "express";
 const router = express.Router();
 
-router.post("/user/verify", async (req, res) => {
+router.post("/verify", async (req, res) => {
   try {
     let { email, verificationCode } = req.body;
     email = email.toLowerCase();
