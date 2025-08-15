@@ -1,11 +1,4 @@
-import axios from "axios";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const apiKey = process.env.OPENAI_API_KEY;
-
-export async function getAggregatedEmotionalData(
+export function aggregatedEmotionalDataPrompt(
   moodSequential,
   toneSequential,
   intensitySequential
@@ -96,26 +89,10 @@ export async function getAggregatedEmotionalData(
     },
   ];
 
-  const response = await axios.post(
-    "https://api.openai.com/v1/chat/completions",
-    {
-      model: "gpt-4.1-mini",
-      messages,
-      temperature: 0,
-      max_tokens: 300,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  return JSON.parse(response.data.choices[0].message.content);
+  return messages;
 }
 
-export async function getGrowthTrace(lastPost, aggregatedData) {
+export function growthTracePrompt(lastPost, aggregatedData) {
   const messages = [
     {
       role: "system",
@@ -174,21 +151,5 @@ export async function getGrowthTrace(lastPost, aggregatedData) {
     },
   ];
 
-  const response = await axios.post(
-    "https://api.openai.com/v1/chat/completions",
-    {
-      model: "gpt-4.1-mini",
-      messages,
-      temperature: 0,
-      max_tokens: 300,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  return JSON.parse(response.data.choices[0].message.content);
+  return messages;
 }
