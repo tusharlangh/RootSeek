@@ -29,7 +29,7 @@ export async function signin(email, firstName, lastName, username, password) {
   });
 
   await user.save();
-  await sendVerificationEmail(email, verificationCode);
+  await sendVerificationEmail(firstName, email, verificationCode);
 
   return { status: 201, message: "User registered." };
 }
