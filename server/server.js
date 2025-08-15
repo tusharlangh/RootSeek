@@ -1,7 +1,6 @@
 import express from "express";
 import userRoutes from "./user.js";
 import rootsRoutes from "./roots.js";
-import libraryRoutes from "./library.js";
 import nlpTasksRoutes from "./nlpTasks.js";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -22,7 +21,6 @@ async function startServer() {
 
     app.use("/", userRoutes);
     app.use("/", rootsRoutes);
-    app.use("/library", libraryRoutes);
     app.use("/nlp", nlpTasksRoutes);
 
     app.listen(5002, () => {

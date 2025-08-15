@@ -13,6 +13,8 @@ import moment from "moment";
 import NlpTasks from "./models/nlptasks.js";
 import { auth } from "./middleware.js";
 import patternInsights from "./patternInsights/patternInsight.js";
+import stories from "./themeThread/stories/routerHandler.js";
+import topTheme from "./themeThread/topTheme/routerHandler.js";
 
 dotenv.config();
 
@@ -21,6 +23,8 @@ const router = express.Router();
 router.use(cors());
 
 router.use("/collect", patternInsights);
+router.use("/theme-thread-stories", stories);
+router.use("/theme-thread-toptheme", topTheme);
 
 router.get("/topThemePosts", auth, async (req, res) => {
   try {
