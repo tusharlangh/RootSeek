@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import growthTrace from "./growthTrace/growthTrace.js";
+import growthTrace from "./growthTrace/routerHandler.js";
 import createRoot from "./roots/create/routerHandler.js";
 import singleRoot from "./roots/get/singlePost/routerHandler.js";
 import allRoots from "./roots/get/allPosts/routerHandler.js";
