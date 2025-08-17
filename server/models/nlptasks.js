@@ -7,8 +7,8 @@ const nlpTasksScheme = new mongoose.Schema({
     date: { type: Date, default: Date.now() },
   },
   storiesData: {
-    type: Object,
-    default: {},
+    data: { type: Object },
+    date: { type: Date, default: Date.now() },
   },
 });
 
