@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/stories", auth, async (req, res) => {
   const { posts, theme } = req.body;
-  const result = await stories(req.userId, posts, theme);
+  const result = await stories(req.userId, theme);
   res.json(result);
 });
 

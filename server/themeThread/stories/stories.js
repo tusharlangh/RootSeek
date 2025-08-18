@@ -1,20 +1,17 @@
 import { callOpenAI } from "../../aiClient.js";
 import NlpTasks from "../../models/nlptasks.js";
 import { storiesPrompt } from "./prompt.js";
+import Post from "../../models/post-model.js";
 
-export async function stories(userId, posts, theme) {
+export async function stories(userId, theme) {
   const nlpTasks = await NlpTasks.findOne({ user: userId });
 
-  const tasks = nlpTasks.storiesData;
+  const tasks = nlpTasks.storiesData.data[theme];
+  const posts = await Post.find({ _id: { $in: tasks } });
+  const messages = storiesPrompt(posts, theme);
+  const response = await callOpenAI(messages);
 
-  if (!tasks[theme]) {
-    const messages = storiesPrompt(posts, theme);
+  console.log(response);
 
-    const response = await callOpenAI(messages);
-
-    nlpTasks.storiesData[theme] = response;
-    nlpTasks.save();
-  }
-
-  return nlpTasks.storiesData[theme];
+  return response;
 }
