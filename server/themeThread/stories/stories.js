@@ -8,10 +8,6 @@ export async function stories(userId, theme) {
 
   const tasks = nlpTasks.storiesData.data[theme];
   const posts = await Post.find({ _id: { $in: tasks } });
-  const messages = storiesPrompt(posts, theme);
-  const response = await callOpenAI(messages);
 
-  console.log(response);
-
-  return response;
+  return posts;
 }

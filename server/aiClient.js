@@ -19,6 +19,7 @@ export async function callOpenAI(
       },
     }
   );
+  const raw = res.data.choices[0].message.content;
 
-  return JSON.parse(res.data.choices[0].message.content);
+  return JSON.parse(raw);
 }

@@ -31,3 +31,60 @@ export function topThemePrompt(posts) {
 
   return messages;
 }
+
+export function themeColorPalletePrompt(theme) {
+  const messages = [
+    {
+      role: "system",
+      content: `
+      You are a mapping engine that assigns themes to positions on a universal spectrum between 0 and 1. 
+      This spectrum is divided into segments, each representing a theme. The mapping is fixed and must always 
+      return the same value for the same theme.
+
+      Here is the universal theme spectrum (theme → range on 0–1):
+      - Love: 0.00–0.05
+      - Friendship: 0.05–0.10
+      - Joy / Happiness: 0.10–0.15
+      - Hope: 0.15–0.20
+      - Growth: 0.20–0.25
+      - Peace / Calm: 0.25–0.30
+      - Curiosity / Wonder: 0.30–0.35
+      - Wisdom / Knowledge: 0.35–0.40
+      - Creativity: 0.40–0.45
+      - Courage / Strength: 0.45–0.50
+      - Resilience: 0.50–0.55
+      - Sadness: 0.55–0.60
+      - Fear / Anxiety: 0.60–0.65
+      - Anger: 0.65–0.70
+      - Loss / Grief: 0.70–0.75
+      - Healing: 0.75–0.80
+      - Spirituality / Transcendence: 0.80–0.85
+      - Gratitude: 0.85–0.90
+      - Connection / Belonging: 0.90–0.95
+      - Legacy / Purpose: 0.95–1.00
+
+      Task:
+      1. When I give you a theme (e.g., "Hope", "Growth", "Sadness"), 
+        find the matching spectrum range.
+      2. Return a single representative number between the start and end 
+        of that range (e.g., midpoint).
+      3. Answer only with the number (0–1), no explanation.
+
+      { "theme_value": number }
+
+      Example:
+      Input: "Hope"
+      Output: { "theme_value": 0.175 }
+
+      return only JSON response format:
+        {"theme_value": number}
+      `,
+    },
+    {
+      role: "user",
+      content: `The theme is ${theme}`,
+    },
+  ];
+
+  return messages;
+}
