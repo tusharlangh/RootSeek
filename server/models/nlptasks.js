@@ -10,6 +10,18 @@ const nlpTasksScheme = new mongoose.Schema({
     data: { type: Object },
     date: { type: Date, default: Date.now() },
   },
+  themeThread: {
+    data: [
+      {
+        theme: { type: String, default: "" },
+        postIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+        color: { type: String, default: "" },
+        summary: { type: String, default: "" },
+        growth_role: { type: String, default: "" },
+      },
+    ],
+    date: { type: Date },
+  },
 });
 
 const NlpTasks = mongoose.model("NlpTasks", nlpTasksScheme);

@@ -32,7 +32,10 @@ export function topThemePrompt(posts) {
   return messages;
 }
 
-export function themeColorPalletePrompt(theme) {
+export function themeColorPalletePrompt(themes) {
+  const combinedContent = themes.map(
+    (theme, index) => `${index} - ${theme.toLowerCase()} `
+  );
   const messages = [
     {
       role: "system",
@@ -64,25 +67,25 @@ export function themeColorPalletePrompt(theme) {
       - Legacy / Purpose: 0.95–1.00
 
       Task:
-      1. When I give you a theme (e.g., "Hope", "Growth", "Sadness"), 
-        find the matching spectrum range.
+      1. I have given you multiple themes like (e.g., "Hope", "Growth", "Sadness"), 
+         for each of them find the matching spectrum range.
       2. Return a single representative number between the start and end 
         of that range (e.g., midpoint).
       3. Answer only with the number (0–1), no explanation.
 
-      { "theme_value": number }
+      { "theme": number }
 
       Example:
-      Input: "Hope"
-      Output: { "theme_value": 0.175 }
+      Input: "hope"
+      Output: { "hope": 0.175 }
 
       return only JSON response format:
-        {"theme_value": number}
+        {"theme": number}
       `,
     },
     {
       role: "user",
-      content: `The theme is ${theme}`,
+      content: `The themes are ${combinedContent}`,
     },
   ];
 

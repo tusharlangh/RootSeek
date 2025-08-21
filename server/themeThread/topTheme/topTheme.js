@@ -3,49 +3,61 @@ import { themeColorPalletePrompt, topThemePrompt } from "./prompt.js";
 import { callOpenAI } from "../../aiClient.js";
 import NlpTasks from "../../models/nlptasks.js";
 import moment from "moment";
-import colorPallete from "./colorPallete.js";
+import { colorPallete } from "./colorPallete.js";
 
-export async function topTheme(userId) {
+async function generateTopThemes(userId) {
+  const posts = await Post.find({ user: userId });
+  const messages = topThemePrompt(posts);
+  return await callOpenAI(messages, "gpt-4.1-mini", 0, 2000);
+}
+
+async function assignThemeColors(themes, tasks) {
+  const result = await callOpenAI(themeColorPalletePrompt(themes));
+
+  for (let data of tasks.themeThread.data) {
+    const themeColor = result[data.theme];
+    const number = Math.floor(themeColor * 10) / 10;
+    data.color = colorPallete[String(number)];
+  }
+}
+
+export async function topTheme(userId, force = false) {
   const tasks = await NlpTasks.findOne({ user: userId });
 
-  let date = moment("30-11-2005", "DD-MM-YYYY");
+  let date = tasks.themeThread?.date
+    ? moment(tasks.themeThread.date)
+    : moment(0);
 
-  if (tasks.storiesData.date) {
-    date = moment(tasks.storiesData.date);
-  }
+  if (force || moment().diff(date, "days") > 30) {
+    tasks.themeThread.data = [];
 
-  if (moment().diff(date, "days") > 30) {
-    const posts = await Post.find({ user: userId });
-    const messages = topThemePrompt(posts);
-    const result = await callOpenAI(messages, "gpt-4.1-mini", 0, 2000);
+    const result = await generateTopThemes(userId);
 
-    tasks.storiesData.data = result;
-    tasks.storiesData.date = moment().toDate();
+    for (let [theme, postIds] of Object.entries(result)) {
+      tasks.themeThread.data.push({ theme: theme.toLowerCase(), postIds });
+    }
+
+    tasks.themeThread.date = moment().toDate();
+
+    await assignThemeColors(Object.keys(result), tasks);
+
     await tasks.save();
   }
 
-  {
-    /*
+  return tasks.themeThread.data.map((data) => ({
+    _theme: data.theme,
+    _theme_color: data.color,
+  }));
+}
+
+{
+  /*
     const posts = await Post.find({
       _id: { $in: tasks.storiesData.data["personal_growth"] },
     });
 
     const fun = await f(posts, "personal_growth");
   */
-  }
-
-  const res = [];
-
-  for (let theme of Object.keys(tasks.storiesData.data)) {
-    const getColor = await callOpenAI(themeColorPalletePrompt(theme));
-    const number = Math.floor(getColor.theme_value * 10) / 10;
-    res.push({
-      _theme: theme,
-      _theme_color: colorPallete[String(number)],
-    });
-  }
-
-  return res;
 }
 
 async function f(posts, theme) {
