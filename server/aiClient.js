@@ -3,6 +3,16 @@ import dotenv from "dotenv";
 dotenv.config();
 const apiKey = process.env.OPENAI_API_KEY;
 
+function parseAIJson(responseText) {
+  // Remove ```json or ``` and any trailing ```
+  const cleaned = responseText
+    .replace(/```json/g, "")
+    .replace(/```/g, "")
+    .trim();
+
+  return JSON.parse(cleaned);
+}
+
 export async function callOpenAI(
   messages,
   model = "gpt-4.1-mini",
@@ -21,5 +31,5 @@ export async function callOpenAI(
   );
   const raw = res.data.choices[0].message.content;
 
-  return JSON.parse(raw);
+  return parseAIJson(raw);
 }

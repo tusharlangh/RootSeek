@@ -14,10 +14,10 @@ const nlpTasksScheme = new mongoose.Schema({
     data: [
       {
         theme: { type: String, default: "" },
-        postIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
         color: { type: String, default: "" },
-        summary: { type: String, default: "" },
-        growth_role: { type: String, default: "" },
+        summary: [{ type: String }],
+        growth_role: [{ type: String }],
+        dates: [{ type: Date }],
       },
     ],
     date: { type: Date },
