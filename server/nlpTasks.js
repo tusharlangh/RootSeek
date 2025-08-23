@@ -15,7 +15,7 @@ import { auth } from "./middleware.js";
 import patternInsights from "./patternInsights/patternInsight.js";
 import stories from "./themeThread/stories/routerHandler.js";
 import topTheme from "./themeThread/topTheme/routerHandler.js";
-import themeAnalysis from "./themeThread/analyzeTheme/routerHandler.js";
+import themeProgression from "./themeThread/progressionTheme/routerHandler.js";
 
 dotenv.config();
 
@@ -26,6 +26,6 @@ router.use(cors());
 router.use("/collect", patternInsights);
 router.use("/theme-thread-stories", stories);
 router.use("/theme-thread-toptheme", topTheme);
-router.use("/theme-analysis", themeAnalysis);
+router.use("/progression", themeProgression);
 
 export default router;

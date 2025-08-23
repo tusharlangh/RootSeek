@@ -1,13 +1,13 @@
 import { auth } from "../../middleware.js";
-import { analyzeThemeProgression } from "./analyzeThemeProgression.js";
 import express from "express";
+import { getProgression } from "./getProgression.js";
 
 const router = express.Router();
 
-router.get("/analyzeThemeProgression", auth, async (req, res) => {
+router.get("/themeProgression", auth, async (req, res) => {
   try {
-    const { posts, theme } = req.body;
-    const result = await analyzeThemeProgression(posts, theme, req.userId);
+    const { theme } = req.query;
+    const result = await getProgression(theme, req.userId);
     res.json(result);
   } catch (error) {
     console.log(error);
