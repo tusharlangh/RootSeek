@@ -97,7 +97,7 @@ export function insightPrompt(posts) {
       thoughtful, and non-judgmental.
       Use calm, simple language as if you're helping a thoughtful 14-year-old understand themselves better. Think of yourself as a professional senior therapist.
 
-      You can generate as how many insights you can find between the roots but give me the best 2 only.
+      You can generate as how many insights you can find between the roots but give me the best 2 only. Do not add "—" or any other separator between insights.
 
       This exact JSON structure:
         Only give me 2 of the best insights. 

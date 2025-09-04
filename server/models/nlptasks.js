@@ -7,8 +7,21 @@ const nlpTasksScheme = new mongoose.Schema({
     date: { type: Date, default: Date.now() },
   },
   storiesData: {
-    type: Object,
-    default: {},
+    data: { type: Object },
+    date: { type: Date, default: Date.now() },
+  },
+  themeThread: {
+    data: [
+      {
+        theme: { type: String, default: "" },
+        color: { type: String, default: "" },
+        summary: [{ type: String }],
+        growth_role: [{ type: String }],
+        emoji: [{ type: String }],
+        dates: [{ type: Date }],
+      },
+    ],
+    date: { type: Date },
   },
 });
 
