@@ -34,11 +34,12 @@ async function analyzeThemes(themes) {
     const messages = themeAnalysisPrompt(posts, theme.toLowerCase());
     const results = await callOpenAI(messages, "gpt-4.1-mini", 0, 2000);
 
-    console.log(results.summary);
+    console.log(results.emoji);
     themeAnalyses[theme.toLowerCase()] = {
       summary: results.map((result) => result.summary),
       growth_role: results.map((result) => result.growth_role),
       dates: posts.map((post) => post.createdAt),
+      emoji: results.map((result) => result.emoji),
     };
   }
 
@@ -74,6 +75,7 @@ export async function topTheme(userId, force = false) {
       dates: analyses[theme.toLowerCase()]?.dates,
       summary: analyses[theme.toLowerCase()]?.summary,
       growth_role: analyses[theme.toLowerCase()]?.growth_role,
+      emoji: analyses[theme.toLowerCase()]?.emoji,
       color: colors[theme.toLowerCase()],
     }));
 

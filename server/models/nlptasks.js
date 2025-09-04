@@ -17,6 +17,7 @@ const nlpTasksScheme = new mongoose.Schema({
         color: { type: String, default: "" },
         summary: [{ type: String }],
         growth_role: [{ type: String }],
+        emoji: [{ type: String }],
         dates: [{ type: Date }],
       },
     ],

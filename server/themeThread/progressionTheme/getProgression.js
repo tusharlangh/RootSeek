@@ -11,6 +11,7 @@ export async function getProgression(theme, userId) {
         growth_role: task.growth_role,
         summary: task.summary,
         dates: task.dates,
+        emoji: task.emoji,
       };
     }
   }

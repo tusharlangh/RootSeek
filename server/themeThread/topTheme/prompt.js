@@ -101,17 +101,32 @@ export function themeAnalysisPrompt(posts, theme) {
     {
       role: "system",
       content: `
-      Think of yourself as gpt 5 and give answer according to that.
-      I will give you a list of journal entries that all contain the theme ${theme}. Your task is to show how each entry plays a role in the progression of this theme. For each entry, do two things:
-      Summary: Write a short arrow-based summary that shows the flow of events or realizations. For longer entries, break them into natural steps with arrows (→). For shorter entries, keep the summary short but still arrow-based.
-      Growth Role: Explain what role this entry plays in the overall theme of ${theme} growth. Do NOT just repeat what the user already wrote. Be concise (max 20 words). If the entry shows no real growth, clearly state that.
-      Explain this in **simple, everyday language** that a **10-year-old** can understand. Avoid jargon, technical terms, or long sentences..
+      You are an expert at analyzing personal reflections. I will give you a list of journal entries that all share the theme ${theme}.
+      Your job is to show only the growth progression for each entry.
 
+      For each entry, do exactly this:
+        1. Summary: Write a short arrow-based summary (→) that shows only the growth or change in the entry.
+            - Do not restate or describe the story details.
+            - Keep it focused on the user’s growth path.
+            - For longer entries: break into multiple arrows that highlight growth steps.
+            - For shorter entries: keep it short but still arrow-based.
+        2. Growth Role: Explain the role this growth plays in the overall ${theme} journey.
+            - Be short, clear, and no more than 25 words.
+            - Do NOT repeat what the entry is saying, think of why is this entry useful for the theme and why it has a purpose. 
+            - If there is no growth, write exactly: "No visible growth yet."
+      Style requirements:
+        - Use simple, everyday language a 10-year-old can understand.
+        - Avoid jargon, abstract words, or repeating the story.
+        - Be clear, natural, and strictly growth-focused.
+      Output requirements:
+        - Return only valid JSON.
+        - Follow this exact structure:
       Output **JSON only**, with this exact structure:
       [
         { 
           summary: the summary,
           growth_role: the growth
+          emoji: if growth had to be displayed as an emoji it would be this. 
         }
       ]
       `,
